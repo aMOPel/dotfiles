@@ -1,0 +1,102 @@
+# --------------------------
+# History
+# Lines configured by zsh-newuser-install
+HISTFILE=$ZDOTDIR/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+# live update von history file
+setopt incappendhistory
+# share history live between all open shells
+setopt sharehistory
+# add start and termination time of commands to history
+# setopt extendedhistory
+# handle duplicates in history properly
+setopt histignoredups histexpiredupsfirst
+# remove unnecessary blanks from new hist lines
+setopt histreduceblanks
+# dont store history and fc commands, dont store functions
+setopt histnostore histnofunctions
+# turn off history beep when scrolling past beginning of history
+setopt nohistbeep
+# ----------------------------
+# Prompt
+# sets terminal window title to $PWD each time a command is executed
+PROMPT_COMMAND='echo -ne "\033]0;${PWD}\007"'
+precmd() { eval "$PROMPT_COMMAND" }
+# sets right prompt to current time with seconds
+# RPS1='%B%w - %T%b'
+# sets left default prompt
+PS1='%(2L.+.) %15<<%~%<< %(?..%F{red}(%?%)%f) %# '
+# ----------------------------
+# aliases and named directories (also in zshaliasrc)
+if [[ -r $ZDOTDIR/.zshaliasrc ]]; then
+. $ZDOTDIR/.zshaliasrc
+fi
+# transforms variables which are just paths always to named directories
+setopt autonamedirs
+# ----------------------------
+# automatical cd ex: % .. or % ~
+setopt autocd
+# automatical pushd instead of cd
+setopt autopushd pushdsilent
+DIRSTACKSIZE=100
+# to enable use of glob syntax of zsh
+setopt extendedglob
+setopt globdots
+# related to error message for not found file
+setopt nomatch
+# prints output of background job to current shell
+setopt notify
+
+# no beep
+setopt nobeep
+# enables vi like keys
+bindkey -v
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+
+# End of lines added by compinstall
+# personal setup
+
+# makes options and traps set in function return to normal values after funtion ends
+setopt localoptions localtraps
+# gives additional prompt after bang history command for user to inspect result
+setopt histverify
+
+# --------------------------
+# Completion for kitty
+kitty + complete setup zsh | source /dev/stdin
+# Completion for pass
+# fpath+=/usr/share/zsh/vendor-completions/_pass
+# completion 
+fpath=( ~/.local/zsh-fpath $fpath )
+autoload -Uz compinit
+compinit -d $ZDOTDIR/.zcompdump
+# --------------------------
+# FZF
+[ -f $ZDOTDIR/.fzf.zsh ] && source $ZDOTDIR/.fzf.zsh
+# zoxide
+eval "$(zoxide init zsh)"
+# --------------------------
+
+##################
+
+# x-yank() {
+#     zle copy-region-as-kill
+#     print -rn -- $CUTBUFFER | xclip -sel clip
+#     zle exchange-point-and-mark -n -1
+# }
+# zle -N x-yank
+#
+# x-paste() {
+#     killring=("$CUTBUFFER" "${(@)killring[1,-2]}")
+#     CUTBUFFER=$(xclip -selection clipboard -o)
+#     zle yank
+# }
+# zle -N x-paste
+#
+# bindkey -M vicmd "y" x-yank
+# bindkey -M vicmd "Y" x-yank
+# bindkey -M vicmd "p" x-paste
+
+# Traditional ZSHRC config goes here

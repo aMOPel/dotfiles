@@ -1,0 +1,46 @@
+{
+  "p": {
+    "prefix": "p",
+    "body": [
+      "[[plugins]]",
+      "repo = '$1'"
+    ],
+    "description": "p"
+  },
+  "ha": {
+    "prefix": "ha",
+    "body": [
+      "hook_add = '''",
+      "\t$1",
+      "'''"
+    ],
+    "description": "p"
+  },
+  "hs": {
+    "prefix": "hs",
+    "body": [
+      "hook_source = '''",
+      "\t$1",
+      "'''"
+    ],
+    "description": "p"
+  },
+  "hps": {
+    "prefix": "hps",
+    "body": [
+      "hook_post_source = '''",
+      "\t$1",
+      "'''"
+    ],
+    "description": "p"
+  },
+  "hpu": {
+    "prefix": "hpu",
+    "body": [
+      "hook_post_update = '''",
+      "\t$1",
+      "'''"
+    ],
+    "description": "p"
+  }
+}

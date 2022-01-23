@@ -1,0 +1,102 @@
+{{ if and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.idLike "ubuntu debian") -}}
+
+#!/bin/bash
+
+echo 'hi'
+get_github=$XDG_DATA_HOME/chezmoi/bin/get_github.sh
+# sudo apt install zsh
+# chsh -s $(which zsh) $USER
+# sudo apt install atool
+# $get_github x-motemen ghq
+# $get_github kovidgoyal kitty
+# $get_github neovim neovim nvim
+# $get_github extrawurst gitui
+# $get_github tree-sitter tree-sitter
+# $get_github charmbracelet glow
+# $get_github karan joe
+# $get_github kdheepak taskwarrior-tui
+# $get_github ajeetdsouza zoxide
+# $get_github burntsushi ripgrep rg 13.0.0
+# $get_github sharkdp fd
+# $get_github godotengine godot
+# $get_github junegunn fzf
+# $get_github twpayne chezmoi
+#
+# # ../.bin/get_github.sh gothenburgbitfactory taskwarrior
+# # ../.bin/get_github.sh gothenburgbitfactory timewarrior
+#
+# sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 100
+#
+# sudo apt install xclip
+#
+# # dein
+# curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+# sh ./installer.sh ~/.cache/dein
+# rm ./installer.sh
+#
+# # tabnine
+# ~/.cache/dein/repos/github.com/tzachar/cmp-tabnine/install.sh
+#
+# # python
+# sudo apt install python3
+# sudo apt install python3-pip
+# sudo apt install python3-venv
+# pip3 install pynvim
+# pip3 install gdtoolkit
+# pip3 install neovim-remote
+# pip3 install docker-compose
+#
+# # brave
+# sudo apt install apt-transport-https curl gnupg
+# curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
+# 'echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list'
+# sudo apt install brave-browser
+#
+# # ranger
+# sudo apt install ranger
+# chmod +x ~/.config/ranger/scope.sh
+# sudo apt install zathura
+# mkdir -p ~/.local/fzf ~/.local/bin
+# ghq get --shallow -u https://github.com/junegunn/fzf.git
+# $GHQ_ROOT/github.com/junegunn/fzf/install
+# ln -s ~/.local/fzf/bin/fzf ~/.local/bin
+# sudo apt install bat
+# sudo apt install ffmpegthumbnailer
+# sudo apt install mediainfo
+# sudo apt install vlc
+#
+# # taskw
+# sudo apt install taskwarrior
+# sudo apt install timewarrior
+# cp /usr/share/doc/timewarrior/ext/on-modify.timewarrior ~/.local/share/task/hooks/
+# chmod +x ~/.local/share/task/hooks/on-modify.timewarrior
+#
+# # pass
+# sudo apt install pass
+# sudo apt install webext-browserpass
+# ghq get https://github.com/languitar/pass-git-helper
+# pip3 install ~/.local/ghq/github.com/languitar/pass-git-helper
+#
+# echo gpg --allow-secret-key-import --import-options keep-ownertrust --import secret.key
+# echo gpg --list-keys; gpg --edit-key KEY
+# echo https://github.com/browserpass/browserpass-native#install-manually
+#
+# sudo apt update
+#
+# # docker
+# sudo apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
+# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+# echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# sudo apt update
+# sudo apt-get install docker-ce docker-ce-cli containerd.io
+# sudo docker run hello-world
+# sudo groupadd docker
+# sudo usermod -aG docker $USER
+#
+# # node
+# curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+# sudo apt-get install -y nodejs
+
+
+{{ end -}}
+# vim:ft=sh:

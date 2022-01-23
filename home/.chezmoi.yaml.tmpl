@@ -1,0 +1,16 @@
+{{ $email := promptString "email" -}}
+{{ $githubUserName := promptString "githubUserName" -}}
+
+data:
+    email: {{ $email | quote }}
+    githubUserName: {{ $githubUserName | quote }}
+
+diff:
+  #  command : "nvim"
+  #  args : ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Target }}`}}"]
+  exclude : ["scripts"]
+  pager : "diff-so-fancy"
+
+merge:
+    command : "nvim"
+    args : ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Source }}`}}", "{{`{{ .Target }}`}}"]

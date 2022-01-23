@@ -1,0 +1,11 @@
+sudo apt get ranger
+sudo apt get ffmpegthumbnailer
+#kitty
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+sudo dpkg -i bat_0.15.0_amd64.deb 
+sudo apt install zathura
+sudo apt install atool
+pdftoppm/poppler
+sudo apt install mediainfo
+fd
+fzf
