@@ -6,11 +6,11 @@
 
 # Auto-completion
 # ---------------
-[[ $- == *i* ]] && source "$HOME/.local/ghq/github.com/junegunn/fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "$GHQ_ROOT/github.com/junegunn/fzf/shell/completion.zsh" 2> /dev/null
 
 # Key bindings
 # ------------
-source "$HOME/.local/ghq/github.com/junegunn/fzf/shell/key-bindings.zsh"
+source "$GHQ_ROOT/github.com/junegunn/fzf/shell/key-bindings.zsh"
 
 # %%base16_template: fzf##default %%
 # Base16 OneDark

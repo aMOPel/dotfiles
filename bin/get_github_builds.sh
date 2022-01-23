@@ -7,9 +7,9 @@ jq=$dotf/bin/jq
 fd=$dotf/bin/fd
 fzf=$dotf/bin/fzf
 
-local=~/.local/binaries
+local=~/.local/builds
 if [ ! -d "$local" ]; then
-  mkdir $local
+  mkdir -p $local
 fi
 
 user=$1
@@ -30,12 +30,12 @@ else
   version=$4
 fi
 
-bin_json=$dotf/bin/binaries.json
+builds_json=$dotf/bin/builds.json
 echo repo: $repo
-echo current version: `$jq -r ".\"${repo}\" | .version" $bin_json` 
+echo current version: `$jq -r ".\"${repo}\" | .version" $builds_json` 
 
-# check if local version of binary is up to date
-if ( $jq -e ".\"${repo}\" | .version == \"${version}\"" $bin_json > /dev/null ); then
+# check if local version of build is up to date
+if ( $jq -e ".\"${repo}\" | .version == \"${version}\"" $builds_json > /dev/null ); then
   echo $repo 'is up to date'
 else
   echo wanted version: $version
@@ -43,10 +43,10 @@ else
   # write json data of version to temp file
   curl "https://api.github.com/repos/${userrepo}/releases" -s | $jq "map(select(.tag_name == \"${version}\")) | .[0]" > temp.json
 
-  # if repo has file_name in $bin_json
-  if ( $jq -e ".\"${repo}\" | .file_name" $bin_json > /dev/null ); then
+  # if repo has file_name in $builds_json
+  if ( $jq -e ".\"${repo}\" | .file_name" $builds_json > /dev/null ); then
     # load previous file_name from json
-    file_name=`$jq -r ".\"${repo}\" | .file_name" $bin_json`
+    file_name=`$jq -r ".\"${repo}\" | .file_name" $builds_json`
   else
     # query user for file_name name with fzf
     file_name=`$jq -r ".assets | .[].name" temp.json | $fzf --query="!sha !sum !256 !sig !win !exe$ !msi$ !js$ !wasm$ !mac !darwin !dmg$ !arm !arch !deb$ !rpm$ !apk$ !snap$ !appimage$ !686 !386 'linux | '64 | 'tar | 'tz$ | 'gz$ | ^${binname}$ " -1`
@@ -61,17 +61,17 @@ else
 
   rm temp.json
 
-  # write update to $bin_json
-  # $jq "(del(.\"${repo}\")) + {\"${repo}\": {version: \"${version}\",  file_name: \"${file_name}\"}}" $bin_json > temp.json
-  # rm $bin_json > /dev/null
-  # mv temp.json $bin_json
+  # write update to $builds_json
+  $jq "(del(.\"${repo}\")) + {\"${repo}\": {version: \"${version}\",  file_name: \"${file_name}\"}}" $builds_json > temp.json
+  rm $builds_json > /dev/null
+  mv temp.json $builds_json
 
   target="$local/$repo"
   # delete old files
   if [ -d "$target" ]; then
     rm -rf $target
   fi
-  mkdir $target
+  mkdir -p $target
 
   pushd $target > /dev/null
 
@@ -86,33 +86,8 @@ else
     mv archive $binname; chmod +x $binname
   fi
 
-  # symlink the binaries
-  bin_dir=~/.local/bin
-  bin=`$fd -t x -E "*.so*" -E "*.sh" -E "*.bat" -E "*.awk"`
-
-  # rename binary to binname
-  [ $binname != `basename $bin` ] && mv $bin `dirname $bin`/$binname && bin=`dirname $bin`/$binname
-  [ -n "$bin" ] && echo linking binaries && echo $bin
-  echo $bin | xargs -I{} ln -fs $target/{} $bin_dir
-
-  # symlink completion files
-  zsh_comp_dir=~/.local/zsh-fpath
-  comp=`fd -t f "^(.*_${binname}|.*complet.*${binname}\.zsh)$"`
-
-  [ -n "$comp" ] && echo linking completion files && echo $comp && \
-  echo $comp | xargs -I{} ln -fs $target/{} $zsh_comp_dir/_$binname
-
-  # symlink man
-  man1_dir=~/.local/share/man/man1
-  man1=`$fd -t f -E "*.so.*" "\.1$"`
-  [ -n "$man1" ] && echo linking man files && echo $man1
-  echo $man1 | xargs -I{} ln -fs $target/{} $man1_dir
-  man5_dir=~/.local/share/man/man5
-  man5=`$fd -t f -E "*.so.*" "\.5$"`
-  [ -n "$man5" ] && echo linking man files && echo $man5
-  echo $man5 | xargs -I{} ln -fs $target/{} $man5_dir
+  makefile=`$fd -t f makefile`
+  echo makefile
 
   popd > /dev/null
 fi
-
-

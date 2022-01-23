@@ -28,6 +28,7 @@ export DOTSESSIONS=$HOME/dotfiles/dotfiles
 export _ZO_RESOLVE_SYMLINKS=1
 # ghq
 export GHQ_ROOT=$HOME/.local/ghq
+export DEIN_REPOS=$HOME/.cache/dein/repos/github.com
 export GOPATH=$HOME/.local/go
 
 # notes-cli
