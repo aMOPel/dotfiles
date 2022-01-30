@@ -1,9 +1,8 @@
 # Named Directories
-dotfiles_repo=~/dotfiles
-dotfiles=~dotfiles_repo/dotfiles
+dotfiles_repo=$XDG_DATA_HOME/chezmoi
+dotfiles=~dotfiles_repo/home
 # -------------------
 # Aliases
-alias dbinstall="~dotfiles_repo/install"
 
 
 alias bins=~/.local/binaries

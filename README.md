@@ -41,9 +41,11 @@ Also many dependencies are installed with `apt` assuming you are on a debian bas
 Otherwise things will break unless you provide the dependencies.
 
 ### font: 
+(already embedded in the repo)
   * FiraCode NerdFont (https://www.nerdfonts.com/font-downloads)
 
 ### colorscheme:
+(already embedded in the repo)
   * in kitty and nvim: onedark
       (https://github.com/navarasu/onedark.nvim)
       (https://github.com/kdrag0n/base16-kitty)

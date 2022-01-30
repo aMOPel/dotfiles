@@ -31,6 +31,11 @@ else
 fi
 
 bin_json=$dotf/bin/binaries.json
+if [ ! -f "$bin_json" ]; then
+  touch $bin_json
+  echo '{}' > $bin_json
+fi
+
 echo repo: $repo
 echo current version: `$jq -r ".\"${repo}\" | .version" $bin_json` 
 

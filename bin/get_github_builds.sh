@@ -31,6 +31,11 @@ else
 fi
 
 builds_json=$dotf/bin/builds.json
+if [ ! -f "$builds_json" ]; then
+  touch $builds_json
+  echo '{}' > $builds_json
+fi
+
 echo repo: $repo
 echo current version: `$jq -r ".\"${repo}\" | .version" $builds_json` 
 

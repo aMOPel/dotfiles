@@ -23,7 +23,7 @@ export TASKDATA=$XDG_DATA_HOME/twarrior/task
 export GDSESSIONS=$HOME/Documents/godot_projects
 export JSSESSIONS=$HOME/Documents/learnjs
 export BASESSIONS=$HOME/Documents/ba
-export DOTSESSIONS=$HOME/dotfiles/dotfiles
+export DOTSESSIONS=$XDG_DATA_HOME/chezmoi/home/dot_config
 # zoxide
 export _ZO_RESOLVE_SYMLINKS=1
 # ghq
@@ -53,7 +53,7 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 export PYTHONPATH=$HOME/.local/lib/python3.8/site-packages
 # export PYTHONPATH=$PYTHONPATH:$HOME/Documents/ba/fomu-workshop/bump_litex_boards/litex/deps
 
-alias dbrc='nvim ~dotfiles_repo/install.conf.yaml'
+alias dfrc='nvim ~dotfiles/.chezmoiscripts/run_once_install_dependencies.sh.tmpl'
 
 zrc () {
 cd $DOTSESSIONS/zsh; v
