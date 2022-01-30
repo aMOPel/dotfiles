@@ -4,9 +4,7 @@
 [[plugins]]
 repo = 'https://github.com/tpope/vim-speeddating'
 on_cmd = 'SpeedDatingFormat'
-on_map = {
-  n = ['<c-a>', '<c-x>'],
-}
+on_map = { n = ['<c-a>', '<c-x>'] }
 hook_post_source = '''
 1SpeedDatingFormat %-d-%-m-%y
 '''
@@ -63,10 +61,54 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'https://github.com/FooSoft/vim-argwrap'
+on_map = { n = ['gJ'] }
+hook_add = '''
+  nnoremap gJ :ArgWrap<CR>
+  let g:argwrap_tail_comma_braces = '[{'
+'''
+
+[[plugins]]
 repo = 'https://github.com/AndrewRadev/splitjoin.vim'
-on_map = {
-  n = ['gJ', 'gS'],
-}
+on_map = { n = [' J', ' j'] }
+hook_add = '''
+  let g:splitjoin_split_mapping = ''
+  let g:splitjoin_join_mapping = ''
+
+  nmap <Leader>J :SplitjoinJoin<cr>
+  nmap <Leader>j :SplitjoinSplit<cr>
+'''
+# only has clever definitions for these fts
+on_ft = [
+  'c',
+  'coffee',
+  'css',
+  'elixir',
+  'elm',
+  'eruby',
+  'go',
+  'haml',
+  'handlebars',
+  'html',
+  'java',
+  'javascript',
+  'json',
+  'jsx',
+  'tsx',
+  'lua',
+  'perl',
+  'php',
+  'python',
+  'r',
+  'ruby',
+  'rust',
+  'scss',
+  'less',
+  'shell',
+  'tex',
+  'vimscript',
+  'yaml',
+]
 
 [[plugins]]
 repo = 'https://github.com/aMOPel/vim-log-print'
@@ -116,12 +158,6 @@ hook_add = '''
   nnoremap <leader>fg :FloatermNew --autoclose=2 --disposable gitui<CR>
   nnoremap <leader>ft :FloatermNew --autoclose=2 --disposable taskwarrior-tui<CR>
   nnoremap <leader>fw :FloatermNew --autoclose=0 --disposable --width=0.9 timew week<CR>
-
-  " nnoremap <leader>rr :FloatermNew --autoclose=2 --disposable --opener=edit ranger<CR>
-  " nnoremap <leader>rs :FloatermNew --autoclose=2 --disposable --opener=split ranger<CR>
-  " nnoremap <leader>rv :FloatermNew --autoclose=2 --disposable --opener=vsplit ranger<CR>
-  " nnoremap <leader>rt :FloatermNew --autoclose=2 --disposable --opener=tabe ranger<CR>
-
 '''
 
 [[plugins]]
@@ -165,8 +201,8 @@ hook_add = '''
   nnoremap <leader>gr :Grepper -tool rg<CR>
   nnoremap <leader>*  :Grepper -tool rg -cword -noprompt<cr>
 
-  nmap gs <Plug>(GrepperOperator)
-  xmap gs <Plug>(GrepperOperator)
+  nmap gr <Plug>(GrepperOperator)
+  xmap gr <Plug>(GrepperOperator)
 
   aug Grepper
       au!
@@ -557,11 +593,11 @@ if = 'has("nvim")'
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 name = 'lspconfig'
-depends = ['lsp-installer', 'cmp-nvim-lsp', 'schemastore']
+depends = ['lsp-installer', 'cmp-nvim-lsp', 'schemastore', 'dd', 'fidget']
 if = 'has("nvim")'
 on_ft = [
   "tex",
-  "latex"
+  "latex",
   "bib",
   "markdown",
 
@@ -582,6 +618,7 @@ on_ft = [
 
   "json",
   "yaml",
+  "toml",
 
   "sh"
 ]
@@ -595,13 +632,23 @@ repo = 'https://github.com/williamboman/nvim-lsp-installer'
 
 [[plugins]]
 repo = 'https://gitlab.com/yorickpeterse/nvim-dd'
-depends = 'lspconfig'
+name = 'dd'
 if = 'has("nvim")'
 hook_source = '''
 lua <<EOF
 require('dd').setup{
   timeout = 1000,
 }
+EOF
+'''
+
+[[plugins]]
+repo = 'https://github.com/j-hui/fidget.nvim'
+name = 'fidget'
+if = 'has("nvim")'
+hook_post_source = '''
+lua <<EOF
+require"fidget".setup{}
 EOF
 '''
 

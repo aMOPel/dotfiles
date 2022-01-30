@@ -160,6 +160,7 @@ nmap <leader>id O<esc>v:!date --date='TZ="Berlin" now'<cr>
 
 tnoremap <c-q> <C-\><C-n>
 autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s///<Left>
+autocmd MyAutoCmd BufWritePost $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
 
 let s:HEX_CHARS = [
   \ '0', '1', '2', '3', '4', '5', '6', '7',
@@ -216,3 +217,10 @@ func g:AddAbbreviation(selection)
   let meaning = input('Meaning of ' . a:selection . ': ')
   call writefile([a:selection . " : " . meaning], resolve(expand('$XDG_CONFIG_HOME/nvim/abbreviations.txt')), "a")
 endfunc
+
+autocmd MyAutoCmd BufEnter *dot_zshenv,*dot_zshrc,*dot_zshaliasrc,*dot_profile set ft=zsh
+autocmd MyAutoCmd BufEnter *kitty*.conf set ft=kitty
+
+
+command! DiagnosticEnable lua vim.diagnostic.enable()
+command! DiagnosticDisable lua vim.diagnostic.disable()

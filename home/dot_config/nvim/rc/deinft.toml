@@ -256,7 +256,6 @@ EOF
 [[plugins]]
 repo = 'https://github.com/fladson/vim-kitty'
 on_path = ['kitty.conf', 'kitty_keyboard.conf', 'kitty_colors.conf', 'diff.conf']
-frozen = true
 
 # [[plugins]]
 # repo = 'https://github.com/lervag/vimtex'

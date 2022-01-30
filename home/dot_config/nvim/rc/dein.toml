@@ -4,8 +4,8 @@
 repo = 'Shougo/dein.vim'
 hook_add = '''
   " nnoremap <leader>pu <esc>:<c-u>call dein#update()<CR>:silent! helptags ALL<CR>
-  nnoremap <leader>pr <esc>:<c-u>call dein#recache_runtimepath()<CR>:silent! helptags ALL<CR>
-  nnoremap <leader>pi <esc>:<c-u>call dein#install()<CR>:silent! helptags ALL<CR>
+  nnoremap <leader>pr <esc>:<c-u>echomsg dein#recache_runtimepath()<CR>:silent! helptags ALL<CR>
+  nnoremap <leader>pi <esc>:<c-u>echomsg dein#install()<CR>:silent! helptags ALL<CR>
 '''
 
 # -------------------------------------------------------------------
@@ -15,6 +15,21 @@ hook_add = '''
 repo = 'https://github.com/machakann/vim-sandwich'
 hook_add = '''
   runtime vim-sandwich/surround.vim
+
+  xmap is <Plug>(textobj-sandwich-query-i)
+	xmap as <Plug>(textobj-sandwich-query-a)
+	omap is <Plug>(textobj-sandwich-query-i)
+	omap as <Plug>(textobj-sandwich-query-a)
+	xmap iss <Plug>(textobj-sandwich-auto-i)
+	xmap ass <Plug>(textobj-sandwich-auto-a)
+	omap iss <Plug>(textobj-sandwich-auto-i)
+	omap ass <Plug>(textobj-sandwich-auto-a)
+  " example: dim( in 'outer(in|ner())' would delete 'inner', not 'inner()'
+	" xmap im <Plug>(textobj-sandwich-literal-query-i)
+	" xmap am <Plug>(textobj-sandwich-literal-query-a)
+	" omap im <Plug>(textobj-sandwich-literal-query-i)
+	" omap am <Plug>(textobj-sandwich-literal-query-a)
+
 '''
 
 [[plugins]]
@@ -22,6 +37,7 @@ repo = 'tpope/vim-repeat'
 
 [[plugins]]
 repo = 'tpope/vim-unimpaired'
+frozen = false
 
 # cant be lazy loaded
 [[plugins]]
@@ -139,12 +155,40 @@ let g:context_filetype#ignore_patterns = {
 repo = 'michaeljsmith/vim-indent-object'
 
 [[plugins]]
-repo = 'https://github.com/AndrewRadev/dsf.vim'
+repo = 'https://github.com/Matt-A-Bennett/vim-surround-funk'
 hook_add = '''
-  let g:dsf_no_mappings = 1
+  let g:surround_funk_create_mappings = 0
 
-  nmap dsf <Plug>DsfDelete
-  nmap csf <Plug>DsfChange
+  nmap <silent> dsf <Plug>(DeleteSurroundingFunction)
+  nmap <silent> dsF <Plug>(DeleteSurroundingFUNCTION)
+  nmap <silent> csf <Plug>(ChangeSurroundingFunction)
+  nmap <silent> csF <Plug>(ChangeSurroundingFUNCTION)
+  nmap <silent> ysf <Plug>(YankSurroundingFunction)
+  nmap <silent> ysF <Plug>(YankSurroundingFUNCTION)
+
+  " visual mode
+  xmap <silent> af <Plug>(SelectWholeFunction)
+  omap <silent> af <Plug>(SelectWholeFunction)
+  xmap <silent> aF <Plug>(SelectWholeFUNCTION)
+  omap <silent> aF <Plug>(SelectWholeFUNCTION)
+  xmap <silent> if <Plug>(SelectWholeFunction)
+  omap <silent> if <Plug>(SelectWholeFunction)
+  xmap <silent> iF <Plug>(SelectWholeFUNCTION)
+  omap <silent> iF <Plug>(SelectWholeFUNCTION)
+  xmap <silent> an <Plug>(SelectFunctionName)
+  omap <silent> an <Plug>(SelectFunctionName)
+  xmap <silent> aN <Plug>(SelectFunctionNAME)
+  omap <silent> aN <Plug>(SelectFunctionNAME)
+  xmap <silent> in <Plug>(SelectFunctionName)
+  omap <silent> in <Plug>(SelectFunctionName)
+  xmap <silent> iN <Plug>(SelectFunctionNAME)
+  omap <silent> iN <Plug>(SelectFunctionNAME)
+
+  " operator pending mode
+  nmap <silent> gpf <Plug>(GripSurroundObject)
+  vmap <silent> gpf <Plug>(GripSurroundObject)
+  " nmap <silent> gS <Plug>(GripSurroundObjectNoPaste)
+  " vmap <silent> gS <Plug>(GripSurroundObjectNoPaste)
 '''
 
 [[plugins]]
@@ -153,13 +197,13 @@ hook_add = '''
 let g:camelcasemotion_key = ','
 '''
 
-[[plugins]]
-repo = 'wellle/targets.vim'
-hook_add = '''
-  let g:targets_aiAI = 'ai  '
-  let g:targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
-  let g:targets_nl = '  '
-'''
+# [[plugins]]
+# repo = 'wellle/targets.vim'
+# hook_add = '''
+#   let g:targets_aiAI = 'ai  '
+#   let g:targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
+#   let g:targets_nl = '  '
+# '''
 
 # -------------------------------------------------------------------
 # lsp
@@ -174,7 +218,7 @@ repo = 'nvim-treesitter/nvim-treesitter'
 name = 'treesitter'
 if = 'has("nvim")'
 # on_event = 'BufRead'
-hook_post_update = 'TSUpdate'
+hook_post_update = 'echo execute("TSUpdate")'
 hook_post_source = '''
 lua <<EOF
 
@@ -256,6 +300,29 @@ require'nvim-treesitter.configs'.setup {
       ['<cr>'] = 'textsubjects-smart',
     }
   },
+  element_textobject = {
+    enable = true,
+    set_jumps = true,
+    keymaps = {
+      ['ga'] = 'goto_next_element',
+      ['gA'] = 'goto_prev_element',
+      [']a'] = 'swap_next_element',
+      ['[a'] = 'swap_prev_element',
+      ['ia'] = 'inner_element',
+      ['aa'] = 'an_element',
+    }
+  },
+  scope_textobject = {
+    enable = true,
+    set_jumps = true,
+    keymaps = {
+      ['go'] = 'incremental_outer_scope',
+      [']o'] = 'goto_next_scope',
+      ['[o'] = 'goto_prev_scope',
+      ['ao'] = 'a_scope',
+      ['io'] = 'a_scope',
+    }
+  },
 }
 EOF
 '''
@@ -267,8 +334,11 @@ if = 'has("nvim")'
 [[plugins]]
 repo = 'https://github.com/RRethy/nvim-treesitter-textsubjects'
 
-# -------------------------------------------------------------------
-# autocomletion
+[[plugins]]
+repo = 'https://github.com/jasonmchan/ts-textobjects'
+
+[[plugins]]
+repo = 'https://github.com/romgrk/nvim-treesitter-context'
 
 # -------------------------------------------------------------------
 # beautify
@@ -544,3 +614,15 @@ vim.g.symbols_outline = {
 }
 EOF
 '''
+
+[[plugins]]
+repo = 'https://github.com/AndrewRadev/switch.vim'
+hook_add = '''
+  let g:switch_mapping = "gs"
+'''
+
+[[plugins]]
+repo = 'https://github.com/AndrewRadev/deleft.vim'
+
+# TODO: look into argument textobject (ts-textobjects doesn't work everywhere
+# TODO: maybe look into dein 'depends' tree again regarding nvim-dd and fidget.nvim
