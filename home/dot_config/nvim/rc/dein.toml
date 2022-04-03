@@ -151,8 +151,8 @@ let g:context_filetype#ignore_patterns = {
 # -------------------------------------------------------------------
 # wordobjects
 
-[[plugins]]
-repo = 'michaeljsmith/vim-indent-object'
+# [[plugins]]
+# repo = 'michaeljsmith/vim-indent-object'
 
 [[plugins]]
 repo = 'https://github.com/Matt-A-Bennett/vim-surround-funk'
@@ -300,29 +300,29 @@ require'nvim-treesitter.configs'.setup {
       ['<cr>'] = 'textsubjects-smart',
     }
   },
-  element_textobject = {
-    enable = true,
-    set_jumps = true,
-    keymaps = {
-      ['ga'] = 'goto_next_element',
-      ['gA'] = 'goto_prev_element',
-      [']a'] = 'swap_next_element',
-      ['[a'] = 'swap_prev_element',
-      ['ia'] = 'inner_element',
-      ['aa'] = 'an_element',
-    }
-  },
-  scope_textobject = {
-    enable = true,
-    set_jumps = true,
-    keymaps = {
-      ['go'] = 'incremental_outer_scope',
-      [']o'] = 'goto_next_scope',
-      ['[o'] = 'goto_prev_scope',
-      ['ao'] = 'a_scope',
-      ['io'] = 'a_scope',
-    }
-  },
+--  element_textobject = {
+--    enable = true,
+--    set_jumps = true,
+--    keymaps = {
+--      ['ga'] = 'goto_next_element',
+--      ['gA'] = 'goto_prev_element',
+--      [']a'] = 'swap_next_element',
+--      ['[a'] = 'swap_prev_element',
+--      ['ia'] = 'inner_element',
+--      ['aa'] = 'an_element',
+--    }
+--  },
+--  scope_textobject = {
+--    enable = true,
+--    set_jumps = true,
+--    keymaps = {
+--      ['go'] = 'incremental_outer_scope',
+--      [']o'] = 'goto_next_scope',
+--      ['[o'] = 'goto_prev_scope',
+--      ['ao'] = 'a_scope',
+--      ['io'] = 'a_scope',
+--    }
+--  },
 }
 EOF
 '''
@@ -334,8 +334,8 @@ if = 'has("nvim")'
 [[plugins]]
 repo = 'https://github.com/RRethy/nvim-treesitter-textsubjects'
 
-[[plugins]]
-repo = 'https://github.com/jasonmchan/ts-textobjects'
+# [[plugins]]
+# repo = 'https://github.com/jasonmchan/ts-textobjects'
 
 [[plugins]]
 repo = 'https://github.com/romgrk/nvim-treesitter-context'
@@ -344,29 +344,38 @@ repo = 'https://github.com/romgrk/nvim-treesitter-context'
 # beautify
 
 [[plugins]]
+repo = 'https://github.com/navarasu/onedark.nvim'
+frozen = true
+if = 'has("nvim")'
+
+[[plugins]]
 repo = 'kyazdani42/nvim-web-devicons'
 if = 'has("nvim")'
 name = 'devicons'
 
-# [[plugins]]
-# repo = 'ryanoasis/vim-devicons'
+[[plugins]]
+repo = 'https://github.com/SmiteshP/nvim-gps'
+if = 'has("nvim")'
 
 [[plugins]]
 repo = 'https://github.com/nvim-lualine/lualine.nvim'
-depends = 'gps'
 if = 'has("nvim")'
 hook_post_source = '''
 function! ObsessionStatusMod() abort
   return ObsessionStatus("Session", "")
 endfunction
 lua <<EOF
+
+require('onedark').load()
+
+require("nvim-gps").setup()
 local gps = require("nvim-gps")
 
 require('lualine').setup {
   options = {
     theme = 'onedark',
-    section_separators = "",
-    component_separators = "",
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
   },
   sections = {
     lualine_a = {'mode'},
@@ -430,15 +439,6 @@ require('lualine').setup {
   extensions = {'quickfix', 'fugitive'},
 }
 EOF
-'''
-
-[[plugins]]
-repo = 'https://github.com/navarasu/onedark.nvim'
-frozen = true
-if = 'has("nvim")'
-hook_post_source = '''
-  colorscheme onedark
-  lua require('onedark').setup()
 '''
 
 # -------------------------------------------------------------------
@@ -626,3 +626,53 @@ repo = 'https://github.com/AndrewRadev/deleft.vim'
 
 # TODO: look into argument textobject (ts-textobjects doesn't work everywhere
 # TODO: maybe look into dein 'depends' tree again regarding nvim-dd and fidget.nvim
+
+# [[plugins]]
+# repo = 'https://github.com/echasnovski/mini.nvim'
+# hook_post_source = '''
+# lua << EOF
+# require('mini.indentscope').setup{
+#   gen_animation = 'none',
+#   draw = {
+#     -- Delay (in ms) between event and start of drawing scope indicator
+#     delay = 100,
+#
+#     -- Animation rule for scope's first drawing. A function which, given next
+#     -- and total step numbers, returns wait time (in ms). See
+#     -- |MiniIndentscope.gen_animation()| for builtin options. To not use
+#     -- animation, supply `require('mini.indentscope').gen_animation('none')`.
+#   },
+#
+#   -- Module mappings. Use `''` (empty string) to disable one.
+#   mappings = {
+#     -- Textobjects
+#     object_scope = 'ii',
+#     object_scope_with_border = 'ai',
+#
+#     -- Motions (jump to respective border line; if not present - body line)
+#     goto_top = '[i',
+#     goto_bottom = ']i',
+#   },
+#
+#   -- Options which control computation of scope. Buffer local values can be
+#   -- supplied in buffer variable `vim.b.miniindentscope_options`.
+#   options = {
+#     -- Type of scope's border: which line(s) with smaller indent to
+#     -- categorize as border. Can be one of: 'both', 'top', 'bottom', 'none'.
+#     border = 'both',
+#
+#     -- Whether to use cursor column when computing reference indent. Useful to
+#     -- see incremental scopes with horizontal cursor movements.
+#     indent_at_cursor = true,
+#
+#     -- Whether to first check input line to be a border of adjacent scope.
+#     -- Use it if you want to place cursor on function header to get scope of
+#     -- its body.
+#     try_as_border = false,
+#   },
+#
+#   -- Which character to use for drawing scope indicator
+#   symbol = '╎',
+# }
+# EOF
+# '''

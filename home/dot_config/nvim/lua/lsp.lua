@@ -119,6 +119,7 @@ local servers = {
   "tsserver",
   "volar",
   "yamlls",
+  "nimls"
 }
 
 for _, name in pairs(servers) do

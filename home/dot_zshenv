@@ -67,3 +67,6 @@ cd $DOTSESSIONS/ranger; v
 kittyrc () {
 cd $DOTSESSIONS/kitty; v
 }
+
+export PATH=$HOME/.nimble/bin:$PATH
+

@@ -23,7 +23,7 @@ fi
 }
 
 ba () {
-cd $HOME/Documents/ba/fomu-workshop/bump_litex_boards/litex
+cd $HOME/Documents/ba/fomu-trng
 task context ba
 source ./venv/bin/activate
 v -c 'norm \ ft'

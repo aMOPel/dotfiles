@@ -68,47 +68,47 @@ hook_add = '''
   let g:argwrap_tail_comma_braces = '[{'
 '''
 
-[[plugins]]
-repo = 'https://github.com/AndrewRadev/splitjoin.vim'
-on_map = { n = [' J', ' j'] }
-hook_add = '''
-  let g:splitjoin_split_mapping = ''
-  let g:splitjoin_join_mapping = ''
-
-  nmap <Leader>J :SplitjoinJoin<cr>
-  nmap <Leader>j :SplitjoinSplit<cr>
-'''
-# only has clever definitions for these fts
-on_ft = [
-  'c',
-  'coffee',
-  'css',
-  'elixir',
-  'elm',
-  'eruby',
-  'go',
-  'haml',
-  'handlebars',
-  'html',
-  'java',
-  'javascript',
-  'json',
-  'jsx',
-  'tsx',
-  'lua',
-  'perl',
-  'php',
-  'python',
-  'r',
-  'ruby',
-  'rust',
-  'scss',
-  'less',
-  'shell',
-  'tex',
-  'vimscript',
-  'yaml',
-]
+# [[plugins]]
+# repo = 'https://github.com/AndrewRadev/splitjoin.vim'
+# on_map = { n = [' J', ' j'] }
+# hook_source = '''
+#   let g:splitjoin_split_mapping = ''
+#   let g:splitjoin_join_mapping = ''
+#
+#   nmap <Leader>J :SplitjoinJoin<cr>
+#   nmap <Leader>j :SplitjoinSplit<cr>
+# '''
+# # only has clever definitions for these fts
+# on_ft = [
+#   'c',
+#   'coffee',
+#   'css',
+#   'elixir',
+#   'elm',
+#   'eruby',
+#   'go',
+#   'haml',
+#   'handlebars',
+#   'html',
+#   'java',
+#   'javascript',
+#   'json',
+#   'jsx',
+#   'tsx',
+#   'lua',
+#   'perl',
+#   'php',
+#   'python',
+#   'r',
+#   'ruby',
+#   'rust',
+#   'scss',
+#   'less',
+#   'shell',
+#   'tex',
+#   'vimscript',
+#   'yaml',
+# ]
 
 [[plugins]]
 repo = 'https://github.com/aMOPel/vim-log-print'
@@ -610,6 +610,7 @@ on_ft = [
   "gdscript",
 
   "python",
+  "nim",
 
   "lua",
 
@@ -659,10 +660,3 @@ name = 'schemastore'
 # -------------------------------------------------------------------
 # beautify
 
-[[plugins]]
-repo = 'https://github.com/SmiteshP/nvim-gps'
-name = 'gps'
-if = 'has("nvim")'
-hook_source = '''
-lua require("nvim-gps").setup()
-'''
