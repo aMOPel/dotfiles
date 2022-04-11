@@ -2,87 +2,91 @@
 
 #!/bin/bash
 
-echo 'runnung "install_dependencies.sh"'
+echo 'running "install_dependencies.sh"'
+read -p "Install All? [y/n]" choice && [[ confirm == [yY] ]] || exit 0
 
+[ -z "$XDG_DATA_HOME" ] && export XDG_DATA_HOME=~/.local/share
 get_github=$XDG_DATA_HOME/chezmoi/bin/get_github_binaries.sh
 
-# echo "deb http://deb.volian.org/volian/ scar main" | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list
-# wget -qO - https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg > /dev/null
-# sudo apt update 
-# sudo apt install nala
-# sudo nala fetch --ubuntu {{ .chezmoi.osRelease.ubuntuCodename }}
+echo "deb http://deb.volian.org/volian/ scar main" | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list
+wget -qO - https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg > /dev/null
+sudo apt update
+sudo apt install nala
+sudo nala fetch --ubuntu {{ .chezmoi.osRelease.ubuntuCodename }}
 
-# sudo nala install -y zsh
-# chsh -s $(which zsh) $USER
-# sudo nala install -y atool
-# $get_github x-motemen ghq
-# $get_github kovidgoyal kitty
-# $get_github neovim neovim nvim
-# $get_github extrawurst gitui
-# $get_github tree-sitter tree-sitter
-# $get_github charmbracelet glow
-# $get_github karan joe
-# $get_github ajeetdsouza zoxide
-# $get_github burntsushi ripgrep rg 13.0.0
-# $get_github sharkdp fd
-# $get_github godotengine godot
-# $get_github junegunn fzf
-# $get_github twpayne chezmoi
+sudo nala install -y zsh
+chsh -s $(which zsh) $USER
+sudo nala install -y atool
+$get_github x-motemen ghq
+$get_github kovidgoyal kitty
+$get_github neovim neovim nvim
+$get_github extrawurst gitui
+$get_github tree-sitter tree-sitter
+$get_github charmbracelet glow
+$get_github karan joe
+$get_github ajeetdsouza zoxide
+$get_github burntsushi ripgrep rg 13.0.0
+$get_github sharkdp fd
+$get_github godotengine godot
+$get_github junegunn fzf
+$get_github twpayne chezmoi
 
-# ghq get --shallow -u https://github.com/junegunn/fzf.git
-#
-# sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 100
-#
-# sudo nala install -y xclip
-#
-# # dein
-# curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-# sh ./installer.sh ~/.cache/dein
-# rm ./installer.sh
-#
-# # python
-# sudo nala install -y python3
-# sudo nala install -y python3-pip
-# sudo nala install -y python3-venv
-# pip3 install pynvim
-# pip3 install gdtoolkit
-# pip3 install neovim-remote
-# pip3 install docker-compose
-#
-# # brave
-# sudo nala install -y nala-transport-https curl gnupg
-# curl -s https://brave-browser-nala-release.s3.brave.com/brave-core.asc | sudo nala-key --keyring /etc/nala/trusted.gpg.d/brave-browser-release.gpg add -
-# 'echo "deb [arch=amd64] https://brave-browser-nala-release.s3.brave.com/ stable main" | sudo tee /etc/nala/sources.list.d/brave-browser-release.list'
-# sudo nala install -y brave-browser
-#
-# # ranger
-# sudo nala install -y ranger
-# chmod +x ~/.config/ranger/scope.sh
-# sudo nala install -y zathura
-# sudo nala install -y bat
-# sudo nala install -y ffmpegthumbnailer
-# sudo nala install -y mediainfo
-# sudo nala install -y vlc
-#
-#
-# sudo nala update
-#
-# # docker
-# sudo nala install nala-transport-https ca-certificates curl gnupg lsb-release
-# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-# echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/nala/sources.list.d/docker.list > /dev/null
-# sudo nala update
-# sudo nala install docker-ce docker-ce-cli containerd.io
-# sudo docker run hello-world
-# sudo groupadd docker
-# sudo usermod -aG docker $USER
-#
-# # node
-# curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
-# sudo nala install -y nodejs
-#
-# # font
-# fc-cache -f
+ghq get --shallow -u https://github.com/junegunn/fzf.git
+
+sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 100
+
+sudo nala install -y xclip
+
+# dein
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+sh ./installer.sh ~/.cache/dein
+rm ./installer.sh
+
+# python
+sudo nala install -y python3
+sudo nala install -y python3-pip
+sudo nala install -y python3-venv
+pip3 install pynvim
+pip3 install gdtoolkit
+pip3 install neovim-remote
+pip3 install docker-compose
+
+# brave
+sudo nala install -y apt-transport-https curl gnupg
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo nala update
+sudo nala install -y brave-browser
+
+# ranger
+sudo nala install -y ranger
+chmod +x ~/.config/ranger/scope.sh
+sudo nala install -y zathura
+sudo nala install -y bat
+sudo nala install -y ffmpegthumbnailer
+sudo nala install -y mediainfo
+sudo nala install -y vlc
+
+
+sudo nala update
+
+# docker
+sudo nala install -y ca-certificates lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo nala update
+sudo nala install -y docker-ce docker-ce-cli containerd.io
+sudo docker run hello-world
+sudo groupadd docker
+sudo usermod -aG docker $USER
+
+# node
+curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+sudo nala install -y nodejs
+
+# font
+fc-cache -f
 
 {{ end -}}
 # vim:ft=sh:
