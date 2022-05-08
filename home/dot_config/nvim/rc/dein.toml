@@ -130,12 +130,14 @@ hook_add = '''
   nnoremap <silent> <leader>rr :RnvimrToggle<CR>
   let g:rnvimr_layout = {
       \ 'relative': 'editor',
-      \ 'width': float2nr(round(0.7 * &columns)),
-      \ 'height': float2nr(round(0.7 * &lines)),
-      \ 'col': float2nr(round(0.15 * &columns)),
-      \ 'row': float2nr(round(0.15 * &lines)),
-      \ 'style': 'minimal'
+      \ 'width': float2nr(round(0.90 * &columns)),
+      \ 'height': float2nr(round(0.80 * &lines)),
+      \ 'col': float2nr(round(0.05 * &columns)),
+      \ 'row': float2nr(round(0.05 * &lines)),
+      \ 'style': 'minimal',
+      \ 'border': 'rounded'
       \ }
+  let g:rnvimr_draw_border = 0
 '''
 
 # for caw and log_print
@@ -676,3 +678,19 @@ repo = 'https://github.com/AndrewRadev/deleft.vim'
 # }
 # EOF
 # '''
+
+[[plugins]]
+repo = 'https://github.com/mopp/vim-operator-convert-case'
+hook_add = '''
+  nmap <Leader>guc <Plug>(operator-convert-case-lower-camel)
+  nmap <Leader>gUc <Plug>(operator-convert-case-upper-camel)
+  nmap <Leader>gus <Plug>(operator-convert-case-lower-snake)
+  nmap <Leader>gUs <Plug>(operator-convert-case-upper-snake)
+  " nmap <Leader>,tt <Plug>(operator-convert-case-toggle-upper-lower)
+  " nmap <Leader>,ll <Plug>(convert-case-loop)
+  " nmap <Leader>,cc <Plug>(operator-convert-case-convert)
+'''
+
+[[plugins]]
+repo = 'https://github.com/kana/vim-operator-user'
+

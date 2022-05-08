@@ -159,7 +159,7 @@ nnoremap <C-q> :b <C-d>
 nmap <leader>id O<esc>v:!date --date='TZ="Berlin" now'<cr>
 
 tnoremap <c-q> <C-\><C-n>
-autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s///<Left>
+autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s/// \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 autocmd MyAutoCmd BufWritePost $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
 
 let s:HEX_CHARS = [

@@ -113,7 +113,7 @@ local servers = {
   "jsonls",
   "ltex",
   "pylsp",
-  -- "sumneko_lua",
+  "sumneko_lua",
   "tailwindcss",
   "texlab",
   "tsserver",
@@ -217,36 +217,39 @@ lsp_installer.on_server_ready(function(server)
       }
     }
   elseif (server.name == "sumneko_lua") then
-    local sumneko_root = vim.fn.stdpath('data')..'/lsp_servers/sumneko_lua/extension/server'
-    local sumneko_main = sumneko_root..'/main.lua'
-    local sumneko_binary = sumneko_root..'/bin/Linux/lua-language-server'
     local runtime_path = vim.split(package.path, ';')
-    opts = {
-      cmd = {sumneko_binary, "-E", sumneko_main};
+    table.insert(runtime_path, "lua/?.lua")
+    table.insert(runtime_path, "lua/?/init.lua")
+
+    require'lspconfig'.sumneko_lua.setup {
       settings = {
         Lua = {
           runtime = {
+            -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
             version = 'LuaJIT',
+            -- Setup your lua path
             path = runtime_path,
           },
           diagnostics = {
+            -- Get the language server to recognize the `vim` global
             globals = {'vim'},
           },
           workspace = {
+            -- Make the server aware of Neovim runtime files
             library = vim.api.nvim_get_runtime_file("", true),
           },
+          -- Do not send telemetry data containing a randomized but unique identifier
           telemetry = {
             enable = false,
           },
         },
-      },
-      filetypes = {"lua"},
       capabilities = capabilities,
       on_attach = on_attach,
       flags = {
         debounce_text_changes = 150,
       }
     }
+  }
   elseif (server.name == 'texlab') then
     local util = require "lspconfig".util
     opts = {

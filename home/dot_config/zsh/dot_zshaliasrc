@@ -30,6 +30,13 @@ v -c 'norm \ ft'
 
 }
 
+nt () {
+cd $HOME/Documents/learn_nim/tutto.nim
+task context nim
+v -c 'norm \ ft'
+
+}
+
 
 vu () {
 if [[ -f vue.config.js || -f vite.config.ts ]] ; then

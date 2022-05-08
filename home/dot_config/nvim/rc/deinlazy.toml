@@ -30,9 +30,9 @@ repo = 'tpope/vim-fugitive'
 on_cmd = ['Git', 'Gclog', 'Gdiffsplit', 'GBrowse']
 depends = 'rhubarb'
 hook_add = '''
-  nnoremap <leader>gg :-tabnew<cr>:Git<CR>
-  nnoremap <leader>gl :-tabnew<cr>:Gclog<CR>
-  nnoremap <leader>gd :-tabnew %<cr>:Gdiffsplit!<cr>
+  nnoremap <leader>gg :-tabnew<cr>:Git ++curwin<CR>
+  nnoremap <leader>gl :-tabnew<cr>:Gclog <CR>
+  nnoremap <leader>gd :-tabnew %<cr>:Gdiffsplit! <cr>
 '''
 
 [[plugins]]
@@ -124,6 +124,7 @@ hook_add = '''
 		\ gdscript: #{pre:"print(", post:")"},
 		\ typescript: #{pre:"console.log(", post:")"},
 		\ sh: #{pre:"echo "},
+		\ nim: #{pre:"echo "},
 		\ }
 '''
 
@@ -154,6 +155,7 @@ hook_add = '''
 
   nnoremap <silent>	<leader>ff   :FloatermToggle<CR>
   tnoremap <silent>	<C-W>	<C-\><C-n>:FloatermToggle<CR>
+  tnoremap <silent>	<F11>	<C-\><C-n>
 
   nnoremap <leader>fg :FloatermNew --autoclose=2 --disposable gitui<CR>
   nnoremap <leader>ft :FloatermNew --autoclose=2 --disposable taskwarrior-tui<CR>
@@ -454,7 +456,7 @@ if = 'has("nvim")'
 name = 'cmp'
 depends = [
 'lspkind',
-'autopairs',
+# 'autopairs',
 'vsnip',
 'cmp-rg',
 'cmp-emoji',
@@ -555,32 +557,32 @@ cmp.setup.cmdline(':', {
   }),
 })
 
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on( 
-  'confirm_done',
-  cmp_autopairs.on_confirm_done(
-    { map_char = { tex = '{' } }
-  )
-)
+-- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+-- cmp.event:on( 
+--   'confirm_done',
+--   cmp_autopairs.on_confirm_done(
+--     { map_char = { tex = '{' } }
+--   )
+-- )
 EOF
 '''
 
-[[plugins]]
-repo = 'windwp/nvim-autopairs'
-name = 'autopairs'
-if = 'has("nvim")'
-hook_source = '''
-lua <<EOF
-require('nvim-autopairs').setup({
-  disable_filetype = { "TelescopePrompt" },
-  fast_wrap = {
-    map = '<c-f>',
-  },
-  enable_check_bracket_line = true,
-  ignored_next_char = "[%w%.]",
-})
-EOF
-'''
+# [[plugins]]
+# repo = 'windwp/nvim-autopairs'
+# name = 'autopairs'
+# if = 'has("nvim")'
+# hook_source = '''
+# lua <<EOF
+# require('nvim-autopairs').setup({
+#   disable_filetype = { "TelescopePrompt" },
+#   fast_wrap = {
+#     map = '<c-f>',
+#   },
+#   enable_check_bracket_line = true,
+#   ignored_next_char = "[%w%.]",
+# })
+# EOF
+# '''
 
 [[plugins]]
 repo = 'https://github.com/onsails/lspkind-nvim'

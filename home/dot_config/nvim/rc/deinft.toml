@@ -96,7 +96,14 @@ python = '''
 '''
 
 nim = '''
+  " nnoremap <silent> <buffer> <leader>m :exec 'FloatermNew --autoclose=0 --disposable nim c ' . resolve(expand('%:p')) <CR>
   nnoremap <silent> <buffer> <leader>n :exec 'FloatermNew --autoclose=0 --disposable nim r ' . resolve(expand('%:p')) <CR>
+  nnoremap <silent> <buffer> <leader>lf :exec '!nimpretty ' . resolve(expand('%:p')) <CR>
+'''
+
+lua = '''
+  " nnoremap <silent> <buffer> <leader>m :exec 'FloatermNew --autoclose=0 --disposable nim c ' . resolve(expand('%:p')) <CR>
+  nnoremap <silent> <buffer> <leader>n :exec 'FloatermNew --autoclose=0 --disposable luajit ' . resolve(expand('%:p')) <CR>
   nnoremap <silent> <buffer> <leader>lf :exec '!nimpretty ' . resolve(expand('%:p')) <CR>
 '''
 
