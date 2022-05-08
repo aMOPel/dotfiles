@@ -118,25 +118,25 @@ let g:matchup_matchparen_offscreen = {'method': 'popup'}
 
 '''
 
-[[plugins]]
-repo = 'kevinhwang91/rnvimr'
-if = 'has("nvim")'
-on_cmd = 'Rnvimr'
-hook_add = '''
-  let g:rnvimr_enable_ex = 1
-  let g:rnvimr_enable_picker = 0
-  let g:rnvimr_enable_bw = 1
-
-  nnoremap <silent> <leader>rr :RnvimrToggle<CR>
-  let g:rnvimr_layout = {
-      \ 'relative': 'editor',
-      \ 'width': float2nr(round(0.7 * &columns)),
-      \ 'height': float2nr(round(0.7 * &lines)),
-      \ 'col': float2nr(round(0.15 * &columns)),
-      \ 'row': float2nr(round(0.15 * &lines)),
-      \ 'style': 'minimal'
-      \ }
-'''
+# [[plugins]]
+# repo = 'kevinhwang91/rnvimr'
+# if = 'has("nvim")'
+# on_cmd = 'Rnvimr'
+# hook_add = '''
+#   let g:rnvimr_enable_ex = 1
+#   let g:rnvimr_enable_picker = 0
+#   let g:rnvimr_enable_bw = 1
+#
+#   nnoremap <silent> <leader>rr :RnvimrToggle<CR>
+#   let g:rnvimr_layout = {
+#       \ 'relative': 'editor',
+#       \ 'width': float2nr(round(0.7 * &columns)),
+#       \ 'height': float2nr(round(0.7 * &lines)),
+#       \ 'col': float2nr(round(0.15 * &columns)),
+#       \ 'row': float2nr(round(0.15 * &lines)),
+#       \ 'style': 'minimal'
+#       \ }
+# '''
 
 # for caw and log_print
 [[plugins]]
@@ -676,3 +676,15 @@ repo = 'https://github.com/AndrewRadev/deleft.vim'
 # }
 # EOF
 # '''
+[[plugins]]
+[[plugins]]
+repo = 'https://github.com/sayanarijit/xplr.vim'
+hook_add = '''
+  let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.9, 'highlight': 'Debug' } }
+  let g:nnn#action = {
+        \ '<c-t>': 'tab split',
+        \ '<c-x>': 'split',
+        \ '<c-v>': 'vsplit' }
+  let g:nnn#replace_netrw = 1
+  nmap <silent> <leader>x :XplrPicker<cr>
+'''

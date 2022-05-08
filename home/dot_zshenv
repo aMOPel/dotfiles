@@ -67,6 +67,9 @@ cd $DOTSESSIONS/ranger; v
 kittyrc () {
 cd $DOTSESSIONS/kitty; v
 }
+xrc () {
+cd $DOTSESSIONS/xplr; v
+}
 
 export PATH=$HOME/.nimble/bin:$PATH
 
