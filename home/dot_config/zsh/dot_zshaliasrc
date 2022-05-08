@@ -124,6 +124,3 @@ alias znotes='cd ~/Documents/ba/repo/notes; v'
 
 # ba
 alias fomu_reboot='wishbone-tool 0xe0006000 0xac'
-# xplr
-alias x='cd "$(xplr --print-pwd-as-result)"'
-
