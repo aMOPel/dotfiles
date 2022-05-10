@@ -1,12 +1,15 @@
+local configs = {}
 
-P = function(v)
-  print(vim.inspect(v))
-  return v
-end
+local p = require'utils'.p
+
+configs['nvim-lspconfig'] = function ()
 
 -------------------------------------------------------------------
 -- mappings
-local nvim_lsp = require('lspconfig')
+local lsp_installer = require("nvim-lsp-installer")
+lsp_installer.setup {}
+local lspconfig = require('lspconfig')
+
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -103,7 +106,7 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 -------------------------------------------------------------------
 -- attaching settings to server
 
-local lsp_installer = require("nvim-lsp-installer")
+
 
 -- Include the servers you want to have installed by default below
 local servers = {
@@ -138,10 +141,10 @@ local add_on_attach = function(client, bufnr)
   on_attach(client, bufnr)
 end
 
-lsp_installer.on_server_ready(function(server)
+for _, server in pairs(servers) do
   local opts = {}
 
-  if (server.name == "eslint") then
+  if (server == "eslint") then
     opts = {
       on_attach = function (client, bufnr)
         client.resolved_capabilities.document_formatting = true
@@ -154,7 +157,7 @@ lsp_installer.on_server_ready(function(server)
         debounce_text_changes = 500,
       }
     }
-  elseif (server.name == "jsonls") then
+  elseif (server == "jsonls") then
     opts = {
       filetypes = { "json" },
       capabilities = capabilities,
@@ -168,7 +171,7 @@ lsp_installer.on_server_ready(function(server)
         },
       },
     }
-  elseif (server.name == "volar") then
+  elseif (server == "volar") then
     opts = {
       init_options = {
         languageFeatures = {
@@ -180,7 +183,7 @@ lsp_installer.on_server_ready(function(server)
           tsPlugin = true;
       },
     }
-  elseif (server.name == "tsserver") then
+  elseif (server == "tsserver") then
     opts = {
       capabilities = capabilities,
       handlers = {['textDocument/publishDiagnostics'] = function(...) end  },
@@ -189,7 +192,7 @@ lsp_installer.on_server_ready(function(server)
         debounce_text_changes = 150,
       }
     }
-  elseif (server.name == "html") then
+  elseif (server == "html") then
     opts = {
       filetypes = { "html" },
       capabilities = capabilities,
@@ -198,7 +201,7 @@ lsp_installer.on_server_ready(function(server)
         debounce_text_changes = 150,
       }
     }
-  elseif (server.name == "css") then
+  elseif (server == "css") then
     opts = {
       filetypes = { "css" },
       capabilities = capabilities,
@@ -207,7 +210,7 @@ lsp_installer.on_server_ready(function(server)
         debounce_text_changes = 150,
       }
     }
-  elseif (server.name == "tailwindcss") then
+  elseif (server == "tailwindcss") then
     opts = {
       filetypes = { "html", "vue", "css" },
       capabilities = capabilities,
@@ -216,12 +219,17 @@ lsp_installer.on_server_ready(function(server)
         debounce_text_changes = 150,
       }
     }
-  elseif (server.name == "sumneko_lua") then
+  elseif (server == "sumneko_lua") then
     local runtime_path = vim.split(package.path, ';')
     table.insert(runtime_path, "lua/?.lua")
     table.insert(runtime_path, "lua/?/init.lua")
 
-    require'lspconfig'.sumneko_lua.setup {
+    opts = {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      flags = {
+        debounce_text_changes = 150,
+      },
       settings = {
         Lua = {
           runtime = {
@@ -243,14 +251,9 @@ lsp_installer.on_server_ready(function(server)
             enable = false,
           },
         },
-      capabilities = capabilities,
-      on_attach = on_attach,
-      flags = {
-        debounce_text_changes = 150,
-      }
+      },
     }
-  }
-  elseif (server.name == 'texlab') then
+  elseif (server == 'texlab') then
     local util = require "lspconfig".util
     opts = {
       capabilities = capabilities,
@@ -285,7 +288,7 @@ lsp_installer.on_server_ready(function(server)
         }
       }
     }
-  elseif (server.name == 'ltex') then
+  elseif (server == 'ltex') then
     opts = {
       capabilities = capabilities,
       on_attach = on_attach,
@@ -327,14 +330,14 @@ lsp_installer.on_server_ready(function(server)
     opts.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
   end
 
-  server:setup(opts)
+  lspconfig[server].setup(opts)
   vim.cmd [[ do User LspAttachBuffers ]]
-end)
+end
 
 -------------------------------------------------------------------
 -- gdscript
 
-nvim_lsp.gdscript.setup{
+lspconfig.gdscript.setup{
   on_attach = on_attach,
   capabilities = capabilities,
   flags = {
@@ -343,3 +346,33 @@ nvim_lsp.gdscript.setup{
 }
 
 
+end
+
+local M = function(use)
+  use {
+    p'https://github.com/neovim/nvim-lspconfig',
+    requires = {
+      { 'cmp-nvim-lsp' },
+      { p'https://github.com/williamboman/nvim-lsp-installer' },
+      {
+        p'https://gitlab.com/yorickpeterse/nvim-dd',
+        config = function() require('dd').setup{ timeout = 1000, } end
+      },
+      { p'https://github.com/j-hui/fidget.nvim' },
+      { p'https://github.com/b0o/SchemaStore.nvim' },
+    },
+    config = configs['nvim-lspconfig'],
+    ft = {
+      'tex', 'latex', 'bib', 'markdown',
+      'html', 'css', 'javascript', 'typescript', 'vue',
+      'gdscript',
+      'python', 'nim',
+      'lua',
+      'cpp', 'cmake',
+      'json', 'yaml', 'toml',
+      'sh',
+    }
+  }
+
+end
+return M
