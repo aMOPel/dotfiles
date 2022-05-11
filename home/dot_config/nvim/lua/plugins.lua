@@ -7,36 +7,52 @@ vim.cmd([[
 ]])
 
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-  vim.cmd[[qa]]
+  fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+  vim.cmd [[qa]]
 end
 
 local utils = require('utils')
 local p = utils.p
-local map = utils.map
+
 
 vim.cmd [[packadd packer.nvim]]
-
 require('packer').startup(function(use)
-  use {
-    p'https://github.com/wbthomason/packer.nvim',
-  }
+  local core_prefix = 'plugins/core/'
+  local ft_prefix = 'ft/'
+  local misc_prefix = 'plugins/misc/'
 
-  -- require'libs'(use)
-  -- require'cmp'(use)
-  -- require'lsp'(use)
-
-  -- require all scripts in /lua/plugins and pass them 'use'
-  for _, s in pairs(utils.getPluginScripts()) do
-    -- print(s)
-    require('plugins/'..s)(use)
+  local function useCore(script_name)
+    require(core_prefix .. script_name)(use)
   end
+
+  local function useDir(prefix)
+    for _, s in pairs(utils.getPluginScripts(prefix)) do
+      require(prefix .. s)(use)
+    end
+  end
+
+  use { p 'https://github.com/wbthomason/packer.nvim', }
+
+  useDir(ft_prefix)
+
+  -- importing in order
+  useCore('libs')
+  useCore('ft')
+  useCore('lsp')
+  useCore('treesitter')
+  useCore('visuals')
+  useCore('cmp')
+  useCore('basics')
+
+  useDir(misc_prefix)
+
 end)
 
-map('n', '<leader>pu', ':PackerSync<cr>')
-map('n', '<leader>pi', ':PackerInstall<cr>')
-map('n', '<leader>pc', ':PackerClean<cr>')
-map('n', '<leader>pr', ':PackerCompile<cr>')
-map('n', '<leader>ps', ':PackerStatus<cr>')
+local noremap = utils.noremap
+noremap('n', '<leader>pu', ':PackerSync<cr>')
+noremap('n', '<leader>pi', ':PackerInstall<cr>')
+noremap('n', '<leader>pc', ':PackerClean<cr>')
+noremap('n', '<leader>pr', ':PackerCompile<cr>')
+noremap('n', '<leader>ps', ':PackerStatus<cr>')

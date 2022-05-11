@@ -1,6 +1,6 @@
 local configs = {}
 
-local p = require'utils'.p
+local p = require 'utils'.p
 
 configs['cmp-tabnine'] = function()
   local tabnine = require('cmp_tabnine.config')
@@ -14,9 +14,9 @@ configs['cmp-tabnine'] = function()
 end
 
 configs['cmp-cmdline'] = function()
-  local map = require'utils'.map
-  map('c', '<tab>', '', {})
-  map('c', '<s-tab>', '', {})
+  local map = require 'utils'.map
+  map('c', '<tab>', '')
+  map('c', '<s-tab>', '')
   vim.opt.wildmenu = false
 end
 
@@ -24,7 +24,7 @@ configs['nvim-cmp'] = function()
   vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
   vim.opt.complete = {}
 
-  local cmp = require'cmp'
+  local cmp = require 'cmp'
 
   cmp.setup({
     -- snippet = {
@@ -54,18 +54,18 @@ configs['nvim-cmp'] = function()
         else
           fallback()
         end
-      end, { "i", "s", "c" } )
+      end, { "i", "s", "c" })
     },
     sources = {
-      { name = 'cmp_tabnine', priority=1000, max_item_count=20  },
+      { name = 'cmp_tabnine', priority = 1000, max_item_count = 20 },
       -- { name = 'vsnip', priority=900, max_item_count=10  },
       -- { name = 'fuzzy_path', priority=900, max_item_count=10  },
-      { name = 'nvim_lsp', priority=500, max_item_count=20 },
-      { name = 'nvim_lua', priority=500, max_item_count=20  },
+      { name = 'nvim_lsp', priority = 500, max_item_count = 20 },
+      { name = 'nvim_lua', priority = 500, max_item_count = 20 },
       -- { name = 'buffer', priority=100, keyword_length=3, max_item_count=5  },
       { name = 'emoji' },
-      { name = 'rg', priority=500, keyword_length=3, max_item_count=10  },
-      { name = 'calc', priority=100 },
+      { name = 'rg', priority = 500, keyword_length = 3, max_item_count = 10 },
+      { name = 'calc', priority = 100 },
       -- { name = 'spell', priority=100 },
       -- { name = 'neorg' },
     },
@@ -113,36 +113,36 @@ end
 
 local M = function(use)
   use {
-    p'https://github.com/hrsh7th/nvim-cmp',
+    p 'https://github.com/hrsh7th/nvim-cmp',
     requires = {
-      { p'https://github.com/hrsh7th/cmp-calc', after = 'nvim-cmp', },
+      { p 'https://github.com/hrsh7th/cmp-calc', after = 'nvim-cmp', },
       -- { p'https://github.com/hrsh7th/cmp-vsnip', after = 'nvim-cmp', },
-      { p'https://github.com/hrsh7th/cmp-emoji', after = 'nvim-cmp', },
-      { p'https://github.com/hrsh7th/cmp-buffer', after = 'nvim-cmp', },
-      { p'https://github.com/hrsh7th/cmp-nvim-lua', after = 'nvim-cmp', },
-      { p'https://github.com/hrsh7th/cmp-path', after = 'nvim-cmp', },
-      { p'https://github.com/lukas-reineke/cmp-rg', after = 'nvim-cmp', },
-      { p'https://github.com/f3fora/cmp-spell', after = 'nvim-cmp', },
-      { p'https://github.com/onsails/lspkind-nvim', },
+      { p 'https://github.com/hrsh7th/cmp-emoji', after = 'nvim-cmp', },
+      { p 'https://github.com/hrsh7th/cmp-buffer', after = 'nvim-cmp', },
+      { p 'https://github.com/hrsh7th/cmp-nvim-lua', after = 'nvim-cmp', },
+      { p 'https://github.com/hrsh7th/cmp-path', after = 'nvim-cmp', },
+      { p 'https://github.com/lukas-reineke/cmp-rg', after = 'nvim-cmp', },
+      { p 'https://github.com/f3fora/cmp-spell', after = 'nvim-cmp', },
+      { p 'https://github.com/onsails/lspkind-nvim', },
       {
-        p'https://github.com/tzachar/cmp-fuzzy-path',
+        p 'https://github.com/tzachar/cmp-fuzzy-path',
         requires = { 'fuzzy.nvim', 'telescope-fzf-native.nvim', },
         after = 'nvim-cmp',
       },
       {
-        p'https://github.com/tzachar/cmp-tabnine',
+        p 'https://github.com/tzachar/cmp-tabnine',
         config = configs['cmp-tabnine'],
         run = function()
           vim.pretty_print(
             vim.fn.system(
-              vim.fn.stdpath('data')..'/site/pack/packer/opt/cmp-tabnine/install.sh'
+              vim.fn.stdpath('data') .. '/site/pack/packer/opt/cmp-tabnine/install.sh'
             )
           )
         end,
         after = 'nvim-cmp',
       },
       {
-        p'https://github.com/hrsh7th/cmp-cmdline',
+        p 'https://github.com/hrsh7th/cmp-cmdline',
         config = configs['cmp-cmdline'],
         after = 'nvim-cmp',
       },
@@ -150,7 +150,7 @@ local M = function(use)
     config = configs['nvim-cmp'],
     event = { 'InsertEnter', 'CmdlineEnter' },
   }
-  use { p'https://github.com/hrsh7th/cmp-nvim-lsp', }
+  use { p 'https://github.com/hrsh7th/cmp-nvim-lsp', }
 
 end
 return M

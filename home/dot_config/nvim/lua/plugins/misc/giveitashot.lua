@@ -1,0 +1,175 @@
+local configs = {}
+
+local p = require 'utils'.p
+
+local M = function(use)
+end
+return M
+-- # [[plugins]]
+-- # repo = 'https://github.com/NTBBloodbath/rest.nvim'
+-- # if = 'has("nvim")'
+-- # depends = 'plenary'
+-- # hook_add = '''
+-- #   nmap <silent> <leader>cc <Plug>RestNvim
+-- #   nmap <silent> <leader>cp <Plug>RestNvimPreview
+-- #   nmap <silent> <leader>cr <Plug>RestNvimLast
+-- # '''
+-- # hook_post_source = '''
+-- # lua <<EOF
+-- # require("rest-nvim").setup({
+-- #     -- Open request results in a horizontal split
+-- #     result_split_horizontal = false,
+-- #     -- Skip SSL verification, useful for unknown certificates
+-- #     skip_ssl_verification = false,
+-- #     -- Highlight request on run
+-- #     highlight = {
+-- #       enabled = true,
+-- #       timeout = 150,
+-- #     },
+-- #     -- Jump to request line on run
+-- #     jump_to_request = false,
+-- #   })
+-- # EOF
+-- # '''
+--
+-- # [[plugins]]
+-- # repo = 'https://github.com/nvim-neorg/neorg'
+-- # depends = 'plenary'
+-- # hook_post_source = '''
+-- # lua << EOF
+-- #   require('neorg').setup {
+-- #       -- Tell Neorg what modules to load
+-- #       load = {
+-- #           ["core.defaults"] = {}, -- Load all the default modules
+-- #           ["core.norg.concealer"] = {}, -- Allows for use of icons
+-- #           ["core.norg.dirman"] = { -- Manage your directories with Neorg
+-- #               config = {
+-- #                   workspaces = {
+-- #                       my_workspace = "~/neorg"
+-- #                   }
+-- #               }
+-- #           },
+-- #           ["core.keybinds"] = { -- Configure core.keybinds
+-- #               config = {
+-- #                   default_keybinds = true, -- Generate the default keybinds
+-- #                   neorg_leader = "<Leader>o" -- This is the default if unspecified
+-- #               }
+-- #           },
+-- #           ["core.norg.completion"] = {
+-- #             config = {
+-- #               engine = "nvim-cmp",
+-- #             },
+-- #           },
+-- #       },
+-- #   }
+-- # EOF
+-- # '''
+--
+--
+-- # for harpoon
+-- # [[plugins]]
+-- # repo = 'nvim-lua/popup.nvim'
+-- # if = 'has("nvim")'
+-- # name = 'popup'
+--
+-- # [[plugins]]
+-- # repo = 'ThePrimeagen/harpoon'
+-- # if = 'has("nvim")'
+-- # on_lua = 'harpoon'
+-- # depends = ['popup', 'plenary']
+-- # hook_add = '''
+-- #   nnoremap <leader>hh :lua require("harpoon.ui").toggle_quick_menu()<cr>
+-- #   nnoremap <leader>ha :lua require("harpoon.mark").add_file()<CR>
+-- #   nnoremap <C-m> :lua require("harpoon.ui").nav_file(1)<CR>
+-- #   nnoremap <C-n> :lua require("harpoon.ui").nav_file(2)<CR>
+-- #   nnoremap <C-h> :lua require("harpoon.ui").nav_file(3)<CR>
+-- #   nnoremap <C-y> :lua require("harpoon.ui").nav_file(4)<CR>
+-- #   autocmd MyAutoCmd FileType harpoon nnoremap <buffer> <esc> :wq<cr>
+-- # '''
+-- # hook_post_source = '''
+-- # lua <<EOF
+-- # require("harpoon").setup({
+-- #   global_settings = {
+-- #       save_on_toggle = false,
+-- #       save_on_change = true,
+-- #   },
+-- # })
+-- # EOF
+-- # '''
+--
+-- # -------------------------------------------------------------------
+-- # test
+--
+-- [[plugins]]
+-- repo = 'https://github.com/folke/which-key.nvim'
+-- hook_post_source = '''
+-- lua <<EOF
+-- require("which-key").setup{
+--   plugins = {
+--     marks = false,
+--     spelling = {
+--       enabled = true,
+--       suggestions = 20,
+--     },
+--   },
+-- }
+-- EOF
+-- '''
+--
+-- [[plugins]]
+-- repo = 'https://github.com/simrat39/symbols-outline.nvim'
+-- hook_add = '''
+-- lua <<EOF
+-- vim.g.symbols_outline = {
+--   highlight_hovered_item = true,
+--   show_guides = true,
+--   auto_preview = false,
+--   position = 'right',
+--   relative_width = true,
+--   width = 50,
+--   show_numbers = false,
+--   show_relative_numbers = false,
+--   show_symbol_details = true,
+--   preview_bg_highlight = 'Pmenu',
+--   keymaps = { -- These keymaps can be a string or a table for multiple keys
+--       close = {"<Esc>", "q"},
+--       goto_location = "<Cr>",
+--       focus_location = "o",
+--       hover_symbol = "<C-space>",
+--       toggle_preview = "K",
+--       rename_symbol = "r",
+--       code_actions = "a",
+--   },
+--   lsp_blacklist = {},
+--   symbol_blacklist = {},
+--   symbols = {
+--       File = {icon = "", hl = "TSURI"},
+--       Module = {icon = "", hl = "TSNamespace"},
+--       Namespace = {icon = "", hl = "TSNamespace"},
+--       Package = {icon = "", hl = "TSNamespace"},
+--       Class = {icon = "𝓒", hl = "TSType"},
+--       Method = {icon = "ƒ", hl = "TSMethod"},
+--       Property = {icon = "", hl = "TSMethod"},
+--       Field = {icon = "", hl = "TSField"},
+--       Constructor = {icon = "", hl = "TSConstructor"},
+--       Enum = {icon = "ℰ", hl = "TSType"},
+--       Interface = {icon = "ﰮ", hl = "TSType"},
+--       Function = {icon = "", hl = "TSFunction"},
+--       Variable = {icon = "", hl = "TSConstant"},
+--       Constant = {icon = "", hl = "TSConstant"},
+--       String = {icon = "𝓐", hl = "TSString"},
+--       Number = {icon = "#", hl = "TSNumber"},
+--       Boolean = {icon = "⊨", hl = "TSBoolean"},
+--       Array = {icon = "", hl = "TSConstant"},
+--       Object = {icon = "⦿", hl = "TSType"},
+--       Key = {icon = "🔐", hl = "TSType"},
+--       Null = {icon = "NULL", hl = "TSType"},
+--       EnumMember = {icon = "", hl = "TSField"},
+--       Struct = {icon = "𝓢", hl = "TSType"},
+--       Event = {icon = "🗲", hl = "TSType"},
+--       Operator = {icon = "+", hl = "TSOperator"},
+--       TypeParameter = {icon = "𝙏", hl = "TSParameter"}
+--   }
+-- }
+-- EOF
+-- '''
