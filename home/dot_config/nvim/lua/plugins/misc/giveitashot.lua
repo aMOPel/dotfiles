@@ -1,8 +1,69 @@
 local configs = {}
 
+configs['vim-floaterm'] = function()
+  vim.g.floaterm_shell = 'zsh'
+  vim.g.floaterm_width = 0.7
+  vim.g.floaterm_height = 0.7
+
+  local noremap = require 'utils'.noremap
+  noremap('n', '<leader>ff', ':FloatermToggle<CR>')
+  noremap('t', '<C-W>', '<C-\\><C-n>:FloatermToggle<CR>')
+  noremap('t', '<F11>', '<C-\\><C-n>')
+  noremap('n', '<leader>fg', ':FloatermNew --autoclose=2 --disposable gitui<CR>')
+  noremap('n', '<leader>ft', ':FloatermNew --autoclose=2 --disposable taskwarrior-tui<CR>')
+  noremap('n', '<leader>fw', ':FloatermNew --autoclose=0 --disposable --width=0.9 timew week<CR>')
+end
+
+configs['vim-grepper'] = function()
+vim.cmd([[
+nnoremap <leader>gr :Grepper -tool rg<CR>
+nnoremap <leader>*  :Grepper -tool rg -cword -noprompt<cr>
+
+nmap gr <Plug>(GrepperOperator)
+xmap gr <Plug>(GrepperOperator)
+
+aug Grepper
+    au!
+    au User Grepper ++nested call setqflist([], 'r', {'context': {'bqf': {'pattern_hl': '\%#' . getreg('/')}}})
+aug END
+
+let g:grepper = {}
+let g:grepper.open = 1
+let g:grepper.switch = 1
+let g:grepper.quickfix = 1
+let g:grepper.searchreg = 1
+let g:grepper.highlight = 1
+let g:grepper.dir = 'cwd'
+let g:grepper.tools = ['rg']
+
+let g:grepper.operator = {}
+let g:grepper.operator.open = 1
+let g:grepper.operator.switch = 1
+let g:grepper.operator.prompt = 0
+let g:grepper.operator.quickfix = 1
+let g:grepper.operator.searchreg = 1
+let g:grepper.operator.highlight = 1
+let g:grepper.operator.dir = 'cwd'
+let g:grepper.operator.tools = ['rg']
+
+" let g:grepper.rg.grepprg .= ' --smart-case'
+]])
+end
+
 local p = require 'utils'.p
 
 local M = function(use)
+  use {
+    p 'https://github.com/voldikss/vim-floaterm',
+    config = configs['vim-floaterm'],
+  }
+  use {
+    p 'https://github.com/kevinhwang91/nvim-bqf',
+  }
+  use {
+    p 'https://github.com/mhinz/vim-grepper',
+    config = configs['vim-grepper'],
+  }
 end
 return M
 -- # [[plugins]]
@@ -173,3 +234,166 @@ return M
 -- }
 -- EOF
 -- '''
+-- # -------------------------------------------------------------------
+-- # bigger frameworks or functions
+--
+-- [[plugins]]
+-- repo = 'https://github.com/tpope/vim-speeddating'
+-- on_cmd = 'SpeedDatingFormat'
+-- on_map = { n = ['<c-a>', '<c-x>'] }
+-- hook_post_source = '''
+-- 1SpeedDatingFormat %-d-%-m-%y
+-- '''
+--
+-- #for rest, harpoon and todo
+-- [[plugins]]
+-- repo = 'nvim-lua/plenary.nvim'
+-- if = 'has("nvim")'
+-- name = 'plenary'
+--
+-- [[plugins]]
+-- repo = 'https://github.com/folke/todo-comments.nvim'
+-- depends = 'plenary'
+-- on_cmd = ['TodoQuickFix', 'TodoLocList']
+-- hook_source = '''
+-- lua <<EOF
+--   require("todo-comments").setup{}
+-- EOF
+-- '''
+--
+-- [[plugins]]
+-- repo = 'tpope/vim-fugitive'
+-- on_cmd = ['Git', 'Gclog', 'Gdiffsplit', 'GBrowse']
+-- depends = 'rhubarb'
+-- hook_add = '''
+--   nnoremap <leader>gg :-tabnew<cr>:Git ++curwin<CR>
+--   nnoremap <leader>gl :-tabnew<cr>:Gclog <CR>
+--   nnoremap <leader>gd :-tabnew %<cr>:Gdiffsplit! <cr>
+-- '''
+--
+-- [[plugins]]
+-- repo = 'https://github.com/tpope/vim-rhubarb'
+-- name = 'rhubarb'
+--
+-- [[plugins]]
+-- repo = 'https://github.com/MattesGroeger/vim-bookmarks'
+-- on_map = '<Plug>Bookmark'
+-- hook_add = '''
+--   let g:bookmark_sign = '📘'
+--   let g:bookmark_annotation_sign = '📗'
+--   let g:bookmark_no_default_key_mappings = 1
+--   let g:bookmark_auto_save_file = stdpath('data') . '/bookmarks'
+--
+--   nmap <Leader>bb <Plug>BookmarkToggle
+--   nmap <Leader>bi <Plug>BookmarkAnnotate
+--   nmap <Leader>ba <Plug>BookmarkShowAll
+--   nmap <Leader>bn <Plug>BookmarkNext
+--   nmap <Leader>bp <Plug>BookmarkPrev
+--   nmap <Leader>bc <Plug>BookmarkClear
+--   nmap <Leader>bx <Plug>BookmarkClearAll
+--   nmap <Leader>bk <Plug>BookmarkMoveUp
+--   nmap <Leader>bj <Plug>BookmarkMoveDown
+--   nmap <Leader>bg <Plug>BookmarkMoveToLine
+-- '''
+--
+-- [[plugins]]
+-- repo = 'https://github.com/FooSoft/vim-argwrap'
+-- on_map = { n = ['gJ'] }
+-- hook_add = '''
+--   nnoremap gJ :ArgWrap<CR>
+--   let g:argwrap_tail_comma_braces = '[{'
+-- '''
+--
+-- # [[plugins]]
+-- # repo = 'https://github.com/AndrewRadev/splitjoin.vim'
+-- # on_map = { n = [' J', ' j'] }
+-- # hook_source = '''
+-- #   let g:splitjoin_split_mapping = ''
+-- #   let g:splitjoin_join_mapping = ''
+-- #
+-- #   nmap <Leader>J :SplitjoinJoin<cr>
+-- #   nmap <Leader>j :SplitjoinSplit<cr>
+-- # '''
+-- # # only has clever definitions for these fts
+-- # on_ft = [
+-- #   'c',
+-- #   'coffee',
+-- #   'css',
+-- #   'elixir',
+-- #   'elm',
+-- #   'eruby',
+-- #   'go',
+-- #   'haml',
+-- #   'handlebars',
+-- #   'html',
+-- #   'java',
+-- #   'javascript',
+-- #   'json',
+-- #   'jsx',
+-- #   'tsx',
+-- #   'lua',
+-- #   'perl',
+-- #   'php',
+-- #   'python',
+-- #   'r',
+-- #   'ruby',
+-- #   'rust',
+-- #   'scss',
+-- #   'less',
+-- #   'shell',
+-- #   'tex',
+-- #   'vimscript',
+-- #   'yaml',
+-- # ]
+--
+-- [[plugins]]
+-- repo = 'https://github.com/aMOPel/vim-log-print'
+-- on_map = '<Plug>LogPrint'
+-- hook_add = '''
+-- 	let g:log_print#default_mappings = 0
+--
+-- 	nmap <silent> gl <Plug>LogPrintToggle
+-- 	nmap <silent> [g <Plug>LogPrintAbove
+-- 	nmap <silent> ]g <Plug>LogPrintBelow
+--
+-- 	let g:log_print#languages = #{
+-- 		\ gdscript: #{pre:"print(", post:")"},
+-- 		\ typescript: #{pre:"console.log(", post:")"},
+-- 		\ sh: #{pre:"echo "},
+-- 		\ nim: #{pre:"echo "},
+-- 		\ }
+-- '''
+--
+-- # [[plugins]]
+-- # repo = 'tversteeg/registers.nvim'
+-- # if = 'has("nvim")'
+-- # on_cmd = 'Registers'
+-- # on_map = {
+-- #   i = '<c-r>',
+-- #   n = '"',
+-- #   v = '"',
+-- # }
+--
+-- [[plugins]]
+-- repo = 'szw/vim-maximizer'
+-- on_cmd = 'Maximizer'
+-- hook_add = '''
+--   let g:maximizer_set_default_mapping = 0
+--   nnoremap <c-w>m :MaximizerToggle!<CR>
+--   nnoremap <c-w><c-m> :MaximizerToggle!<CR>
+-- '''
+--
+-- # [[plugins]]
+-- # repo = 'kana/vim-altr'
+-- # on_map = '<Plug>'
+-- # hook_add = '''
+-- #   nmap <leader>a <Plug>(altr-back)
+-- #   nmap <leader>A <Plug>(altr-forward)
+-- # '''
+-- # hook_source = '''
+-- #   " call altr#remove_all()
+-- #   call altr#define('%/src/%.cpp', '%/src/%.h*', '%/include/%.h*')
+-- #   call altr#define('%.gd', 'test/unit/test_%.gd')
+-- #   call altr#define('addons/*/%.gd', 'test/unit/test_%.gd')
+-- # '''
+--

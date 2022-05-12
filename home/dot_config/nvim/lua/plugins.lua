@@ -20,7 +20,6 @@ local p = utils.p
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
   local core_prefix = 'plugins/core/'
-  local ft_prefix = 'ft/'
   local misc_prefix = 'plugins/misc/'
 
   local function useCore(script_name)
@@ -35,17 +34,16 @@ require('packer').startup(function(use)
 
   use { p 'https://github.com/wbthomason/packer.nvim', }
 
-  useDir(ft_prefix)
-
   -- importing in order
   useCore('libs')
-  useCore('ft')
+  useCore('filetypes')
   useCore('lsp')
   useCore('treesitter')
   useCore('visuals')
   useCore('cmp')
   useCore('basics')
 
+  -- importing all misc scripts
   useDir(misc_prefix)
 
 end)

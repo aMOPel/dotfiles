@@ -1,21 +1,23 @@
 local g = require 'globals'
 local add = require 'utils'.addTable
 
+local ft = 'markdown'
+
 add(g.lsp.fts, {
-  'markdown',
+  ft,
 })
 
-add(g.lsp.servers, {
-  'prosemd-lsp',
+add(g.lsp.servers.lsp_installer, {
+  prosemd_lsp = 'default',
 })
 
--- add(g.ts.ensure_installed, {
---   'markdown',
+-- add(g.treesitter.ensure_installed, {
+--   ft,
 -- })
 
 local configs = {}
 
-configs['markdown'] = function()
+configs[ft] = function()
   local optl = vim.opt_local
   -- " setl spelllang=en,de
   -- " setl spell
@@ -33,14 +35,11 @@ configs['markdown'] = function()
   -- noremap('n', '<leader>n', ':exec "FloatermNew --autoclose=2 --disposable --width=0.95 --height=0.95 glow -w 200 "<CR>')
 end
 
-local p = require 'utils'.p
--- TODO: this doesn't work
-local M = function(use)
-  use {
-    vim.fn.stdpath('config') .. '/dummy_plugin/',
-    config = configs['markdown'],
-    ft = { 'markdown' },
+vim.api.nvim_create_autocmd(
+  {'Filetype'},
+  {
+    group = 'MyFt',
+    pattern = { ft, },
+    callback = configs[ft],
   }
-end
-return M
-
+)

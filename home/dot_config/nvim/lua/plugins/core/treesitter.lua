@@ -21,19 +21,19 @@ configs['nvim-treesitter'] = function()
 
   local g = require 'globals'
   require 'nvim-treesitter.configs'.setup {
-    ensure_installed = g.ts.ensure_installed,
+    ensure_installed = g.treesitter.ensure_installed,
     highlight = {
       enable = true,
-      disable = g.ts.highlight.disable,
+      disable = g.treesitter.highlight.disable,
       additional_vim_regex_highlighting = true,
     },
     indent = {
       enable = false,
-      disable = g.ts.indent.disable,
+      disable = g.treesitter.indent.disable,
     },
     incremental_selection = {
       enable = false,
-      disable = g.ts.incremental_selection.disable,
+      disable = g.treesitter.incremental_selection.disable,
     },
     context_commentstring = {
       enable = true,

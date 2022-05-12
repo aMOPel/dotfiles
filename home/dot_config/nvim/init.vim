@@ -1,6 +1,6 @@
 
 function! s:source_viml(path) abort
-  let abspath = resolve(expand('$XDG_CONFIG_HOME/nvim/viml/general/' . a:path))
+  let abspath = resolve(expand('$XDG_CONFIG_HOME/nvim/vimscript/general/' . a:path))
   execute 'source' fnameescape(abspath)
 endfunction
 
@@ -9,6 +9,10 @@ augroup MyAutoCmd
 augroup END
 
 augroup MyColors
+  autocmd!
+augroup END
+
+augroup MyFt
   autocmd!
 augroup END
 
@@ -68,4 +72,4 @@ if has('vim_starting')
   syntax enable
 endif
 
-lua require('plugins')
+lua require('main')

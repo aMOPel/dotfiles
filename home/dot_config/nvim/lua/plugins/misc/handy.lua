@@ -1,7 +1,7 @@
 local configs = {}
 
 configs['vim-sandwich'] = function()
-  vim.cmd [[runtime viml/vim-sandwich/surround.vim]]
+  vim.cmd [[runtime vimscript/vim-sandwich/surround.vim]]
 
   local map = require 'utils'.map
   map('x', 'is', '<Plug>(textobj-sandwich-query-i)')

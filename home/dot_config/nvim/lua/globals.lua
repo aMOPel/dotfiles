@@ -1,66 +1,22 @@
 local M = {
   lsp = {
     fts = {
-      -- 'tex', 'latex', 'bib', 'markdown',
-      -- 'html', 'css', 'javascript', 'typescript', 'vue',
-      -- 'gdscript',
-      -- 'python',
-      -- 'nim',
-      -- 'lua',
-      -- 'cpp',
-      -- 'cmake',
-      -- 'json',
-      -- 'yaml',
-      -- 'toml',
-      -- 'sh',
     },
     servers = {
-      -- 'bashls',
-      -- 'clangd',
-      -- 'eslint',
-      -- 'jsonls',
-      -- 'ltex',
-      -- 'pylsp',
-      -- 'sumneko_lua',
-      -- 'tailwindcss',
-      -- 'texlab',
-      -- 'tsserver',
-      -- 'volar',
-      -- 'yamlls',
-      -- 'nimls'
+      lsp_installer = {
+      },
+      other = {
+      },
     },
   },
-  ts = {
+  treesitter = {
     ensure_installed = {
       -- 'viml',
       -- 'http',
       -- 'norg',
-      -- 'latex',
 
-      -- 'html',
-      -- 'css',
-      -- 'javascript',
-      -- 'typescript',
-      -- 'vue',
-
-      -- 'gdscript',
-      -- 'godot_resource',
-
-      -- 'python',
-
-      -- 'lua',
-
-      -- 'cpp',
-      -- 'cmake',
-
-      -- 'json',
-      -- 'toml',
-      -- 'yaml',
-
-      -- 'bash',
       'regex',
       'comment',
-      -- 'dockerfile',
     },
     highlight = {
       disable = {}
@@ -69,10 +25,7 @@ local M = {
       disable = {}
     },
     indent = {
-      disable = {
-        -- 'gdscript',
-        -- 'python',
-      }
+      disable = {}
     },
   },
 }

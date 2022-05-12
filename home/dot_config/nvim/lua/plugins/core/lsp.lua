@@ -2,10 +2,6 @@ local configs = {}
 
 configs['nvim-lspconfig'] = function()
   -- mappings
-  local lsp_installer = require("nvim-lsp-installer")
-  lsp_installer.setup {}
-  local lspconfig = require('lspconfig')
-
   local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
@@ -101,229 +97,55 @@ configs['nvim-lspconfig'] = function()
   }
 
   -------------------------------------------------------------------
-  -- Include the servers you want to have installed by default below
+  -- setup servers
+
   local g = require 'globals'
-  local servers = g.lsp.servers
+  local lsp_installer_servers = g.lsp.servers.lsp_installer
+  local other_servers = g.lsp.servers.other
 
-  for _, name in pairs(servers) do
-    local server_is_found, server = lsp_installer.get_server(name)
-    if server_is_found then
-      if not server:is_installed() then
-        print("Installing " .. name)
-        server:install()
-      end
-    end
-  end
-
-  local add_on_attach = function(client, bufnr)
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
-    on_attach(client, bufnr)
-  end
-
-  for _, server in pairs(servers) do
-    local opts = {}
-
-    if (server == "eslint") then
-      opts = {
-        on_attach = function(client, bufnr)
-          client.resolved_capabilities.document_formatting = true
-          on_attach(client, bufnr)
-        end,
-        settings = {
-          format = { enable = true },
-        },
-        flags = {
-          debounce_text_changes = 500,
-        }
-      }
-    elseif (server == "jsonls") then
-      opts = {
-        filetypes = { "json" },
-        capabilities = capabilities,
-        on_attach = on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        },
-        settings = {
-          json = {
-            schemas = require('schemastore').json.schemas(),
-          },
-        },
-      }
-    elseif (server == "volar") then
-      opts = {
-        init_options = {
-          languageFeatures = {
-            diagnostics = false,
-          }
-        },
-        on_attach = add_on_attach,
-        settings = {
-          tsPlugin = true;
-        },
-      }
-    elseif (server == "tsserver") then
-      opts = {
-        capabilities = capabilities,
-        handlers = { ['textDocument/publishDiagnostics'] = function(...) end },
-        on_attach = add_on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        }
-      }
-    elseif (server == "html") then
-      opts = {
-        filetypes = { "html" },
-        capabilities = capabilities,
-        on_attach = add_on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        }
-      }
-    elseif (server == "css") then
-      opts = {
-        filetypes = { "css" },
-        capabilities = capabilities,
-        on_attach = add_on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        }
-      }
-    elseif (server == "tailwindcss") then
-      opts = {
-        filetypes = { "html", "vue", "css" },
-        capabilities = capabilities,
-        on_attach = add_on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        }
-      }
-    elseif (server == "sumneko_lua") then
-      local runtime_path = vim.split(package.path, ';')
-      table.insert(runtime_path, "lua/?.lua")
-      table.insert(runtime_path, "lua/?/init.lua")
-
-      opts = {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        },
-        settings = {
-          Lua = {
-            runtime = {
-              -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-              version = 'LuaJIT',
-              -- Setup your lua path
-              path = runtime_path,
-            },
-            diagnostics = {
-              -- Get the language server to recognize the `vim` global
-              globals = { 'vim' },
-            },
-            workspace = {
-              -- Make the server aware of Neovim runtime files
-              library = vim.api.nvim_get_runtime_file("", true),
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {
-              enable = false,
-            },
-          },
-        },
-      }
-    elseif (server == 'texlab') then
-      local util = require "lspconfig".util
-      opts = {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        },
-        root_dir = util.root_pattern(".git"),
-        settings = {
-          texlab = {
-            auxDirectory = ".",
-            bibtexFormatter = "texlab",
-            build = {
-              args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
-              executable = "latexmk",
-              forwardSearchAfter = false,
-              onSave = true
-            },
-            chktex = {
-              onEdit = false,
-              onOpenAndSave = false
-            },
-            diagnosticsDelay = 300,
-            formatterLineLength = 80,
-            forwardSearch = {
-              args = {}
-            },
-            latexFormatter = "latexindent",
-            latexindent = {
-              modifyLineBreaks = false
-            }
-          }
-        }
-      }
-    elseif (server == 'ltex') then
-      opts = {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        },
-        -- delete this line to activate
-        filetypes = {},
-        settings = {
-          ltex = {
-            enabled = { "latex", "tex", "bib", "markdown" },
-            language = "en",
-            diagnosticSeverity = "information",
-            setenceCacheSize = 2000,
-            additionalRules = {
-              enablePickyRules = true,
-              motherTongue = { "en", "de" },
-            },
-            trace = { server = "verbose" },
-            dictionary = {};
-            disabledRules = {};
-            hiddenFalsePositives = {};
-          }
-        }
-      }
-    else
-      opts = {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        }
-      }
-    end
-
-    if (opts["capabilities"] ~= nil) then
-      opts.capabilities = require('cmp_nvim_lsp').update_capabilities(opts.capabilities)
-    else
-      opts.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-    end
-
-    lspconfig[server].setup(opts)
-    vim.cmd [[ do User LspAttachBuffers ]]
-  end
-
-  -------------------------------------------------------------------
-  -- gdscript
-
-  lspconfig.gdscript.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    }
+  require 'nvim-lsp-installer'.setup {
+    ensure_installed = lsp_installer_servers
   }
+
+  local lspconfig = require('lspconfig')
+
+  function default_config(on_attach, capabilities)
+    return {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      flags = {
+        debounce_text_changes = 150,
+      }
+    }
+  end
+
+  function setup_server(server_name, server_config)
+    local config = {}
+
+    if server_config == 'default' then
+      config = default_config(on_attach, capabilities)
+    elseif type(server_config) == 'function' then
+      config = server_config(on_attach, capabilities)
+    else
+      print('error with '..server_name)
+    end
+
+    if (config["capabilities"] ~= nil) then
+      config.capabilities = require('cmp_nvim_lsp').update_capabilities(config.capabilities)
+    else
+      config.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    end
+    lspconfig[server_name].setup(config)
+    -- vim.cmd [[ do User LspAttachBuffers ]]
+  end
+
+  for server_name, server_config in pairs(lsp_installer_servers) do
+    setup_server(server_name, server_config)
+  end
+
+  for server_name, server_config in pairs(other_servers) do
+    setup_server(server_name, server_config)
+  end
 end
 
 local g = require 'globals'

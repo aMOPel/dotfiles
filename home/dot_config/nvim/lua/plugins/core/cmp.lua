@@ -1,6 +1,15 @@
 local configs = {}
 
-local p = require 'utils'.p
+
+configs['vim-vsnip'] = function()
+  local map = require 'utils'.map
+  vim.g.vsnip_snippet_dir = vim.fn.expand("$XDG_CONFIG_HOME/nvim/snippets")
+
+  map('i', '<Tab>'  , 'vsnip#available(1)  ? "<Plug>(vsnip-expand-or-jump)" : "<Tab>"'  , {silent = true, expr = true})
+  map('s', '<Tab>'  , 'vsnip#available(1)  ? "<Plug>(vsnip-expand-or-jump)" : "<Tab>"'  , {silent = true, expr = true})
+  map('i', '<S-Tab>', 'vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)"      : "<S-Tab>"', {silent = true, expr = true})
+  map('s', '<S-Tab>', 'vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)"      : "<S-Tab>"', {silent = true, expr = true})
+end
 
 configs['cmp-tabnine'] = function()
   local tabnine = require('cmp_tabnine.config')
@@ -27,11 +36,11 @@ configs['nvim-cmp'] = function()
   local cmp = require 'cmp'
 
   cmp.setup({
-    -- snippet = {
-    --   expand = function(args)
-    --     vim.fn["vsnip#anonymous"](args.body)
-    --   end,
-    -- },
+    snippet = {
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+      end,
+    },
     mapping = {
       ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
@@ -58,7 +67,7 @@ configs['nvim-cmp'] = function()
     },
     sources = {
       { name = 'cmp_tabnine', priority = 1000, max_item_count = 20 },
-      -- { name = 'vsnip', priority=900, max_item_count=10  },
+      { name = 'vsnip', priority=900, max_item_count=10  },
       -- { name = 'fuzzy_path', priority=900, max_item_count=10  },
       { name = 'nvim_lsp', priority = 500, max_item_count = 20 },
       { name = 'nvim_lua', priority = 500, max_item_count = 20 },
@@ -75,7 +84,7 @@ configs['nvim-cmp'] = function()
         maxwidth = 50,
         menu = {
           cmp_tabnine = '[T9]',
-          -- vsnip = '[VSNIP]',
+          vsnip = '[VSNIP]',
           fuzzy_path = '[PATH]',
           nvim_lsp = '[LSP]',
           nvim_lua = '[LUA]',
@@ -110,13 +119,24 @@ configs['nvim-cmp'] = function()
   })
 end
 
+local p = require 'utils'.p
 
 local M = function(use)
   use {
     p 'https://github.com/hrsh7th/nvim-cmp',
+    config = configs['nvim-cmp'],
+    event = { 'InsertEnter', 'CmdlineEnter' },
     requires = {
+      {
+        p 'https://github.com/hrsh7th/vim-vsnip',
+        config = configs['vim-vsnip'],
+        requires = {
+          { p 'https://github.com/hrsh7th/vim-vsnip-integ', },
+          { p 'https://github.com/rafamadriz/friendly-snippets', },
+        },
+      },
       { p 'https://github.com/hrsh7th/cmp-calc', after = 'nvim-cmp', },
-      -- { p'https://github.com/hrsh7th/cmp-vsnip', after = 'nvim-cmp', },
+      { p 'https://github.com/hrsh7th/cmp-vsnip', after = 'nvim-cmp', },
       { p 'https://github.com/hrsh7th/cmp-emoji', after = 'nvim-cmp', },
       { p 'https://github.com/hrsh7th/cmp-buffer', after = 'nvim-cmp', },
       { p 'https://github.com/hrsh7th/cmp-nvim-lua', after = 'nvim-cmp', },
@@ -147,10 +167,8 @@ local M = function(use)
         after = 'nvim-cmp',
       },
     },
-    config = configs['nvim-cmp'],
-    event = { 'InsertEnter', 'CmdlineEnter' },
   }
-  use { p 'https://github.com/hrsh7th/cmp-nvim-lsp', }
 
+  use { p 'https://github.com/hrsh7th/cmp-nvim-lsp', }
 end
 return M

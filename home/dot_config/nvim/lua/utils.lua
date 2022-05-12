@@ -58,8 +58,12 @@ M.getPluginScripts = function(prefix)
 end
 
 M.addTable = function(table1, table2)
-  for _,v in ipairs(table2) do
+  for k, v in pairs(table2) do
+    if type(k) == 'number' then
       table.insert(table1, v)
+    else
+      table1[k] = v
+    end
   end
 end
 
