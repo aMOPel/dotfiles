@@ -63,13 +63,14 @@ setopt localoptions localtraps
 # gives additional prompt after bang history command for user to inspect result
 setopt histverify
 
+zmodload zsh/zpty
 # --------------------------
 # Completion for kitty
 kitty + complete setup zsh | source /dev/stdin
 # Completion for pass
 # fpath+=/usr/share/zsh/vendor-completions/_pass
 # completion 
-fpath=( ~/.local/zsh-fpath $fpath )
+# fpath=( ~/.local/zsh-fpath $fpath )
 autoload -Uz compinit
 compinit -d $ZDOTDIR/.zcompdump
 # --------------------------

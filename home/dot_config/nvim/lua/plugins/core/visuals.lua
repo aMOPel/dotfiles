@@ -96,7 +96,7 @@ local M = function(use)
       },
       {
         p 'https://github.com/SmiteshP/nvim-gps',
-        config = configs['nvim-gps'],
+        -- config = configs['nvim-gps'],
         -- after = 'nvim-treesitter',
       },
     },

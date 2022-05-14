@@ -1,4 +1,5 @@
 local configs = {}
+local setups = {}
 
 configs['vim-sandwich'] = function()
   vim.cmd [[runtime vimscript/vim-sandwich/surround.vim]]
@@ -79,6 +80,28 @@ configs['switch.vim'] = function()
   vim.g.switch_mapping = "gs"
 end
 
+setups['vim-log-print'] = function()
+  vim.g['log_print#default_mappings'] = 0
+
+  vim.g['log_print#languages'] = {
+    gdscript = { pre = "print(", post = ")" },
+    typescript = { pre = "console.log(", post = ")" },
+    sh = { pre = "echo " },
+    nim = { pre = "echo " },
+  }
+
+  local map = require 'utils'.map
+  map('n', 'gl', '<Plug>LogPrintToggle')
+  map('n', '[g', '<Plug>LogPrintAbove')
+  map('n', ']g', '<Plug>LogPrintBelow')
+end
+
+setups['vim-argwrap'] = function()
+  local noremap = require 'utils'.noremap
+  noremap('n', 'gJ', ':ArgWrap<CR>')
+  vim.g.argwrap_tail_comma_braces = '[{'
+end
+
 local p = require 'utils'.p
 
 local M = function(use)
@@ -86,12 +109,7 @@ local M = function(use)
     p 'https://github.com/machakann/vim-sandwich',
     config = configs['vim-sandwich'],
   }
-  use {
-    p 'https://github.com/deris/vim-shot-f',
-  }
-  use {
-    p 'https://github.com/tommcdo/vim-exchange',
-  }
+  use { p 'https://github.com/tommcdo/vim-exchange', }
   use {
     p 'https://github.com/numToStr/Comment.nvim',
     config = configs['Comment.nvim'],
@@ -111,8 +129,18 @@ local M = function(use)
     p 'https://github.com/AndrewRadev/switch.vim',
     config = configs['switch.vim'],
   }
+  use { p 'https://github.com/AndrewRadev/deleft.vim', }
+  use { p 'https://github.com/vim-scripts/argtextobj.vim', }
   use {
-    p 'https://github.com/AndrewRadev/deleft.vim',
+    p 'https://github.com/aMOPel/vim-log-print',
+    setup = setups['vim-log-print'],
+    keys = '<Plug>LogPrint',
+    requires = 'Shougo/context_filetype.vim',
+  }
+  use {
+    p 'https://github.com/FooSoft/vim-argwrap',
+    setup = setups['vim-argwrap'],
+    cmd = 'ArgWrap',
   }
 end
 return M

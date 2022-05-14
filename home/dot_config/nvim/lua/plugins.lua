@@ -1,8 +1,9 @@
 -- auto recompile lazy loading after altering plugins.lua
+-- TODO: figure out how to make this work
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+    autocmd BufWritePost $XDG_DATA_HOME/chezmoi/home/nvim/lua/* :PackerCompile<CR>
   augroup end
 ]])
 

@@ -29,3 +29,10 @@ nvim/
   |-general # general/global settings writtin in vimscript
 |-init.vim # from here vimscript/general/* is sourced, as well as lua/main.lua
 ```
+
+# Notable features
+
+1. the directory crawling in ft/ftplugins and plugins/misc, allowing you to just add new files, without explicitly sourcing them
+2. specifying all plugin names as full github links, allowing me to immediately open them in the browser with a terminal shortcut
+(packer does not like this, thats why the `utils.p` function reduces the links to `username/reponame` for packer)
+3. the `ft_` and `plugin_config_template` files, providing guidelines

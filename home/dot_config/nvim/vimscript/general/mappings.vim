@@ -79,7 +79,8 @@ cnoremap <C-s> <C-u>write<CR>
 nnoremap <leader>m :make<CR>
 
 " close all temp windows
-nnoremap <silent> <c-w>q :cclose<CR>:pclose<CR>:helpclose<CR>:lclose<CR>
+nnoremap <silent> <c-w>a :cclose<CR>:pclose<CR>:helpclose<CR>:lclose<CR>
+nnoremap <silent> <c-w><c-a> :cclose<CR>:pclose<CR>:helpclose<CR>:lclose<CR>
 
 "tab control
 nnoremap <C-t>n :tabnew<cr>
@@ -154,11 +155,11 @@ vnoremap ie :normal ggVG<cr>
 " vnoremap P "+P
 
 nnoremap <C-e> :e ./
-nnoremap <C-q> :b <C-d>
+nnoremap <C-q> :b
 
 nmap <leader>id O<esc>v:!date --date='TZ="Berlin" now'<cr>
 
-tnoremap <c-q> <C-\><C-n>
+tnoremap <F11> <C-\><C-n>
 autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s/// \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 autocmd MyAutoCmd BufWritePost $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
 

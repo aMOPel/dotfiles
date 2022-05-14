@@ -70,3 +70,8 @@ cd $DOTSESSIONS/kitty; v
 
 export PATH=$HOME/.nimble/bin:$PATH
 
+if [ -d $HOME/.local/zsh-fpath ]; then
+  export FPATH="$HOME/.local/zsh-fpath:$FPATH"
+fi
+
+export COMPE_ZSH_CACHE_DIR=$HOME/.cache/nvim/cmp-zsh

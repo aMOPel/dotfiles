@@ -23,9 +23,9 @@ configs['nvim-lspconfig'] = function()
     if client.resolved_capabilities.implementation then
       buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     end
-    if client.resolved_capabilities.find_references then
-      buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    end
+    -- if client.resolved_capabilities.find_references then
+    --   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    -- end
     if client.resolved_capabilities.hover then
       buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     end
@@ -159,7 +159,7 @@ local M = function(use)
       { p 'https://github.com/williamboman/nvim-lsp-installer' },
       {
         p 'https://gitlab.com/yorickpeterse/nvim-dd',
-        config = function() require('dd').setup { timeout = 1000, } end
+        -- config = function() require('dd').setup { timeout = 1000, } end
       },
       { p 'https://github.com/j-hui/fidget.nvim' },
       { p 'https://github.com/b0o/SchemaStore.nvim' },
