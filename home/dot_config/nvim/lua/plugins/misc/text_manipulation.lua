@@ -27,9 +27,13 @@ configs['Comment.nvim'] = function()
       extra = true,
       extended = false,
     },
+    toggler = {
+      line = 'gcc',
+      block = '<nop>',
+    },
     opleader = {
       line = 'gc',
-      block = 'gb',
+      block = '<nop>',
     },
     pre_hook = function(ctx)
       local u = require('Comment.utils')
@@ -66,14 +70,19 @@ configs['vim-surround-funk'] = function()
   map('o', 'in', '<Plug>(SelectFunctionName)')
   map('x', 'iN', '<Plug>(SelectFunctionNAME)')
   map('o', 'iN', '<Plug>(SelectFunctionNAME)')
-  map('n', 'gpf', '<Plug>(GripSurroundObject)')
-  map('v', 'gpf', '<Plug>(GripSurroundObject)')
+  -- map('n', 'gpf', '<Plug>(GripSurroundObject)')
+  -- map('v', 'gpf', '<Plug>(GripSurroundObject)')
   -- nmap <silent> gS <Plug>(GripSurroundObjectNoPaste)
   -- vmap <silent> gS <Plug>(GripSurroundObjectNoPaste)
 end
 
 configs['CamelCaseMotion'] = function()
-  vim.g.camelcasemotion_key = ','
+  -- vim.g.camelcasemotion_key = ','
+  local map = require 'utils'.map
+  map('', ',w', '<Plug>CamelCaseMotion_w')
+  map('', ',b', '<Plug>CamelCaseMotion_b')
+  map('', ',e', '<Plug>CamelCaseMotion_e')
+  map('', ',ge', '<Plug>CamelCaseMotion_ge')
 end
 
 configs['switch.vim'] = function()
@@ -102,6 +111,42 @@ setups['vim-argwrap'] = function()
   vim.g.argwrap_tail_comma_braces = '[{'
 end
 
+configs['textobj-word-column.vim'] = function()
+  vim.g.textobj_wordcolumn_no_default_key_mappings = 1
+
+  vim.fn['textobj#user#map']('wordcolumn', {
+    word = {
+      ['select-i'] = 'ic',
+      ['select-a'] = 'ac',
+    },
+    WORD = {
+      ['select-i'] = 'iC',
+      ['select-a'] = 'aC',
+    },
+  })
+end
+
+setups['textobj-pastedtext.vim'] = function()
+  vim.g.pastedtext_select_key = 'gp'
+end
+
+configs['targets.vim'] = function()
+  vim.g.targets_aiAI = 'ai  '
+  vim.g.targets_nl = '  '
+  vim.g.targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
+  vim.api.nvim_create_autocmd(
+    {'User'},
+    {
+      pattern = 'targets#mappings#user',
+      group = 'MyAutoCmd',
+      callback = function()
+        vim.fn['targets#mappings#extend']({
+          a = {argument = {{o = '[{([]', c = '[])}]', s = ','}}},
+        })
+      end,
+  })
+end
+
 local p = require 'utils'.p
 
 local M = function(use)
@@ -114,9 +159,6 @@ local M = function(use)
     p 'https://github.com/numToStr/Comment.nvim',
     config = configs['Comment.nvim'],
   }
-  -- use {
-  --   p 'https://github.com/michaeljsmith/vim-indent-object',
-  -- }
   use {
     p 'https://github.com/Matt-A-Bennett/vim-surround-funk',
     config = configs['vim-surround-funk'],
@@ -130,7 +172,6 @@ local M = function(use)
     config = configs['switch.vim'],
   }
   use { p 'https://github.com/AndrewRadev/deleft.vim', }
-  use { p 'https://github.com/vim-scripts/argtextobj.vim', }
   use {
     p 'https://github.com/aMOPel/vim-log-print',
     setup = setups['vim-log-print'],
@@ -142,13 +183,27 @@ local M = function(use)
     setup = setups['vim-argwrap'],
     cmd = 'ArgWrap',
   }
+  use {
+    p 'https://github.com/kana/vim-textobj-user',
+    requires = {
+      { p 'https://github.com/kana/vim-textobj-indent', after = 'vim-textobj-user', },
+      { p 'https://github.com/kana/vim-textobj-entire', after = 'vim-textobj-user', },
+      -- { p 'https://github.com/Chun-Yang/vim-textobj-chunk', after = 'vim-textobj-user', },
+      {
+        p 'https://github.com/saaguero/vim-textobj-pastedtext',
+        setup = setups['textobj-pastedtext.vim'],
+        after = 'vim-textobj-user',
+      },
+      {
+        p 'https://github.com/idbrii/textobj-word-column.vim',
+        config = configs['textobj-word-column.vim'],
+        after = 'vim-textobj-user',
+      },
+    },
+  }
+  use {
+    p 'https://github.com/wellle/targets.vim',
+    config = configs['targets.vim'],
+  }
 end
 return M
-
--- # [[plugins]]
--- # repo = 'wellle/targets.vim'
--- # hook_add = '''
--- #   let g:targets_aiAI = 'ai  '
--- #   let g:targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
--- #   let g:targets_nl = '  '
--- # '''

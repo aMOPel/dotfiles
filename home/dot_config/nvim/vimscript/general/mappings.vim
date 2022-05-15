@@ -12,7 +12,7 @@ nnoremap H g^
 nnoremap <leader><leader> :b#<CR>
 
 " yank until end of line
-nnoremap Y y$
+" nnoremap Y y$
 
 " . mapping in visual
 vnoremap . :norm.<CR>
@@ -58,7 +58,7 @@ nmap <BS> %
 xmap <BS> %
 
 " Select last paste
-nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
+" nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
 " Quick substitute within selected area
 xnoremap <leader>sg :s//g<Left><Left>
@@ -130,8 +130,8 @@ nnoremap <silent> <leader>ws mb:%s/\s*$//<cr>:nohlsearch<C-R>=has('diff')?'<Bar>
 " -------------------------------------------------------------------
 " wordobjects
 " ie = inner entire buffer
-onoremap ie :exec "normal! ggVG"<cr>
-vnoremap ie :normal ggVG<cr>
+" onoremap ie :exec "normal! ggVG"<cr>
+" vnoremap ie :normal ggVG<cr>
 
 " -------------------------------------------------------------------
 " command and autocommands
@@ -160,51 +160,49 @@ nnoremap <C-q> :b
 nmap <leader>id O<esc>v:!date --date='TZ="Berlin" now'<cr>
 
 tnoremap <F11> <C-\><C-n>
-autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s/// \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-autocmd MyAutoCmd BufWritePost $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
 
-let s:HEX_CHARS = [
-  \ '0', '1', '2', '3', '4', '5', '6', '7',
-  \ '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
-
-function! s:AddDecValue(hex_array, value, source_base, target_base)
-  let carryover = a:value
-  let tmp = 0
-  let i = len(a:hex_array) - 1
-  while (i >= 0)
-    let tmp = (index(s:HEX_CHARS, a:hex_array[i]) * a:source_base) + carryover
-    let a:hex_array[i] = s:HEX_CHARS[tmp % a:target_base]
-    let carryover = tmp / a:target_base
-    let i = i -1
-  endwhile
-endfunction
-
-function! s:Convert(string, source_base, target_base)
-  let input = split(toupper(a:string), '.\zs')
-  let output = repeat(['0'], len(input) * 4)
-  for digit in input
-    let idx = index(s:HEX_CHARS, digit)
-    if idx == -1
-      echo 'Error converting base - unknown digit: ' . digit
-      return ''
-    end
-    call s:AddDecValue(output, idx, a:source_base, a:target_base)
-  endfor
-  while len(output) > 1 && output[0] == '0'
-    let output = output[1:]
-  endwhile
-  return join(output, '')
-endfunction
-
-command! -nargs=? -range HD call s:Hex2Dec(<line1>, <line2>)
-function! s:Hex2Dec(line1, line2) range
-  let cmd = 's/0x\(\x\+\)/\=printf("%s",s:Convert(submatch(1), 16, 10))/g'
-  try
-    execute a:line1 . ',' . a:line2 . cmd
-  catch
-    " echo 'No hex number starting with "0x" found'
-  endtry
-endfunction
+" let s:HEX_CHARS = [
+"   \ '0', '1', '2', '3', '4', '5', '6', '7',
+"   \ '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+"
+" function! s:AddDecValue(hex_array, value, source_base, target_base)
+"   let carryover = a:value
+"   let tmp = 0
+"   let i = len(a:hex_array) - 1
+"   while (i >= 0)
+"     let tmp = (index(s:HEX_CHARS, a:hex_array[i]) * a:source_base) + carryover
+"     let a:hex_array[i] = s:HEX_CHARS[tmp % a:target_base]
+"     let carryover = tmp / a:target_base
+"     let i = i -1
+"   endwhile
+" endfunction
+"
+" function! s:Convert(string, source_base, target_base)
+"   let input = split(toupper(a:string), '.\zs')
+"   let output = repeat(['0'], len(input) * 4)
+"   for digit in input
+"     let idx = index(s:HEX_CHARS, digit)
+"     if idx == -1
+"       echo 'Error converting base - unknown digit: ' . digit
+"       return ''
+"     end
+"     call s:AddDecValue(output, idx, a:source_base, a:target_base)
+"   endfor
+"   while len(output) > 1 && output[0] == '0'
+"     let output = output[1:]
+"   endwhile
+"   return join(output, '')
+" endfunction
+"
+" command! -nargs=? -range HD call s:Hex2Dec(<line1>, <line2>)
+" function! s:Hex2Dec(line1, line2) range
+"   let cmd = 's/0x\(\x\+\)/\=printf("%s",s:Convert(submatch(1), 16, 10))/g'
+"   try
+"     execute a:line1 . ',' . a:line2 . cmd
+"   catch
+"     " echo 'No hex number starting with "0x" found'
+"   endtry
+" endfunction
 
 " custom abbreviation db mapping
 " vsplit the file
@@ -221,6 +219,8 @@ endfunc
 
 autocmd MyAutoCmd BufEnter *dot_zshenv,*dot_zshrc,*dot_zshaliasrc,*dot_profile set ft=zsh
 autocmd MyAutoCmd BufEnter *kitty*.conf set ft=kitty
+autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s/// \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+autocmd MyAutoCmd BufWritePost $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
 
 
 command! DiagnosticEnable lua vim.diagnostic.enable()
