@@ -8,10 +8,6 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
-augroup MyColors
-  autocmd!
-augroup END
-
 augroup MyFt
   autocmd!
 augroup END

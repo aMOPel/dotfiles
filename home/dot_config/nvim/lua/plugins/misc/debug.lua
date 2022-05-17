@@ -1,9 +1,9 @@
-local configs = {}
-
-configs[''] = function()
-end
-
-local p = require 'utils'.p
+-- local configs = {}
+--
+-- configs[''] = function()
+-- end
+--
+-- local p = require 'utils'.p
 
 local M = function(use)
   -- use {
@@ -113,3 +113,5 @@ return M
 -- 	nnoremap <silent> <leader>de <Cmd>lua require("dapui").eval()<CR>
 -- 	vnoremap <silent> <leader>de <Cmd>lua require("dapui").eval()<CR>
 -- '''
+
+-- https://github.com/sakhnik/nvim-gdb

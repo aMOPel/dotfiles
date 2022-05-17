@@ -161,7 +161,10 @@ local M = function(use)
         p 'https://gitlab.com/yorickpeterse/nvim-dd',
         -- config = function() require('dd').setup { timeout = 1000, } end
       },
-      { p 'https://github.com/j-hui/fidget.nvim' },
+      {
+        p 'https://github.com/j-hui/fidget.nvim',
+        config = function() require('fidget').setup {} end
+      },
       { p 'https://github.com/b0o/SchemaStore.nvim' },
     },
     config = configs['nvim-lspconfig'],

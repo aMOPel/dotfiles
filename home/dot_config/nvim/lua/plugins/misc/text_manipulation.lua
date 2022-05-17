@@ -147,6 +147,13 @@ configs['targets.vim'] = function()
   })
 end
 
+configs['regreplop.vim'] = function()
+  local map = require 'utils'.map
+  map('n', '<c-p>', '<Plug>ReplaceMotion')
+  map('n', '<c-p><c-p>', '<Plug>ReplaceLine')
+  map('v', '<c-p>', '<Plug>ReplaceVisual')
+end
+
 local p = require 'utils'.p
 
 local M = function(use)
@@ -171,7 +178,7 @@ local M = function(use)
     p 'https://github.com/AndrewRadev/switch.vim',
     config = configs['switch.vim'],
   }
-  use { p 'https://github.com/AndrewRadev/deleft.vim', }
+  -- use { p 'https://github.com/AndrewRadev/deleft.vim', }
   use {
     p 'https://github.com/aMOPel/vim-log-print',
     setup = setups['vim-log-print'],
@@ -205,5 +212,10 @@ local M = function(use)
     p 'https://github.com/wellle/targets.vim',
     config = configs['targets.vim'],
   }
+  use {
+    p 'https://github.com/vim-scripts/regreplop.vim',
+    config = configs['regreplop.vim'],
+  }
+
 end
 return M

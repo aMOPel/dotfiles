@@ -98,6 +98,7 @@ setups['vim-dispatch'] = function()
   local noremap = require 'utils'.noremap
   noremap('n', '<leader>m', ':Make<cr>')
 end
+
 --------------------------------------------------------------------------------
 
 local p = require 'utils'.p

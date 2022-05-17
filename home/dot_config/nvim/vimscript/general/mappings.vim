@@ -217,10 +217,11 @@ func g:AddAbbreviation(selection)
   call writefile([a:selection . " : " . meaning], resolve(expand('$XDG_CONFIG_HOME/nvim/abbreviations.txt')), "a")
 endfunc
 
-autocmd MyAutoCmd BufEnter *dot_zshenv,*dot_zshrc,*dot_zshaliasrc,*dot_profile set ft=zsh
-autocmd MyAutoCmd BufEnter *kitty*.conf set ft=kitty
+autocmd CustomFileType BufEnter *dot_zshenv,*dot_zshrc,*dot_zshaliasrc,*dot_profile set ft=zsh
+autocmd CustomFileType BufEnter *kitty*.conf set ft=kitty
 autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s/// \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-autocmd MyAutoCmd BufWritePost $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
+" ChezmoiPost calls PackerCompile in plugins.lua
+autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap <silent>  :<c-u>write<cr>:!chezmoi apply --source-path "%"<cr>:doautocmd User ChezmoiPost<cr>
 
 
 command! DiagnosticEnable lua vim.diagnostic.enable()

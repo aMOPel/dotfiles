@@ -11,5 +11,6 @@ local M = function(use)
   use { p 'https://github.com/Shougo/context_filetype.vim', }
   use { p 'https://github.com/tpope/vim-repeat', }
   use { p 'https://github.com/nvim-lua/plenary.nvim', }
+  use { p 'https://github.com/MunifTanjim/nui.nvim', }
 end
 return M

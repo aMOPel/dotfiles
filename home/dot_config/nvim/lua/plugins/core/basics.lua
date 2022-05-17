@@ -3,9 +3,9 @@ local configs = {}
 configs['indent_blankline.nvim'] = function()
   -- vim.g.indent_blankline_use_treesitter = true
   -- vim.g.indent_blankline_show_current_context = true
-  require("indent_blankline").setup {
-    char = "|",
-    buftype_exclude = { "terminal", "help", "clap_input", "floaterm", "wilder", "lsp-installer" }
+  require('indent_blankline').setup {
+    char = '|',
+    buftype_exclude = { 'terminal', 'help', 'floaterm', 'lsp-installer', 'qf' }
   }
 end
 
