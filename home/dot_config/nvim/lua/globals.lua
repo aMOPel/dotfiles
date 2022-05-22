@@ -1,4 +1,8 @@
 local M = {
+  plugin = {
+    configs = {},
+    setups = {},
+  },
   lsp = {
     fts = {
     },

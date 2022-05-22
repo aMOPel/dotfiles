@@ -1,56 +1,10 @@
-local configs = {}
+local configs = require'globals'.plugin.configs
+local setups = require'globals'.plugin.setups
 
 
-configs['vim-vsnip'] = function()
-  local map = require 'utils'.map
-  vim.g.vsnip_snippet_dir = vim.fn.expand("$XDG_CONFIG_HOME/nvim/snippets")
-
-  map('i', '<Tab>', 'vsnip#available(1)  ? "<Plug>(vsnip-expand-or-jump)" : "<Tab>"', { silent = true, expr = true })
-  map('s', '<Tab>', 'vsnip#available(1)  ? "<Plug>(vsnip-expand-or-jump)" : "<Tab>"', { silent = true, expr = true })
-  map('i', '<S-Tab>', 'vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)"      : "<S-Tab>"', { silent = true, expr = true })
-  map('s', '<S-Tab>', 'vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)"      : "<S-Tab>"', { silent = true, expr = true })
-end
-
-configs['cmp-zsh'] = function()
-  require 'cmp_zsh'.setup {
-    filetypes = { 'sh', 'zsh' }
-  }
-end
-
-configs['cmp-git'] = function()
-  require 'cmp_git'.setup {
-    filetypes = { 'gitcommit' },
-    trigger_actions = {
-      {
-        debug_name = "git_commits",
-        trigger_character = "&",
-        action = function(sources, trigger_char, callback, params, git_info)
-          return sources.git:get_commits(callback, params, trigger_char)
-        end,
-      },
-    }
-  }
-end
-
-configs['cmp-tabnine'] = function()
-  local tabnine = require('cmp_tabnine.config')
-  tabnine:setup({
-    max_lines = 1000;
-    max_num_results = 20;
-    sort = true;
-    run_on_every_keystroke = true;
-    snippet_placeholder = '..';
-  })
-end
-
-configs['cmp-cmdline'] = function()
-  local map = require 'utils'.map
-  map('c', '<tab>', '')
-  map('c', '<s-tab>', '')
-  vim.opt.wildmenu = false
-end
-
-configs['nvim-cmp'] = function()
+table.insert(configs, {
+  name = 'nvim-cmp',
+  config = function()
   vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
   vim.opt.complete = {}
 
@@ -143,19 +97,78 @@ configs['nvim-cmp'] = function()
       { name = 'cmdline', max_item_count = 30, }
     }),
   })
-end
+end})
+
+table.insert(configs, {
+  name = 'vim-vsnip',
+  config = function()
+  local map = require 'utils'.map
+  vim.g.vsnip_snippet_dir = vim.fn.expand("$XDG_CONFIG_HOME/nvim/snippets")
+
+  map('i', '<Tab>', 'vsnip#available(1)  ? "<Plug>(vsnip-expand-or-jump)" : "<Tab>"', { silent = true, expr = true })
+  map('s', '<Tab>', 'vsnip#available(1)  ? "<Plug>(vsnip-expand-or-jump)" : "<Tab>"', { silent = true, expr = true })
+  map('i', '<S-Tab>', 'vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)"      : "<S-Tab>"', { silent = true, expr = true })
+  map('s', '<S-Tab>', 'vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)"      : "<S-Tab>"', { silent = true, expr = true })
+end})
+
+table.insert(configs, {
+  name = 'cmp-zsh',
+  config = function()
+  require 'cmp_zsh'.setup {
+    filetypes = { 'sh', 'zsh' }
+  }
+end})
+
+table.insert(configs, {
+  name = 'cmp-git',
+  config = function()
+  require 'cmp_git'.setup {
+    filetypes = { 'gitcommit' },
+    trigger_actions = {
+      {
+        debug_name = "git_commits",
+        trigger_character = "&",
+        action = function(sources, trigger_char, callback, params, git_info)
+          return sources.git:get_commits(callback, params, trigger_char)
+        end,
+      },
+    }
+  }
+end})
+
+table.insert(configs, {
+  name = 'cmp-tabnine',
+  config = function()
+  local tabnine = require('cmp_tabnine.config')
+  tabnine:setup({
+    max_lines = 1000;
+    max_num_results = 20;
+    sort = true;
+    run_on_every_keystroke = true;
+    snippet_placeholder = '..';
+  })
+end})
+
+table.insert(configs, {
+  name = 'cmp-cmdline',
+  config = function()
+  local map = require 'utils'.map
+  map('c', '<tab>', '')
+  map('c', '<s-tab>', '')
+  vim.opt.wildmenu = false
+end})
 
 local p = require 'utils'.p
 
 local M = function(use)
   use {
     p 'https://github.com/hrsh7th/nvim-cmp',
-    config = configs['nvim-cmp'],
-    event = { 'InsertEnter', 'CmdlineEnter' },
+    -- config = configs['nvim-cmp'],
+    -- event = { 'InsertEnter', 'CmdlineEnter' },
     requires = {
       {
         p 'https://github.com/hrsh7th/vim-vsnip',
-        config = configs['vim-vsnip'],
+        -- config = configs['vim-vsnip'],
         requires = {
           { p 'https://github.com/hrsh7th/vim-vsnip-integ', },
           { p 'https://github.com/rafamadriz/friendly-snippets', },
@@ -172,13 +185,13 @@ local M = function(use)
       { p 'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp', },
       {
         p 'https://github.com/petertriho/cmp-git',
-        config = configs['cmp-git'],
+        -- config = configs['cmp-git'],
         after = 'nvim-cmp',
         requires = 'nvim-lua/plenary.nvim',
       },
       {
         p 'https://github.com/tamago324/cmp-zsh',
-        config = configs['cmp-zsh'],
+        -- config = configs['cmp-zsh'],
         after = 'nvim-cmp',
       },
       { p 'https://github.com/onsails/lspkind-nvim', },
@@ -189,7 +202,7 @@ local M = function(use)
       },
       {
         p 'https://github.com/tzachar/cmp-tabnine',
-        config = configs['cmp-tabnine'],
+        -- config = configs['cmp-tabnine'],
         run = function()
           vim.pretty_print(
             vim.fn.system(
@@ -201,12 +214,11 @@ local M = function(use)
       },
       {
         p 'https://github.com/hrsh7th/cmp-cmdline',
-        config = configs['cmp-cmdline'],
+        -- config = configs['cmp-cmdline'],
         after = 'nvim-cmp',
       },
     },
   }
 
-  use { p 'https://github.com/hrsh7th/cmp-nvim-lsp', }
 end
 return M
