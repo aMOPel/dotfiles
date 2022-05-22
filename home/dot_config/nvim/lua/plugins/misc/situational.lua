@@ -20,8 +20,8 @@ setups['vim-grepper'] = function()
   noremap('n', '<leader>gr', ':Grepper -tool rg -grepprg rg -H --no-heading --vimgrep --smart-case --<CR>')
   noremap('n', '<leader>*', ':Grepper -tool rg -cword -noprompt -grepprg rg -H --no-heading --vimgrep --smart-case --<cr>')
 
-  map('n', 'gr', '<Plug>(GrepperOperator)')
-  map('x', 'gr', '<Plug>(GrepperOperator)')
+  map('n', ',gr', '<Plug>(GrepperOperator)')
+  map('x', ',gr', '<Plug>(GrepperOperator)')
 
   vim.cmd([[
 aug Grepper
@@ -59,6 +59,7 @@ setups['vim-fugitive'] = function()
   noremap('n', '<leader>gl', ':-tabnew<cr>:Gclog <CR>')
   noremap('n', '<leader>gd', ':-tabnew %<cr>:Gdiffsplit! <cr>')
 end
+vim.cmd[[au MyAutoCmd Filetype gitcommit nnoremap <buffer>  :wq<cr>]]
 
 configs['rnvimr'] = function()
   vim.g.rnvimr_enable_ex = 1
@@ -99,6 +100,61 @@ setups['vim-dispatch'] = function()
   noremap('n', '<leader>m', ':Make<cr>')
 end
 
+configs['dial.nvim'] = function()
+  local augend = require('dial.augend')
+  require('dial.config').augends:register_group{
+    default = {
+      augend.integer.alias.decimal,
+      augend.integer.alias.hex,
+      augend.integer.alias.octal,
+      augend.integer.alias.binary,
+      augend.constant.alias.bool,
+      augend.semver.alias.semver,
+      augend.date.alias['%Y/%m/%d'],
+      augend.date.alias['%m/%d/%Y'],
+      augend.date.alias['%d/%m/%Y'],
+      augend.date.alias['%m/%d/%y'],
+      augend.date.alias['%d/%m/%y'],
+      augend.date.alias['%m/%d'],
+      augend.date.alias['%-m/%-d'],
+      augend.date.alias['%Y-%m-%d'],
+      augend.date.alias['%H:%M:%S'],
+      augend.date.alias['%H:%M'],
+      augend.hexcolor.new{
+        case = 'lower',
+      },
+      augend.constant.new{ elements = {'and', 'or'}, word = true, cyclic = true, },
+      augend.constant.new{ elements = {'&&', '||'}, word = false, cyclic = true, },
+      augend.constant.new{ elements = {'on', 'off'}, word = false, cyclic = true, },
+      augend.constant.new{ elements = {'!=', '=='}, word = false, cyclic = true, },
+      augend.constant.new{
+        elements = {
+          'pick',
+          'fixup',
+          'reword',
+          'edit',
+          'squash',
+          'exec',
+          'break',
+          'drop',
+          'label',
+          'reset',
+          'merge',
+        },
+        word = false,
+        cyclic = true,
+      },
+    },
+  }
+
+  local noremap = require 'utils'.noremap
+  noremap('n', '<C-a>', require('dial.map').inc_normal())
+  noremap('n', '<C-x>', require('dial.map').dec_normal())
+  -- noremap('v', '<C-a>', require('dial.map').inc_visual())
+  -- noremap('v', '<C-x>', require('dial.map').dec_visual())
+  -- noremap('v', 'g<C-a>', require('dial.map').inc_gvisual())
+  -- noremap('v', 'g<C-x>', require('dial.map').dec_gvisual())
+end
 --------------------------------------------------------------------------------
 
 local p = require 'utils'.p
@@ -133,7 +189,7 @@ local M = function(use)
     p 'https://github.com/tpope/vim-fugitive',
     setup = setups['vim-fugitive'],
     cmd = { 'Git', 'Gclog', 'Gdiffsplit', 'GBrowse' },
-    requires = { p 'https://github.com/tpope/vim-rhubarb', },
+    requires = { p 'https://github.com/tpope/vim-rhubarb', after = 'vim-fugitive' },
   }
 
   use {
@@ -156,6 +212,11 @@ local M = function(use)
       p 'https://github.com/radenling/vim-dispatch-neovim',
       after = 'vim-dispatch',
     },
+  }
+
+  use {
+    p 'https://github.com/monaqa/dial.nvim',
+    config = configs['dial.nvim'],
   }
 end
 return M

@@ -29,11 +29,11 @@ configs['Comment.nvim'] = function()
     },
     toggler = {
       line = 'gcc',
-      block = '<nop>',
+      -- block = '',
     },
     opleader = {
       line = 'gc',
-      block = '<nop>',
+      -- block = '',
     },
     pre_hook = function(ctx)
       local u = require('Comment.utils')
@@ -131,22 +131,28 @@ setups['textobj-pastedtext.vim'] = function()
 end
 
 configs['targets.vim'] = function()
-  vim.g.targets_aiAI = 'ai  '
-  vim.g.targets_nl = '  '
+  vim.g.targets_aiAI = { 'a', 'i', ' ', ' ' }
+  vim.g.targets_nl = { ' ', ' ' }
   vim.g.targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
-  vim.api.nvim_create_autocmd(
-    {'User'},
-    {
-      pattern = 'targets#mappings#user',
-      group = 'MyAutoCmd',
-      callback = function()
-        vim.fn['targets#mappings#extend']({
-          a = {argument = {{o = '[{([]', c = '[])}]', s = ','}}},
-        })
-      end,
-  })
-end
+  vim.cmd [[
+autocmd MyPlugins User targets#mappings#user call targets#mappings#extend({
+    \ 'a': {'argument': [{'o': '[([{]', 'c': '[}])]', 's': ','}]},
+    \ })
+]]
 
+  -- vim.api.nvim_create_autocmd(
+  --   { 'User' },
+  --   {
+  --   pattern = 'targets#mappings#user',
+  --   group = 'MyAutoCmd',
+  --   callback = function()
+  --     vim.fn['targets#mappings#extend']({
+  --       a = {},
+  --     })
+  --   end,
+  --   once = true,
+  -- })
+end
 configs['regreplop.vim'] = function()
   local map = require 'utils'.map
   map('n', '<c-p>', '<Plug>ReplaceMotion')

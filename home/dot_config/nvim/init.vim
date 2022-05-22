@@ -1,3 +1,11 @@
+" DONE?: fix autocmd doubling in config call when recompiling packer
+" DONE?: fix lsp lazy loading
+" TODO: fix delay on <, related to comment blockwise
+" TODO: take care of dial.nvim
+" TODO: fix CursorHold error
+" TODO: fix packer compile autocmd
+" TODO: fix obsession tabline indicator
+" TODO: decouple on ft plugins, move registration of fts to ft/ftconfigs
 
 function! s:source_viml(path) abort
   let abspath = resolve(expand('$XDG_CONFIG_HOME/nvim/vimscript/general/' . a:path))

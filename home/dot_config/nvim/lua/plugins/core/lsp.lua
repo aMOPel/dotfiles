@@ -23,9 +23,9 @@ configs['nvim-lspconfig'] = function()
     if client.resolved_capabilities.implementation then
       buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     end
-    -- if client.resolved_capabilities.find_references then
-    --   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    -- end
+    if client.resolved_capabilities.find_references then
+      buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    end
     if client.resolved_capabilities.hover then
       buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     end
@@ -71,15 +71,15 @@ configs['nvim-lspconfig'] = function()
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
       vim.api.nvim_exec([[
-      hi LspReferenceRead  cterm=underline term=underline gui=underline
-      hi LspReferenceText  cterm=underline term=underline gui=underline
-      hi LspReferenceWrite cterm=underline term=underline gui=underline
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]] , false)
+hi LspReferenceRead  cterm=underline term=underline gui=underline
+hi LspReferenceText  cterm=underline term=underline gui=underline
+hi LspReferenceWrite cterm=underline term=underline gui=underline
+augroup lsp_document_highlight
+  autocmd! * <buffer>
+  autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+  autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+augroup END
+]] , false)
     end
   end
 
@@ -109,7 +109,7 @@ configs['nvim-lspconfig'] = function()
 
   local lspconfig = require('lspconfig')
 
-  function default_config(on_attach, capabilities)
+  local function default_config()
     return {
       capabilities = capabilities,
       on_attach = on_attach,
@@ -119,11 +119,11 @@ configs['nvim-lspconfig'] = function()
     }
   end
 
-  function setup_server(server_name, server_config)
+  local function setup_server(server_name, server_config)
     local config = {}
 
     if server_config == 'default' then
-      config = default_config(on_attach, capabilities)
+      config = default_config()
     elseif type(server_config) == 'function' then
       config = server_config(on_attach, capabilities)
     else
@@ -155,7 +155,7 @@ local M = function(use)
   use {
     p 'https://github.com/neovim/nvim-lspconfig',
     requires = {
-      { 'cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-nvim-lsp' },
       { p 'https://github.com/williamboman/nvim-lsp-installer' },
       {
         p 'https://gitlab.com/yorickpeterse/nvim-dd',
