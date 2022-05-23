@@ -1,6 +1,10 @@
-local configs = {}
+local plugins = require'globals'.plugins
 
-configs['editorconfig.vim'] = function()
+table.insert(plugins, {
+  name = 'editorconfig.vim',
+  setup = function()
+  end,
+  config = function()
   vim.g.EditorConfig_exclude_patterns = { 'fugitive://.*' }
   vim.g.EditorConfig_max_line_indicator = "line"
   vim.g.EditorConfig_preserve_formatoptions = 1
@@ -16,15 +20,13 @@ configs['editorconfig.vim'] = function()
   --   group = 'MyAutoCmd',
   --   callback = function() vim.b.EditorConfig_disable = 1 end,
   -- })
-end
+end,
+})
 
 local p = require 'utils'.p
 
 local M = function(use)
-  use {
-    p 'https://github.com/editorconfig/editorconfig-vim',
-    config = configs['editorconfig.vim']
-  }
+  use { p 'https://github.com/editorconfig/editorconfig-vim', }
 end
 return M
 -- https://github.com/tpope/vim-dotenv

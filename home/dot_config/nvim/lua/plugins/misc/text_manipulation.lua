@@ -1,7 +1,8 @@
-local configs = {}
-local setups = {}
+local plugins = require'globals'.plugins
 
-configs['vim-sandwich'] = function()
+table.insert(plugins, {
+  name = 'vim-sandwich',
+  setup = function()
   vim.cmd [[runtime vimscript/vim-sandwich/surround.vim]]
 
   local map = require 'utils'.map
@@ -18,9 +19,16 @@ configs['vim-sandwich'] = function()
   -- 	" xmap am <Plug>(textobj-sandwich-literal-query-a)
   -- 	" omap im <Plug>(textobj-sandwich-literal-query-i)
   -- 	" omap am <Plug>(textobj-sandwich-literal-query-a)
-end
+  end,
+  config = function()
+end,
+})
 
-configs['Comment.nvim'] = function()
+table.insert(plugins, {
+  name = 'Comment.nvim',
+  setup = function()
+  end,
+  config = function()
   require('Comment').setup {
     mappings = {
       basic = true,
@@ -42,9 +50,14 @@ configs['Comment.nvim'] = function()
       end
     end,
   }
-end
+end,
+})
 
-configs['vim-surround-funk'] = function()
+table.insert(plugins, {
+  name = 'vim-surround-funk',
+  setup = function()
+  end,
+  config = function()
   vim.g.surround_funk_create_mappings = 0
 
   local map = require 'utils'.map
@@ -74,22 +87,35 @@ configs['vim-surround-funk'] = function()
   -- map('v', 'gpf', '<Plug>(GripSurroundObject)')
   -- nmap <silent> gS <Plug>(GripSurroundObjectNoPaste)
   -- vmap <silent> gS <Plug>(GripSurroundObjectNoPaste)
-end
+end,
+})
 
-configs['CamelCaseMotion'] = function()
+table.insert(plugins, {
+  name = 'CamelCaseMotion',
+  setup = function()
+  end,
+  config = function()
   -- vim.g.camelcasemotion_key = ','
   local map = require 'utils'.map
   map('', ',w', '<Plug>CamelCaseMotion_w')
   map('', ',b', '<Plug>CamelCaseMotion_b')
   map('', ',e', '<Plug>CamelCaseMotion_e')
   map('', ',ge', '<Plug>CamelCaseMotion_ge')
-end
+end,
+})
 
-configs['switch.vim'] = function()
+table.insert(plugins, {
+  name = 'switch.vim',
+  setup = function()
+  end,
+  config = function()
   vim.g.switch_mapping = "gs"
-end
+end,
+})
 
-setups['vim-log-print'] = function()
+table.insert(plugins, {
+  name = 'vim-log-print',
+  setup = function()
   vim.g['log_print#default_mappings'] = 0
 
   vim.g['log_print#languages'] = {
@@ -103,15 +129,27 @@ setups['vim-log-print'] = function()
   map('n', 'gl', '<Plug>LogPrintToggle')
   map('n', '[g', '<Plug>LogPrintAbove')
   map('n', ']g', '<Plug>LogPrintBelow')
-end
+end,
+  config = function()
+  end,
+})
 
-setups['vim-argwrap'] = function()
+table.insert(plugins, {
+  name = 'vim-argwrap',
+  setup = function()
   local noremap = require 'utils'.noremap
   noremap('n', 'gJ', ':ArgWrap<CR>')
   vim.g.argwrap_tail_comma_braces = '[{'
-end
+end,
+  config = function()
+  end,
+})
 
-configs['textobj-word-column.vim'] = function()
+table.insert(plugins, {
+  name = 'textobj-word-column.vim',
+  setup = function()
+  end,
+  config = function()
   vim.g.textobj_wordcolumn_no_default_key_mappings = 1
 
   vim.fn['textobj#user#map']('wordcolumn', {
@@ -124,13 +162,23 @@ configs['textobj-word-column.vim'] = function()
       ['select-a'] = 'aC',
     },
   })
-end
+end,
+})
 
-setups['textobj-pastedtext.vim'] = function()
+table.insert(plugins, {
+  name = 'textobj-pastedtext.vim',
+  setup = function()
   vim.g.pastedtext_select_key = 'gp'
-end
+end,
+  config = function()
+  end,
+})
 
-configs['targets.vim'] = function()
+table.insert(plugins, {
+  name = 'targets.vim',
+  setup = function()
+  end,
+  config = function()
   vim.g.targets_aiAI = { 'a', 'i', ' ', ' ' }
   vim.g.targets_nl = { ' ', ' ' }
   vim.g.targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
@@ -152,49 +200,37 @@ autocmd MyPlugins User targets#mappings#user call targets#mappings#extend({
   --   end,
   --   once = true,
   -- })
-end
-configs['regreplop.vim'] = function()
+end,
+})
+
+table.insert(plugins, {
+  name = 'regreplop.vim',
+  setup = function()
+  end,
+  config = function()
   local map = require 'utils'.map
   map('n', '<c-p>', '<Plug>ReplaceMotion')
   map('n', '<c-p><c-p>', '<Plug>ReplaceLine')
   map('v', '<c-p>', '<Plug>ReplaceVisual')
-end
+end,
+})
 
 local p = require 'utils'.p
 
 local M = function(use)
-  use {
-    p 'https://github.com/machakann/vim-sandwich',
-    config = configs['vim-sandwich'],
-  }
+  use { p 'https://github.com/machakann/vim-sandwich', }
   use { p 'https://github.com/tommcdo/vim-exchange', }
-  use {
-    p 'https://github.com/numToStr/Comment.nvim',
-    config = configs['Comment.nvim'],
-  }
-  use {
-    p 'https://github.com/Matt-A-Bennett/vim-surround-funk',
-    config = configs['vim-surround-funk'],
-  }
-  use {
-    p 'https://github.com/bkad/CamelCaseMotion',
-    config = configs['CamelCaseMotion'],
-  }
-  use {
-    p 'https://github.com/AndrewRadev/switch.vim',
-    config = configs['switch.vim'],
-  }
+  use { p 'https://github.com/numToStr/Comment.nvim', }
+  use { p 'https://github.com/Matt-A-Bennett/vim-surround-funk', }
+  use { p 'https://github.com/bkad/CamelCaseMotion', }
+  use { p 'https://github.com/AndrewRadev/switch.vim', }
   -- use { p 'https://github.com/AndrewRadev/deleft.vim', }
+  use { p 'https://github.com/FooSoft/vim-argwrap', }
+  use { p 'https://github.com/wellle/targets.vim', }
+  use { p 'https://github.com/vim-scripts/regreplop.vim', }
   use {
     p 'https://github.com/aMOPel/vim-log-print',
-    setup = setups['vim-log-print'],
-    keys = '<Plug>LogPrint',
-    requires = 'Shougo/context_filetype.vim',
-  }
-  use {
-    p 'https://github.com/FooSoft/vim-argwrap',
-    setup = setups['vim-argwrap'],
-    cmd = 'ArgWrap',
+    requires = { 'https://github.com/Shougo/context_filetype.vim', },
   }
   use {
     p 'https://github.com/kana/vim-textobj-user',
@@ -202,26 +238,9 @@ local M = function(use)
       { p 'https://github.com/kana/vim-textobj-indent', after = 'vim-textobj-user', },
       { p 'https://github.com/kana/vim-textobj-entire', after = 'vim-textobj-user', },
       -- { p 'https://github.com/Chun-Yang/vim-textobj-chunk', after = 'vim-textobj-user', },
-      {
-        p 'https://github.com/saaguero/vim-textobj-pastedtext',
-        setup = setups['textobj-pastedtext.vim'],
-        after = 'vim-textobj-user',
-      },
-      {
-        p 'https://github.com/idbrii/textobj-word-column.vim',
-        config = configs['textobj-word-column.vim'],
-        after = 'vim-textobj-user',
-      },
+      { p 'https://github.com/saaguero/vim-textobj-pastedtext', after = 'vim-textobj-user', },
+      { p 'https://github.com/idbrii/textobj-word-column.vim', after = 'vim-textobj-user', },
     },
   }
-  use {
-    p 'https://github.com/wellle/targets.vim',
-    config = configs['targets.vim'],
-  }
-  use {
-    p 'https://github.com/vim-scripts/regreplop.vim',
-    config = configs['regreplop.vim'],
-  }
-
 end
 return M

@@ -1,11 +1,3 @@
-" DONE?: fix autocmd doubling in config call when recompiling packer
-" DONE?: fix lsp lazy loading
-" TODO: fix delay on <, related to comment blockwise
-" TODO: take care of dial.nvim
-" TODO: fix CursorHold error
-" TODO: fix packer compile autocmd
-" TODO: fix obsession tabline indicator
-" TODO: decouple on ft plugins, move registration of fts to ft/ftconfigs
 
 function! s:source_viml(path) abort
   let abspath = resolve(expand('$XDG_CONFIG_HOME/nvim/vimscript/general/' . a:path))
@@ -22,7 +14,6 @@ augroup END
 
 augroup CustomFileType
   autocmd!
-  au BufRead,BufNewFile *.tscn,*.tres,*.import,*.godot set filetype=dosini
 augroup END
 
 " -------------------------------------------------------------------
@@ -52,15 +43,17 @@ if has('vim_starting')
   let g:loaded_matchit           = 1
   let g:loaded_matchparen        = 1
   let g:loaded_netrwFileHandlers = 1
-  let g:loaded_netrwPlugin       = 1
   let g:loaded_netrwSettings     = 1
   let g:loaded_rrhelper          = 1
   let g:loaded_shada_plugin      = 1
-  let g:loaded_spellfile_plugin  = 1
   let g:loaded_tarPlugin         = 1
   let g:loaded_tutor_mode_plugin = 1
   let g:loaded_vimballPlugin     = 1
   let g:loaded_zipPlugin         = 1
+
+  " to download spellfiles uncomment these:
+  let g:loaded_netrwPlugin       = 1
+  let g:loaded_spellfile_plugin  = 1
 endif
 
 " -------------------------------------------------------------------

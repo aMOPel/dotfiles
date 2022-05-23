@@ -219,12 +219,13 @@ endfunc
 
 autocmd CustomFileType BufEnter *dot_zshenv,*dot_zshrc,*dot_zshaliasrc,*dot_profile set ft=zsh
 autocmd CustomFileType BufEnter *kitty*.conf set ft=kitty
+autocmd CustomFileType BufEnter *.tscn,*.tres,*.import,*.godot set filetype=dosini
+
 autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s/// \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
-" ChezmoiPost calls PackerCompile in plugins.lua
-autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
-" autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap <silent>  :<c-u>write<cr>:!chezmoi apply --source-path ""<cr>
-":doautocmd User ChezmoiPost<cr>
-" autocmd MyAutoCmd User ChezmoiPost sleep | PackerCompile | echomsg 'packer recompiled'
+
+" autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
+autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap <silent>  :<c-u>silent! write<cr>:silent! !chezmoi apply --source-path %<cr>:echomsg "chezmoi applied"<cr>:doautocmd User ChezmoiPost<cr>
+autocmd MyAutoCmd User ChezmoiPost sleep | echomsg 'packer recompiled' | PackerCompile
 
 command! DiagnosticEnable lua vim.diagnostic.enable()
 command! DiagnosticDisable lua vim.diagnostic.disable()

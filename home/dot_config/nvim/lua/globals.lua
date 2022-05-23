@@ -1,7 +1,6 @@
 local M = {
-  plugin = {
-    configs = {},
-    setups = {},
+  plugins = {
+    -- { name = '', config = '', setup = '' }
   },
   lsp = {
     fts = {

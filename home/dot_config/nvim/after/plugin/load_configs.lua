@@ -1,6 +1,5 @@
-local configs = require'globals'.plugin.configs
+local plugins = require'globals'.plugins
 
-for plugin_name, data in pairs(configs) do
-  print(plugin_name)
+for _, data in pairs(plugins) do
   data.config()
 end

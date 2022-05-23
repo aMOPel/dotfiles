@@ -1,5 +1,5 @@
-local setups = require'globals'.plugin.setups
+local plugins = require'globals'.plugins
 
-for _, setup in pairs(setups) do
-  setup()
+for _, data in pairs(plugins) do
+  data.setup()
 end

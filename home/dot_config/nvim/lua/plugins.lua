@@ -1,5 +1,3 @@
--- auto recompile lazy loading after altering plugins.lua
--- vim.cmd([[]])
 
 local fn = vim.fn
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -27,19 +25,15 @@ require('packer').startup(function(use)
     end
   end
 
-  use {
-    p 'https://github.com/wbthomason/packer.nvim',
-  }
-    -- setup = function()
-      vim.cmd[[
+  vim.cmd [[
 augroup MyPlugins
   autocmd!
 augroup END
 ]]
-    -- end,
+
+  use { p 'https://github.com/wbthomason/packer.nvim', }
 
   -- importing in order
-  useCore('libs')
   useCore('filetypes')
   useCore('lsp')
   useCore('treesitter')
@@ -49,7 +43,6 @@ augroup END
 
   -- importing all misc scripts
   useDir(misc_prefix)
-
 end)
 
 local noremap = utils.noremap

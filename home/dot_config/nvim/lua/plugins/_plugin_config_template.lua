@@ -1,14 +1,18 @@
-local configs = {}
+local plugins = require'globals'.plugins
 
-configs[''] = function()
-end
+table.insert(plugins, {
+  name = '',
+  setup = function()
+  end,
+  config = function()
+  end,
+})
 
 local p = require 'utils'.p
 
 local M = function(use)
   use {
     p '',
-    config = configs['']
   }
 end
 return M
