@@ -1,15 +1,32 @@
 local plugins = require 'globals'.plugins
 
 table.insert(plugins, {
+  name = 'vim-localvimrc',
+  setup = function()
+    vim.g.localvimrc_persistent = 2
+    vim.g.localvimrc_persistence_file = vim.fn.expand('$XDG_DATA_HOME/nvim/.localvimrc_persistent')
+  end,
+  config = function()
+  end,
+})
+
+table.insert(plugins, {
   name = 'indent_blankline.nvim',
   setup = function()
+    vim.g.indent_blankline_filetype_exclude = {
+      'terminal',
+      'help',
+      'floaterm',
+      'lsp-installer',
+      'qf',
+      'cybu',
+    }
   end,
   config = function()
     -- vim.g.indent_blankline_use_treesitter = true
     -- vim.g.indent_blankline_show_current_context = true
     require('indent_blankline').setup {
       char = '|',
-      buftype_exclude = { 'terminal', 'help', 'floaterm', 'lsp-installer', 'qf' }
     }
   end,
 })
@@ -87,16 +104,17 @@ table.insert(plugins, {
 table.insert(plugins, {
   name = 'errormarker.vim',
   setup = function()
-  end,
-  config = function()
     vim.g.errormarker_errortext = ""
     vim.g.errormarker_warningtext = ""
+  end,
+  config = function()
   end,
 })
 
 local p = require 'utils'.p
 
 local M = function(use)
+  use { p 'https://github.com/embear/vim-localvimrc', }
   use { p 'https://github.com/lukas-reineke/indent-blankline.nvim', }
   use { p 'https://github.com/andymass/vim-matchup', }
   use { p 'https://github.com/svermeulen/vim-cutlass', }

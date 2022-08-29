@@ -27,3 +27,4 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 export RANGER_LOAD_DEFAULT_RC=FALSE
+. "$HOME/.cargo/env"

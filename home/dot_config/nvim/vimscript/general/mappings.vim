@@ -58,10 +58,11 @@ nmap <BS> %
 xmap <BS> %
 
 " Select last paste
-" nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
+nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
 " Quick substitute within selected area
 xnoremap <leader>sg :s//g<Left><Left>
+nnoremap <leader>sg mz*:%s///g\|norm g`z<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " Open file under the cursor in a vsplit
 nnoremap gf :vertical wincmd f<CR>
@@ -224,8 +225,8 @@ autocmd CustomFileType BufEnter *.tscn,*.tres,*.import,*.godot set filetype=dosi
 autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s/// \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
-autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap <silent>  :<c-u>silent! write<cr>:silent! !chezmoi apply --source-path %<cr>:echomsg "chezmoi applied"<cr>:doautocmd User ChezmoiPost<cr>
-autocmd MyAutoCmd User ChezmoiPost sleep | echomsg 'packer recompiled' | PackerCompile
+autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap <silent>  :<c-u>silent! write<cr>:silent! !chezmoi apply --source-path %<cr>:echo "chezmoi applied"<cr>:doautocmd User ChezmoiPost<cr>
+autocmd MyAutoCmd User ChezmoiPost sleep | PackerCompile
 
 command! DiagnosticEnable lua vim.diagnostic.enable()
 command! DiagnosticDisable lua vim.diagnostic.disable()

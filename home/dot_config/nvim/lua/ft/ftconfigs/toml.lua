@@ -1,10 +1,10 @@
-local g = require 'globals'
-local add = require 'utils'.addTable
+local g = require("globals")
+local add = require("utils").addTable
 
-local ft = 'toml'
+local ft = "toml"
 
 add(g.lsp.fts, {
-  ft,
+	ft,
 })
 
 -- add(g.lsp.servers.lsp_installer, {
@@ -12,5 +12,13 @@ add(g.lsp.fts, {
 -- })
 
 add(g.treesitter.ensure_installed, {
-  ft,
+	ft,
 })
+
+-- add(g.formatter.filetype, {
+-- 	[ft] = { require("formatter.filetypes")[ft].taplo },
+-- })
+--
+-- add(g.formatter.on_save, {
+--  "*." .. ft,
+-- })

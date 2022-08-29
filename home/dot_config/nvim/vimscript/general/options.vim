@@ -78,7 +78,7 @@ set lazyredraw
 " set tildeop
 
 " external vimrc
-set exrc
+set noexrc
 set secure
 
 "spell checking

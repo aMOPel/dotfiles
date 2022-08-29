@@ -2,12 +2,12 @@ local M = {}
 
 M.noremap = function(mode, keys, mapping, args)
   args = args or { silent = true, noremap = true }
-  vim.api.nvim_set_keymap(mode, keys, mapping, args)
+  vim.keymap.set(mode, keys, mapping, args)
 end
 
 M.map = function(mode, keys, mapping, args)
   args = args or { silent = true, noremap = false }
-  vim.api.nvim_set_keymap(mode, keys, mapping, args)
+  vim.keymap.set(mode, keys, mapping, args)
 end
 
 M.noremap_buffer = function(mode, keys, mapping, args)

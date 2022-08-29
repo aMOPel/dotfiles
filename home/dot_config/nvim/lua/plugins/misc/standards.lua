@@ -27,6 +27,7 @@ local p = require 'utils'.p
 
 local M = function(use)
   use { p 'https://github.com/editorconfig/editorconfig-vim', }
+  use { p 'https://github.com/tpope/vim-dotenv', }
 end
 return M
 -- https://github.com/tpope/vim-dotenv

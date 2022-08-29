@@ -1,16 +1,24 @@
-local g = require 'globals'
-local add = require 'utils'.addTable
+local g = require("globals")
+local add = require("utils").addTable
 
-local ft = 'yaml'
+local ft = "yaml"
 
 add(g.lsp.fts, {
-  ft,
+	ft,
 })
 
 add(g.lsp.servers.lsp_installer, {
-  yamlls = 'default',
+	yamlls = "default",
 })
 
 add(g.treesitter.ensure_installed, {
-  ft,
+	ft,
+})
+
+add(g.formatter.filetype, {
+	[ft] = { require("formatter.filetypes")[ft].prettierd },
+})
+
+add(g.formatter.on_save, {
+	"*." .. ft,
 })

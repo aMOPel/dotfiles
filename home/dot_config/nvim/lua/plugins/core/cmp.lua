@@ -45,7 +45,7 @@ table.insert(plugins, {
         { name = 'vsnip', priority = 900, max_item_count = 10 },
         -- { name = 'fuzzy_path', priority=900, max_item_count=10  },
         { name = 'nvim_lsp', priority = 500, max_item_count = 20 },
-        { name = 'nvim_lsp_signature_help' },
+        -- { name = 'nvim_lsp_signature_help' },
         { name = 'nvim_lua', priority = 500, max_item_count = 20 },
         -- { name = 'buffer', priority=100, keyword_length=3, max_item_count=5  },
         { name = 'emoji' },
@@ -192,11 +192,11 @@ local M = function(use)
       { p 'https://github.com/f3fora/cmp-spell', after = 'nvim-cmp', },
       { p 'https://github.com/hrsh7th/cmp-cmdline', after = 'nvim-cmp', },
       { p 'https://github.com/tamago324/cmp-zsh', after = 'nvim-cmp', },
-      { p 'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp', },
+      -- { p 'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp', },
       {
         p 'https://github.com/petertriho/cmp-git',
         after = 'nvim-cmp',
-        requires = 'https://github.com/nvim-lua/plenary.nvim',
+        requires = { p 'https://github.com/nvim-lua/plenary.nvim' },
       },
       {
         p 'https://github.com/tzachar/cmp-fuzzy-path',

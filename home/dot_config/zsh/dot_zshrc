@@ -78,6 +78,8 @@ compinit -d $ZDOTDIR/.zcompdump
 [ -f $ZDOTDIR/.fzf.zsh ] && source $ZDOTDIR/.fzf.zsh
 # zoxide
 eval "$(zoxide init zsh)"
+# direnv
+eval "$(direnv hook zsh)"
 # --------------------------
 
 ##################

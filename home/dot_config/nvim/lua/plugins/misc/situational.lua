@@ -6,11 +6,12 @@ table.insert(plugins, {
     vim.g.floaterm_shell = 'zsh'
     vim.g.floaterm_width = 0.9
     vim.g.floaterm_height = 0.8
+    vim.g.floaterm_opener = 'tabe'
 
     local noremap = require 'utils'.noremap
     noremap('n', '<leader>ff', ':FloatermToggle<CR>')
     noremap('t', '<C-W>', '<C-\\><C-n>:FloatermToggle<CR>')
-    noremap('n', '<leader>fg', ':FloatermNew --autoclose=2 --disposable gitui<CR>')
+    noremap('n', '<leader>fg', ':FloatermNew --autoclose=1 --width=1.0 --height=1.0 lazygit<CR>')
     noremap('n', '<leader>ft', ':FloatermNew --autoclose=2 --disposable taskwarrior-tui<CR>')
     noremap('n', '<leader>fw', ':FloatermNew --autoclose=0 --disposable --width=0.9 timew week<CR>')
   end,
@@ -152,6 +153,8 @@ table.insert(plugins, {
         augend.integer.alias.hex,
         augend.integer.alias.octal,
         augend.integer.alias.binary,
+        augend.constant.alias.alpha,
+        augend.constant.alias.Alpha,
         augend.constant.alias.bool,
         augend.semver.alias.semver,
         augend.date.alias['%Y/%m/%d'],
@@ -234,6 +237,10 @@ local M = function(use)
   use {
     p 'https://github.com/tpope/vim-dispatch',
     requires = { p 'https://github.com/radenling/vim-dispatch-neovim', after = 'vim-dispatch', },
+  }
+  use {
+    p 'https://github.com/simnalamburt/vim-mundo',
+    commit = '595ee332719f397c2441d85f79608113957cc78f',
   }
 end
 return M

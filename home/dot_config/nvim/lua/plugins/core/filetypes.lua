@@ -27,17 +27,17 @@ table.insert(plugins, {
   end,
 })
 
-table.insert(plugins, {
-  name = 'vim-godot',
-  setup = function()
-  end,
-  config = function()
-    --   nnoremap <F4> :GodotRunLast<CR>
-    --   nnoremap <leader>n :GodotRun<CR>
-    --   nnoremap <F6> :GodotRunCurrent<CR>
-    --   nnoremap <F7> :GodotRunFZF<CR>
-  end,
-})
+-- table.insert(plugins, {
+--   name = 'vim-godot',
+--   setup = function()
+--   end,
+--   config = function()
+--       nnoremap <F4> :GodotRunLast<CR>
+--       nnoremap <leader>n :GodotRun<CR>
+--       nnoremap <F6> :GodotRunCurrent<CR>
+--       nnoremap <F7> :GodotRunFZF<CR>
+--   end,
+-- })
 
 local p = require 'utils'.p
 
@@ -51,5 +51,6 @@ local M = function(use)
   use { p 'https://github.com/ekalinin/Dockerfile.vim', }
   use { p 'https://github.com/raimon49/requirements.txt.vim', }
   use { p 'https://github.com/SirJson/fzf-gitignore', }
+  use { p 'https://github.com/aliev/vim-compiler-python', }
 end
 return M

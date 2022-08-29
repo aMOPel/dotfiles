@@ -41,9 +41,13 @@ export GOPATH=$HOME/.local/go
 #export OMP_NUM_THREADS=8
 
 #BA
-export PATH=$HOME/Documents/ba/fomu-toolchain-Linux/bin:$PATH 
-export GHDL_PREFIX=$HOME/Documents/ba/fomu-toolchain-Linux/lib/ghdl
+# export PATH=$HOME/Documents/ba/fomu-toolchain-Linux-nightly/bin:$PATH 
+# export PATH=$HOME/Documents/ba/fomu-toolchain-Linux/bin:$PATH 
+export PATH=$HOME/Documents/ba/oss-cad-suite/bin:$PATH
+# export GHDL_PREFIX=$HOME/Documents/ba/fomu-toolchain-Linux/lib/ghdl
 export FOMU_REV=pvt
+export FOMU_TRNG_ROOT=$HOME/Documents/ba/fomu-trng
+export PATH=$FOMU_TRNG_ROOT/bin:$PATH
 
 
 export NPM_CONFIG_PREFIX=$HOME/.local/npm-global
@@ -75,3 +79,5 @@ if [ -d $HOME/.local/zsh-fpath ]; then
 fi
 
 export COMPE_ZSH_CACHE_DIR=$HOME/.cache/nvim/cmp-zsh
+export GODOT_BIN=$HOME/.local/bin/godot
+. "$HOME/.cargo/env"

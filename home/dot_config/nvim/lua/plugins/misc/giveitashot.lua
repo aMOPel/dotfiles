@@ -1,12 +1,89 @@
-local setups = {}
-local configs = {}
+local plugins = require("globals").plugins
 
-local p = require 'utils'.p
+-- table.insert(plugins, {
+--       name = 'cybu.nvim',
+--       setup = function()
+--       end,
+--       config = function()
+--       require("cybu").setup({
+--         position = {
+--           relative_to = "win",          -- win, editor, cursor
+--           anchor = "center",         -- topleft, topcenter, topright,
+--                                           -- centerleft, center, centerright,
+--                                           -- bottomleft, bottomcenter, bottomright
+--           vertical_offset = 0,         -- vertical offset from anchor in lines
+--           horizontal_offset = 0,        -- vertical offset from anchor in columns
+--           max_win_height = 10,           -- height of cybu window in lines
+--           max_win_width = 0.5,          -- integer for absolute in columns
+--                                           -- float for relative to win/editor width
+--         },
+--         style = {
+--           path = "relative",            -- absolute, relative, tail (filename only)
+--           border = "rounded",           -- single, double, rounded, none
+--           separator = " ",              -- string used as separator
+--           prefix = "…",                 -- string used as prefix for truncated paths
+--           padding = 2,                  -- left & right padding in number of spaces
+--           hide_buffer_id = true,        -- hide buffer IDs in window
+--           devicons = {
+--             enabled = true,             -- enable or disable web dev icons
+--             colored = true,             -- enable color for web dev icons
+--             truncate = false,            -- truncate wide icons to one char width
+--           },
+--           highlights = {                -- see highlights via :highlight
+--             current_buffer = "CybuFocus",       -- current / selected buffer
+--             adjacent_buffers = "CybuAdjacent",  -- buffers not in focus
+--             background = "CybuBackground",      -- window background
+--             border = "CybuBorder",              -- border of the window
+--           },
+--         },
+--         behavior = {                    -- set behavior for different modes
+--           mode = {
+--             default = {
+--               switch = "on_close",     -- immediate, on_close
+--               view = "paging",         -- paging, rolling
+--             },
+--             last_used = {
+--               switch = "on_close",      -- immediate, on_close
+--               view = "paging",          -- paging, rolling
+--             },
+--           },
+--         },
+--         display_time = 1500,             -- time the cybu window is displayed
+--         exclude = {                     -- filetypes, cybu will not be active
+--           "neo-tree",
+--           "fugitive",
+--           "qf",
+--         },
+--     })
+--     local map = require 'utils'.map
+--     map('n', '\\', '<Plug>(CybuPrev)')
+--     map('n', '\'', '<Plug>(CybuNext)')
+--     -- map({'n', 'v'}, '<tab>', '<plug>(CybuLastusedPrev)')
+--     -- map({'n', 'v'}, '<cr>', '<plug>(CybuLastusedNext)')
+--     vim.cmd[[
+--     highlight CybuFocus cterm=bold gui=bold guifg=#abb2bf guibg=#31353f guisp=none
+--     highlight CybuAdjacent cterm=reverse guifg=#5c6370 guibg=#31353f guisp=none
+--     highlight CybuBackground cterm=reverse guifg=#5c6370 guibg=#31353f guisp=none
+--     highlight CybuBorder cterm=reverse guifg=#5c6370 guibg=#31353f guisp=none
+--     ]]
+--   end,
+-- })
+
+local p = require("utils").p
 
 local M = function(use)
-  -- use {
-  --   p 'https://github.com/dstein64/vim-startuptime',
-  -- }
+	use({
+		p("https://github.com/tpope/vim-dadbod"),
+	})
+	use({
+		p("https://github.com/kristijanhusak/vim-dadbod-ui"),
+	})
+	-- use {
+	--   p 'https://github.com/ghillb/cybu.nvim',
+	-- }
+	-- use {
+	--   p 'https://github.com/dstein64/vim-startuptime',
+	-- }
 end
 return M
 -- # [[plugins]]

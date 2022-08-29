@@ -47,17 +47,25 @@ add(g.lsp.servers.lsp_installer, {
     }
   end,
   ltex = function(on_attach, capabilities)
+    function custom_on_attach(client, bufnr)
+      require("ltex_extra").setup{
+        load_langs = { "es-AR", "en-US" }, -- table <string> : languages for witch dictionaries will be loaded
+        init_check = true, -- boolean : whether to load dictionaries on startup
+        path = nil, -- string : path to store dictionaries. Relative path uses current working directory
+        log_level = "none", -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
+      }
+      on_attach(client, bufnr)
+    end
     return {
       capabilities = capabilities,
-      on_attach = on_attach,
+      on_attach = custom_on_attach,
       flags = {
         debounce_text_changes = 150,
       },
-      -- delete this line to activate
-      filetypes = {},
       settings = {
         ltex = {
-          enabled = { "latex", "tex", "bib", "markdown" },
+          enabled = {},
+          -- enabled = { "latex", "tex", "bib", "markdown" },
           language = "en",
           diagnosticSeverity = "information",
           setenceCacheSize = 2000,

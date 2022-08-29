@@ -165,14 +165,14 @@ table.insert(plugins, {
 end,
 })
 
-table.insert(plugins, {
-  name = 'textobj-pastedtext.vim',
-  setup = function()
-  vim.g.pastedtext_select_key = 'gp'
-end,
-  config = function()
-  end,
-})
+-- table.insert(plugins, {
+--   name = 'textobj-pastedtext.vim',
+--   setup = function()
+--     vim.g.pastedtext_select_key = 'gp'
+--   end,
+--   config = function()
+--   end,
+-- })
 
 table.insert(plugins, {
   name = 'targets.vim',
@@ -184,7 +184,7 @@ table.insert(plugins, {
   vim.g.targets_seekRanges = 'cc cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al'
   vim.cmd [[
 autocmd MyPlugins User targets#mappings#user call targets#mappings#extend({
-    \ 'a': {'argument': [{'o': '[([{]', 'c': '[}])]', 's': ','}]},
+    \ 'a': {'argument': [{'o': '[{([]', 'c': '[])}]', 's': ','}]},
     \ })
 ]]
 
@@ -204,15 +204,15 @@ end,
 })
 
 table.insert(plugins, {
-  name = 'regreplop.vim',
+  name = 'vim-ReplaceWithRegister',
   setup = function()
+    local map = require 'utils'.map
+    map('n', '<c-p>', '<Plug>ReplaceWithRegisterOperator')
+    map('n', '<c-p><c-p>', '<Plug>ReplaceWithRegisterLine')
+    map('x', '<c-p>', '<Plug>ReplaceWithRegisterVisual')
   end,
   config = function()
-  local map = require 'utils'.map
-  map('n', '<c-p>', '<Plug>ReplaceMotion')
-  map('n', '<c-p><c-p>', '<Plug>ReplaceLine')
-  map('v', '<c-p>', '<Plug>ReplaceVisual')
-end,
+  end,
 })
 
 local p = require 'utils'.p
@@ -227,10 +227,10 @@ local M = function(use)
   -- use { p 'https://github.com/AndrewRadev/deleft.vim', }
   use { p 'https://github.com/FooSoft/vim-argwrap', }
   use { p 'https://github.com/wellle/targets.vim', }
-  use { p 'https://github.com/vim-scripts/regreplop.vim', }
+  use { p 'https://github.com/inkarkat/vim-ReplaceWithRegister' }
   use {
     p 'https://github.com/aMOPel/vim-log-print',
-    requires = { 'https://github.com/Shougo/context_filetype.vim', },
+    requires = { p 'https://github.com/Shougo/context_filetype.vim', },
   }
   use {
     p 'https://github.com/kana/vim-textobj-user',
@@ -238,7 +238,7 @@ local M = function(use)
       { p 'https://github.com/kana/vim-textobj-indent', after = 'vim-textobj-user', },
       { p 'https://github.com/kana/vim-textobj-entire', after = 'vim-textobj-user', },
       -- { p 'https://github.com/Chun-Yang/vim-textobj-chunk', after = 'vim-textobj-user', },
-      { p 'https://github.com/saaguero/vim-textobj-pastedtext', after = 'vim-textobj-user', },
+      -- { p 'https://github.com/saaguero/vim-textobj-pastedtext', after = 'vim-textobj-user', },
       { p 'https://github.com/idbrii/textobj-word-column.vim', after = 'vim-textobj-user', },
     },
   }
