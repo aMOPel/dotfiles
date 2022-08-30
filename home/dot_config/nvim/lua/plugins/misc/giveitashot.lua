@@ -72,8 +72,20 @@ local plugins = require("globals").plugins
 local p = require("utils").p
 
 local M = function(use)
-  use { p "https://github.com/tpope/vim-dadbod", }
-  use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
+  -- use { p "https://github.com/tpope/vim-dadbod", }
+  -- use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
+
+  -- TODO: test framework
+  -- TODO: notes framework
+  -- TODO: which-key
+  -- TODO: hydra
+  -- TODO: code runner framework
+  -- TODO: buffer switcher?
+  -- TODO: easy motion?
+  -- TODO: work with marks?
+  -- TODO: work with registers?
+  -- TODO: work with folds?
+  -- TODO: some regex plugin?
 
   -- use {
   --   p 'https://github.com/ghillb/cybu.nvim',
