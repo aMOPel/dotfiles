@@ -7,7 +7,7 @@ dotfiles=~dotfiles_repo/home
 
 alias bins=~/.local/binaries
 
-alias g=gitui
+alias g=lazygit
 alias t=taskwarrior-tui
 alias r=ranger
 #base16
@@ -84,7 +84,6 @@ cd $GDSESSIONS/`ls $GDSESSIONS/  | fzf`;gd
 #fd
 alias fd='fd --ignore-case --hidden --follow'
 alias rg='rg --smart-case --hidden --follow'
-alias dein='cd ~/.cache/dein/repos/github.com'
 alias ghqroot='cd $GHQ_ROOT/github.com; r'
 # kitty diff
 alias kdiff='kitty +kitten diff'
@@ -102,19 +101,20 @@ alias dg='git difftool --no-symlinks --dir-diff'
 }
 # ranger change directory on "Q" opposing to "q"
 function ranger {
-    local IFS=$'\t\n'
-    local tempfile="$(mktemp -t tmp.XXXXXX)"
-    local ranger_cmd=(
-        command
-        ranger
-        --cmd="map Q chain shell echo %d > "$tempfile"; quitall"
-    )
+  local IFS=$'\t\n'
+  local tempfile="$(mktemp -t tmp.XXXXXX)"
+  local ranger_cmd=(
+    command
+    ranger
+    --cmd="map Q chain shell echo %d > "$tempfile"; quitall"
+  )
 
-    ${ranger_cmd[@]} "$@"
-    if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
-        cd -- "$(cat "$tempfile")" || return
-    fi
-    command rm -f -- "$tempfile" 2>/dev/null
+  ${ranger_cmd[@]} "$@"
+  if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
+    cd -- "$(cat "$tempfile")" || return
+    command zoxide add "$(cat "$tempfile")"
+  fi
+  command rm -f -- "$tempfile" 2>/dev/null
 }
 
 # --------------------
