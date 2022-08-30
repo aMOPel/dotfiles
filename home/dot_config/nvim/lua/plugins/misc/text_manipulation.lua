@@ -28,6 +28,8 @@ table.insert(plugins, {
 	setup = function() end,
 	config = function()
 		require("Comment").setup({
+      padding = true,
+      sticky = true,
 			mappings = {
 				basic = true,
 				extra = true,
@@ -35,11 +37,11 @@ table.insert(plugins, {
 			},
 			toggler = {
 				line = "gcc",
-				-- block = '',
+				block = '<nop>',
 			},
 			opleader = {
 				line = "gc",
-				-- block = '',
+				block = '<nop>',
 			},
 			pre_hook = function(ctx)
 				local u = require("Comment.utils")
@@ -95,16 +97,16 @@ table.insert(plugins, {
 	setup = function()
 		-- vim.g.camelcasemotion_key = ','
 		local map = require("utils").map
-		map("", "w", "<Plug>CamelCaseMotion_w")
-		map("", "b", "<Plug>CamelCaseMotion_b")
-		map("", "e", "<Plug>CamelCaseMotion_e")
-		map("", "ge", "<Plug>CamelCaseMotion_ge")
-    vim.cmd[[
-    sunmap w
-    sunmap b
-    sunmap e
-    sunmap ge
-    ]]
+		map("", "gw", "<Plug>CamelCaseMotion_w")
+		map("", "gb", "<Plug>CamelCaseMotion_b")
+		map("", "ge", "<Plug>CamelCaseMotion_e")
+		-- map("", "ge", "<Plug>CamelCaseMotion_ge")
+    -- vim.cmd[[
+    -- sunmap w
+    -- sunmap b
+    -- sunmap e
+    -- ]]
+    -- sunmap ge
   end,
 	config = function()
 	end,
@@ -119,7 +121,7 @@ table.insert(plugins, {
 			gdscript = { pre = "print(", post = ")" },
 			typescript = { pre = "console.log(", post = ")" },
 			sh = { pre = "echo " },
-			nim = { pre = "echo " },
+			nim = { pre = "print " },
 		}
 
 		local map = require("utils").map
