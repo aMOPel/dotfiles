@@ -244,9 +244,23 @@ table.insert(plugins, {
 table.insert(plugins, {
   name = 'vim-columnmove',
   setup = function()
+		local map = require("utils").map
     vim.g.columnmove_no_default_key_mappings = 1
+    map("n", ",w", "<Plug>(columnmove-W)")
+    map("n", ",ge", "<Plug>(columnmove-B)")
+    map("n", ",e", "<Plug>(columnmove-E)")
+    map("n", ",b", "<Plug>(columnmove-gE)")
+    map("o", ",w", "<Plug>(columnmove-W)")
+    map("o", ",ge", "<Plug>(columnmove-B)")
+    map("o", ",e", "<Plug>(columnmove-E)")
+    map("o", ",b", "<Plug>(columnmove-gE)")
+    map("x", ",w", "<Plug>(columnmove-W)")
+    map("x", ",ge", "<Plug>(columnmove-B)")
+    map("x", ",e", "<Plug>(columnmove-E)")
+    map("x", ",b", "<Plug>(columnmove-gE)")
+
     vim.cmd[[
-for s:x in split('ftFT;,wbeWBE', '\zs') + ['ge', 'gE']
+for s:x in split('ftFT;,', '\zs')
   call columnmove#utility#map('nxo', s:x, ',' . s:x, 'block')
 endfor
 unlet s:x
