@@ -40,5 +40,5 @@ endif
 
 let g:terminal_scrollback_buffer_size = 3000
 
-autocmd MyAutoCmd TextYankPost * lua require'vim.highlight'.on_yank
-      \ {higroup='IncSearch', timeout=250}
+" autocmd MyAutoCmd TextYankPost * lua require'vim.highlight'.on_yank
+"       \ {higroup='IncSearch', timeout=250}

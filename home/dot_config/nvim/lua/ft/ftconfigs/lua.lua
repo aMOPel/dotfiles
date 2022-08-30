@@ -67,9 +67,9 @@ add(g.formatter.filetype, {
 	end,
 })
 
-add(g.formatter.on_save, {
-	"*." .. ft,
-})
+-- add(g.formatter.on_save, {
+-- 	"*." .. ft,
+-- })
 
 local configs = {}
 

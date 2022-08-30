@@ -72,18 +72,15 @@ local plugins = require("globals").plugins
 local p = require("utils").p
 
 local M = function(use)
-	use({
-		p("https://github.com/tpope/vim-dadbod"),
-	})
-	use({
-		p("https://github.com/kristijanhusak/vim-dadbod-ui"),
-	})
-	-- use {
-	--   p 'https://github.com/ghillb/cybu.nvim',
-	-- }
-	-- use {
-	--   p 'https://github.com/dstein64/vim-startuptime',
-	-- }
+  use { p "https://github.com/tpope/vim-dadbod", }
+  use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
+
+  -- use {
+  --   p 'https://github.com/ghillb/cybu.nvim',
+  -- }
+  -- use {
+  --   p 'https://github.com/dstein64/vim-startuptime',
+  -- }
 end
 return M
 -- # [[plugins]]

@@ -15,7 +15,14 @@ nnoremap <leader><leader> :b#<CR>
 " nnoremap Y y$
 
 " . mapping in visual
-vnoremap . :norm.<CR>
+" vnoremap . :norm.<CR>
+
+" move argument left and right using targets and exchange
+nmap <c-l> viaXf,viaX
+nmap <c-h> viaXhhviaX
+
+" search in visual selection
+vnoremap / <esc>/\%V
 
 "very magic regex
 " noremap / /\v

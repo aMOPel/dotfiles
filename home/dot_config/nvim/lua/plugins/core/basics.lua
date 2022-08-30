@@ -111,6 +111,15 @@ table.insert(plugins, {
   end,
 })
 
+table.insert(plugins, {
+  name = 'vim-highlightedyank',
+  setup = function()
+    vim.g.highlightedyank_highlight_duration = 500
+  end,
+  config = function()
+  end,
+})
+
 local p = require 'utils'.p
 
 local M = function(use)
@@ -126,5 +135,13 @@ local M = function(use)
   use { p 'https://github.com/tpope/vim-unimpaired', }
   use { p 'https://github.com/tpope/vim-obsession', }
   use { p 'https://github.com/deris/vim-shot-f', }
+  use { p 'https://github.com/machakann/vim-highlightedyank', }
+  use {
+    p "https://github.com/inkarkat/vim-visualrepeat",
+    requires = {
+      { p "https://github.com/inkarkat/vim-ingo-library" },
+      { p "https://github.com/tpope/vim-repeat" },
+    }
+  }
 end
 return M

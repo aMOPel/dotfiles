@@ -199,6 +199,13 @@ augroup END
 			},
 		}
 
+		-- local navic = require("nvim-navic")
+		-- local wrapped_on_attach = function(client, bufnr)
+		-- 	navic.attach(client, bufnr)
+		-- 	on_attach(client, bufnr)
+		-- end
+
+		local wrapped_on_attach = on_attach
 		-------------------------------------------------------------------
 		-- setup servers
 
@@ -223,7 +230,7 @@ augroup END
 		local function default_config()
 			return {
 				capabilities = capabilities,
-				on_attach = on_attach,
+				on_attach = wrapped_on_attach,
 				flags = {
 					debounce_text_changes = 150,
 				},
@@ -236,7 +243,7 @@ augroup END
 			if server_config == "default" then
 				config = default_config()
 			elseif type(server_config) == "function" then
-				config = server_config(on_attach, capabilities)
+				config = server_config(wrapped_on_attach, capabilities)
 			else
 				print("error with " .. server_name)
 			end
@@ -313,6 +320,14 @@ table.insert(plugins, {
 	end,
 })
 
+-- table.insert(plugins, {
+-- 	name = "nvim-navic",
+-- 	setup = function() end,
+-- 	config = function()
+-- 		require("nvim-navic").setup()
+-- 	end,
+-- })
+
 local p = require("utils").p
 
 local M = function(use)
@@ -326,6 +341,7 @@ local M = function(use)
 			{ p("https://github.com/j-hui/fidget.nvim") },
 			{ p("https://github.com/b0o/SchemaStore.nvim") },
 			{ p("https://github.com/barreiroleo/ltex_extra.nvim") },
+			-- { p("https://github.com/SmiteshP/nvim-navic") },
 		},
 	})
 
