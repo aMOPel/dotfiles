@@ -257,6 +257,36 @@ unlet s:x
   end,
 })
 
+table.insert(plugins, {
+  name = 'cool-substitute.nvim',
+  setup = function()
+  end,
+  config = function()
+    require'cool-substitute'.setup({
+      setup_keybindings = true,
+      mappings = {
+        start = '<leader>sw', -- Mark word / region
+        start_word = '<leader>sW', -- Mark word / region. Edit only full word
+        -- start_and_edit = '<leader>cw', -- Mark word / region and also edit
+        -- start_and_edit_word = '<leader>cW', -- Mark word / region and also edit.  Edit only full word.
+        apply_substitute_and_next = '?', -- Start substitution / Go to next substitution
+        apply_substitute_and_prev = '!', -- same as M but backwards
+        apply_substitute_all = 'g?', -- Substitute all
+        force_terminate_substitute = '<leader>sc', -- Terminate macro (if some bug happens)
+        terminate_substitute = '<esc>',
+        skip_substitute = '<cr>',
+        goto_next = '<C-j>',
+        goto_previous = '<C-k>',
+      },
+      reg_char = 's', -- letter to save macro (Dont use number or uppercase here)
+      mark_char = 's', -- mark the position at start of macro
+      writing_substitution_color = "#ECBE7B", -- for status line
+      applying_substitution_color = "#98be65", -- for status line
+      edit_word_when_starting_with_substitute_key = true -- (press M to mark and edit when not executing anything anything)
+    })
+  end,
+})
+
 local p = require("utils").p
 
 local M = function(use)
@@ -293,6 +323,7 @@ local M = function(use)
 		},
 	}
 	use { p "https://github.com/johmsalas/text-case.nvim" }
-  use { p 'https://github.com/machakann/vim-columnmove' }
+  use { p "https://github.com/machakann/vim-columnmove" }
+  use { p "https://github.com/otavioschwanck/cool-substitute.nvim", }
 end
 return M
