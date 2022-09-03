@@ -124,7 +124,7 @@ table.insert(plugins, {
 
     local noremap = require 'utils'.noremap
     noremap('n', '<C-W>m', ':MaximizerToggle!<CR>')
-    noremap('n', '<C-W><CR>', ':MaximizerToggle!<CR>')
+    noremap('n', '<C-W><C-M>', ':MaximizerToggle!<CR>')
   end,
   config = function()
   end,

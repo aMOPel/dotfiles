@@ -75,6 +75,10 @@ local M = function(use)
   -- use { p "https://github.com/tpope/vim-dadbod", }
   -- use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
 
+  -- TODO: fix <leader>l
+  -- TODO: incorporate PackerUpdate --preview
+  -- TODO: fix error with rg
+  -- TODO: fix error when closing zsh, probably due to change in zshrc
   -- TODO: test framework
   -- TODO: notes framework
   -- TODO: which-key

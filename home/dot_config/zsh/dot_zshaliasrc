@@ -7,11 +7,12 @@ dotfiles=~dotfiles_repo/home
 
 alias bins=~/.local/binaries
 
+alias ggb=$dotfiles_repo/bin/get_github_binaries.sh
 alias g=lazygit
 alias t=taskwarrior-tui
 alias r=ranger
 #base16
-alias base16="ls ~/.local/base16-builder-python/output/joe/colors | sed -r 's/base16\-(.*)\.jcf/\1/' | fzf | xargs ~/dotfiles/dotfiles/base16/changethemes.sh"
+# alias base16="ls ~/.local/base16-builder-python/output/joe/colors | sed -r 's/base16\-(.*)\.jcf/\1/' | fzf | xargs ~/dotfiles/dotfiles/base16/changethemes.sh"
 
 # vim
 v () {

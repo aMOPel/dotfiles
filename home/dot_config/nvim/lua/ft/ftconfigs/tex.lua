@@ -48,13 +48,13 @@ add(g.lsp.servers.lsp_installer, {
   end,
   ltex = function(on_attach, capabilities)
     function custom_on_attach(client, bufnr)
+      on_attach(client, bufnr)
       require("ltex_extra").setup{
-        load_langs = { "es-AR", "en-US" }, -- table <string> : languages for witch dictionaries will be loaded
+        load_langs = { "de-DE" }, -- table <string> : languages for witch dictionaries will be loaded
         init_check = true, -- boolean : whether to load dictionaries on startup
         path = nil, -- string : path to store dictionaries. Relative path uses current working directory
         log_level = "none", -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
       }
-      on_attach(client, bufnr)
     end
     return {
       capabilities = capabilities,
@@ -64,19 +64,19 @@ add(g.lsp.servers.lsp_installer, {
       },
       settings = {
         ltex = {
-          enabled = {},
-          -- enabled = { "latex", "tex", "bib", "markdown" },
-          language = "en",
-          diagnosticSeverity = "information",
-          setenceCacheSize = 2000,
-          additionalRules = {
-            enablePickyRules = true,
-            motherTongue = { "en", "de" },
-          },
-          trace = { server = "verbose" },
-          dictionary = {};
-          disabledRules = {};
-          hiddenFalsePositives = {};
+      --     -- enabled = {},
+      --     enabled = { "latex", "tex", "bib", "markdown" },
+      --     language = "de",
+      --     diagnosticSeverity = "information",
+      --     setenceCacheSize = 2000,
+      --     additionalRules = {
+      --       enablePickyRules = true,
+      --       motherTongue = { "de" },
+      --     },
+      --     trace = { server = "verbose" },
+      --     -- dictionary = {};
+      --     -- disabledRules = {};
+      --     -- hiddenFalsePositives = {};
         }
       }
     }
