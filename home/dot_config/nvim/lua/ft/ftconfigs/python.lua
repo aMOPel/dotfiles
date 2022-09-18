@@ -19,6 +19,11 @@ add(g.treesitter.indent.disable, {
 	ft,
 })
 
+add(g.formatter.ensure_installed, {
+  "black",
+  "isort",
+})
+
 add(g.formatter.filetype, {
 	[ft] = {
 		require("formatter.filetypes")[ft].black,

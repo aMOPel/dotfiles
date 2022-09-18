@@ -11,6 +11,10 @@ add(g.lsp.servers.lsp_installer, {
 	prosemd_lsp = "default",
 })
 
+add(g.formatter.ensure_installed, {
+	"prettierd",
+})
+
 add(g.formatter.filetype, {
 	[ft] = { require("formatter.filetypes")[ft].prettierd },
 })

@@ -29,6 +29,10 @@ add(g.treesitter.ensure_installed, {
 	ft,
 })
 
+add(g.formatter.ensure_installed, {
+  "jq",
+})
+
 add(g.formatter.filetype, {
 	[ft] = { require("formatter.filetypes")[ft].jq },
 })

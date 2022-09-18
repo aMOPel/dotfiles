@@ -49,6 +49,10 @@ add(g.treesitter.ensure_installed, {
 	ft,
 })
 
+add(g.formatter.ensure_installed, {
+	"stylua",
+})
+
 add(g.formatter.filetype, {
 	[ft] = function()
 		return {

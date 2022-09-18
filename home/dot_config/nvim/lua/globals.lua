@@ -29,6 +29,7 @@ local M = {
 		},
 	},
 	formatter = {
+		ensure_installed = {},
 		filetype = {},
 		on_save = {},
 	},

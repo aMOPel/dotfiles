@@ -9,6 +9,17 @@ table.insert(plugins, {
 })
 
 table.insert(plugins, {
+	name = "mason-tool-installer.nvim",
+	setup = function() end,
+	config = function()
+		local g = require("globals")
+		require("mason-tool-installer").setup {
+      ensure_installed = g.formatter.ensure_installed,
+    }
+	end,
+})
+
+table.insert(plugins, {
 	name = "nvim-lspconfig",
 	setup = function() end,
 	config = function()
@@ -281,14 +292,14 @@ table.insert(plugins, {
 	end,
 })
 
-table.insert(plugins, {
-	name = "nvim-dd",
-	setup = function() end,
-	config = function()
-		-- require('dd').setup { timeout = 1000, }
-	end,
-})
-
+-- table.insert(plugins, {
+-- 	name = "nvim-dd",
+-- 	setup = function() end,
+-- 	config = function()
+-- 		-- require('dd').setup { timeout = 1000, }
+-- 	end,
+-- })
+--
 table.insert(plugins, {
 	name = "formatter.nvim",
 	setup = function() end,
@@ -337,7 +348,8 @@ local M = function(use)
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ p("https://github.com/williamboman/mason.nvim") },
 			{ p("https://github.com/williamboman/mason-lspconfig.nvim") },
-			{ p("https://gitlab.com/yorickpeterse/nvim-dd") },
+			{ p("https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim") },
+			-- { p("https://gitlab.com/yorickpeterse/nvim-dd") },
 			{ p("https://github.com/j-hui/fidget.nvim") },
 			{ p("https://github.com/b0o/SchemaStore.nvim") },
 			{ p("https://github.com/barreiroleo/ltex_extra.nvim") },
