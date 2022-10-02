@@ -231,8 +231,8 @@ autocmd CustomFileType BufEnter *.tscn,*.tres,*.import,*.godot set filetype=dosi
 
 autocmd MyAutoCmd FileType qf nnoremap <buffer> s :<c-u>cdo s/// \| update<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
-" autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap  :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
-autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap <silent>  :<c-u>silent! write<cr>:silent! !chezmoi apply --source-path %<cr>:echo "chezmoi applied"<cr>:doautocmd User ChezmoiPost<cr>
+" autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap <c-s> :<c-u>write<cr>:FloatermNew --autoclose=1 --disposable chezmoi apply --source-path "%"<cr>
+autocmd MyAutoCmd BufEnter $XDG_DATA_HOME/chezmoi/home/* nnoremap <silent> <c-s> :<c-u>silent! write<cr>:silent! !chezmoi apply --source-path %<cr>:echo "chezmoi applied"<cr>:doautocmd User ChezmoiPost<cr>
 autocmd MyAutoCmd User ChezmoiPost sleep | PackerCompile
 
 command! DiagnosticEnable lua vim.diagnostic.enable()

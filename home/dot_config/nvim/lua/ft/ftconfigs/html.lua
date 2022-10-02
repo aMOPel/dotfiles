@@ -10,8 +10,8 @@ add(g.lsp.fts, {
 add(g.lsp.servers.lsp_installer, {
 	html = function(on_attach, capabilities)
 		local add_on_attach = function(client, bufnr)
-			client.resolved_capabilities.document_formatting = false
-			client.resolved_capabilities.document_range_formatting = false
+			client.server_capabilities.document_formatting = false
+			client.server_capabilities.document_range_formatting = false
 			on_attach(client, bufnr)
 		end
 
@@ -19,9 +19,6 @@ add(g.lsp.servers.lsp_installer, {
 			filetypes = { "html" },
 			capabilities = capabilities,
 			on_attach = add_on_attach,
-			flags = {
-				debounce_text_changes = 150,
-			},
 		}
 	end,
 })

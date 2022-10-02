@@ -65,22 +65,22 @@ table.insert(plugins, {
   end,
 })
 
-table.insert(plugins, {
-  name = 'vim-cool',
-  setup = function()
-  end,
-  config = function()
-    vim.g.CoolTotalMatches = 1
-  end,
-})
+-- table.insert(plugins, {
+--   name = 'vim-cool',
+--   setup = function()
+--   end,
+--   config = function()
+--     vim.g.CoolTotalMatches = 1
+--   end,
+-- })
 
 table.insert(plugins, {
   name = 'vim-asterisk',
   setup = function()
   end,
   config = function()
-    local map = require 'utils'.map
-    map('', '*', '<Plug>(asterisk-gz*)')
+    -- local map = require 'utils'.map
+    -- map('', '*', '<Plug>(asterisk-gz*)')
     vim.g['asterisk#keeppos'] = 1
   end,
 })

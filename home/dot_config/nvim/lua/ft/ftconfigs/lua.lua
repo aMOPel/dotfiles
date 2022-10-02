@@ -16,9 +16,6 @@ add(g.lsp.servers.lsp_installer, {
 		return {
 			capabilities = capabilities,
 			on_attach = on_attach,
-			flags = {
-				debounce_text_changes = 150,
-			},
 			settings = {
 				Lua = {
 					runtime = {

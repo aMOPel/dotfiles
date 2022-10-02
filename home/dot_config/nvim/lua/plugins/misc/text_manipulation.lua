@@ -37,11 +37,11 @@ table.insert(plugins, {
 			},
 			toggler = {
 				line = "gcc",
-				block = '<nop>',
+				block = '|||',
 			},
 			opleader = {
 				line = "gc",
-				block = '<nop>',
+				block = '||',
 			},
 			pre_hook = function(ctx)
 				local u = require("Comment.utils")

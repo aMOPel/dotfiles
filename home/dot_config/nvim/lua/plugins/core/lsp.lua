@@ -29,18 +29,18 @@ table.insert(plugins, {
 				vim.api.nvim_buf_set_keymap(bufnr, ...)
 			end
 
-			local function buf_set_option(...)
-				vim.api.nvim_buf_set_option(bufnr, ...)
-			end
+			-- local function buf_set_option(...)
+			-- 	vim.api.nvim_buf_set_option(bufnr, ...)
+			-- end
 
-			-- for k, v in pairs(client.resolved_capabilities) do
+			-- for k, v in pairs(client.server_capabilities) do
 			--   print(k,v)
 			-- end
 			-- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
 			-- Mappings.
 			local opts = { noremap = true, silent = true }
-			if client.resolved_capabilities.declaration then
+			if client.server_capabilities.declaration then
 				buf_set_keymap(
 					"n",
 					"gD",
@@ -48,7 +48,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.goto_definition then
+			if client.server_capabilities.goto_definition then
 				buf_set_keymap(
 					"n",
 					"gd",
@@ -56,7 +56,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.implementation then
+			if client.server_capabilities.implementation then
 				buf_set_keymap(
 					"n",
 					"gi",
@@ -64,7 +64,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.find_references then
+			if client.server_capabilities.find_references then
 				buf_set_keymap(
 					"n",
 					"gr",
@@ -72,7 +72,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.hover then
+			if client.server_capabilities.hover then
 				buf_set_keymap(
 					"n",
 					"K",
@@ -80,7 +80,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.signature_help then
+			if client.server_capabilities.signature_help then
 				buf_set_keymap(
 					"n",
 					"<C-k>",
@@ -94,7 +94,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.type_definition then
+			if client.server_capabilities.type_definition then
 				buf_set_keymap(
 					"n",
 					"<space>lt",
@@ -102,7 +102,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.rename then
+			if client.server_capabilities.rename then
 				buf_set_keymap(
 					"n",
 					"<space>lr",
@@ -110,7 +110,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.code_action then
+			if client.server_capabilities.code_action then
 				buf_set_keymap(
 					"n",
 					"<space>la",
@@ -118,7 +118,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.workspace_symbol then
+			if client.server_capabilities.workspace_symbol then
 				buf_set_keymap(
 					"n",
 					"<space>lS",
@@ -126,7 +126,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.document_symbol then
+			if client.server_capabilities.document_symbol then
 				buf_set_keymap(
 					"n",
 					"<space>ls",
@@ -134,7 +134,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			if client.resolved_capabilities.document_formatting then
+			if client.server_capabilities.document_formatting then
 				buf_set_keymap(
 					"n",
 					"<space>lf",
@@ -142,7 +142,7 @@ table.insert(plugins, {
 					opts
 				)
 			end
-			-- if client.resolved_capabilities.document_range_formatting then
+			-- if client.server_capabilities.document_range_formatting then
 			--   buf_set_keymap("v", "<space>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
 			-- end
 
@@ -179,7 +179,7 @@ table.insert(plugins, {
 			)
 
 			-- Set autocommands conditional on server_capabilities
-			if client.resolved_capabilities.document_highlight then
+			if client.server_capabilities.document_highlight then
 				vim.api.nvim_exec(
 					[[
 hi LspReferenceRead  cterm=underline term=underline gui=underline
@@ -242,9 +242,6 @@ augroup END
 			return {
 				capabilities = capabilities,
 				on_attach = wrapped_on_attach,
-				flags = {
-					debounce_text_changes = 150,
-				},
 			}
 		end
 
@@ -284,13 +281,13 @@ augroup END
 	end,
 })
 
-table.insert(plugins, {
-	name = "fidget.nvim",
-	setup = function() end,
-	config = function()
-		require("fidget").setup({})
-	end,
-})
+-- table.insert(plugins, {
+-- 	name = "fidget.nvim",
+-- 	setup = function() end,
+-- 	config = function()
+-- 		require("fidget").setup({})
+-- 	end,
+-- })
 
 -- table.insert(plugins, {
 -- 	name = "nvim-dd",
@@ -350,7 +347,7 @@ local M = function(use)
 			{ p("https://github.com/williamboman/mason-lspconfig.nvim") },
 			{ p("https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim") },
 			-- { p("https://gitlab.com/yorickpeterse/nvim-dd") },
-			{ p("https://github.com/j-hui/fidget.nvim") },
+			-- { p("https://github.com/j-hui/fidget.nvim") },
 			{ p("https://github.com/b0o/SchemaStore.nvim") },
 			{ p("https://github.com/barreiroleo/ltex_extra.nvim") },
 			-- { p("https://github.com/SmiteshP/nvim-navic") },

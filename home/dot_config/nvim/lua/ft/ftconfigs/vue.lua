@@ -10,8 +10,8 @@ add(g.lsp.fts, {
 add(g.lsp.servers.lsp_installer, {
   volar = function(on_attach, capabilities)
     local add_on_attach = function(client, bufnr)
-      client.resolved_capabilities.document_formatting = false
-      client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.document_formatting = false
+      client.server_capabilities.document_range_formatting = false
       on_attach(client, bufnr)
     end
     return {

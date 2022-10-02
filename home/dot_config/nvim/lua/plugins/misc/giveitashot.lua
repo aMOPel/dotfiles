@@ -72,6 +72,8 @@ local plugins = require("globals").plugins
 local p = require("utils").p
 
 local M = function(use)
+
+
   -- use { p "https://github.com/tpope/vim-dadbod", }
   -- use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
 
@@ -90,7 +92,6 @@ local M = function(use)
   -- TODO: work with registers?
   -- TODO: work with folds?
   -- TODO: some regex plugin?
-
   -- use {
   --   p 'https://github.com/ghillb/cybu.nvim',
   -- }

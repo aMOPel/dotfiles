@@ -15,9 +15,6 @@ add(g.lsp.servers.lsp_installer, {
     return {
       capabilities = capabilities,
       on_attach = on_attach,
-      flags = {
-        debounce_text_changes = 150,
-      },
       root_dir = util.root_pattern(".git"),
       settings = {
         texlab = {
@@ -59,9 +56,6 @@ add(g.lsp.servers.lsp_installer, {
     return {
       capabilities = capabilities,
       on_attach = custom_on_attach,
-      flags = {
-        debounce_text_changes = 150,
-      },
       settings = {
         ltex = {
       --     -- enabled = {},

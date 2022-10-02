@@ -13,9 +13,6 @@ add(g.lsp.servers.lsp_installer, {
 			filetypes = { "json" },
 			capabilities = capabilities,
 			on_attach = on_attach,
-			flags = {
-				debounce_text_changes = 150,
-			},
 			settings = {
 				json = {
 					schemas = require("schemastore").json.schemas(),
