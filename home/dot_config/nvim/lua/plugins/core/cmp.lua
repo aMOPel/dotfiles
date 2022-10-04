@@ -104,13 +104,15 @@ table.insert(plugins, {
   setup = function()
   end,
   config = function()
-    local map = require 'utils'.map
+    -- local map = require 'utils'.map
     vim.g.vsnip_snippet_dir = vim.fn.expand("$XDG_CONFIG_HOME/nvim/snippets")
 
-    map('i', '<Tab>', 'vsnip#available(1)  ? "<Plug>(vsnip-expand-or-jump)" : "<Tab>"', { silent = true, expr = true })
-    map('s', '<Tab>', 'vsnip#available(1)  ? "<Plug>(vsnip-expand-or-jump)" : "<Tab>"', { silent = true, expr = true })
-    map('i', '<S-Tab>', 'vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)"      : "<S-Tab>"', { silent = true, expr = true })
-    map('s', '<S-Tab>', 'vsnip#jumpable(-1)  ? "<Plug>(vsnip-jump-prev)"      : "<S-Tab>"', { silent = true, expr = true })
+    vim.cmd[[
+imap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<tab>'
+smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+]]
   end })
 
 table.insert(plugins, {

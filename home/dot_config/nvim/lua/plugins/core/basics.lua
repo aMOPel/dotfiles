@@ -56,14 +56,14 @@ table.insert(plugins, {
   end,
 })
 
-table.insert(plugins, {
-  name = 'FixCursorHold.nvim',
-  setup = function()
-  end,
-  config = function()
-    vim.g.cursorhold_updatetime = 100
-  end,
-})
+-- table.insert(plugins, {
+--   name = 'FixCursorHold.nvim',
+--   setup = function()
+--   end,
+--   config = function()
+--     vim.g.cursorhold_updatetime = 100
+--   end,
+-- })
 
 -- table.insert(plugins, {
 --   name = 'vim-cool',
@@ -127,7 +127,7 @@ local M = function(use)
   use { p 'https://github.com/lukas-reineke/indent-blankline.nvim', }
   use { p 'https://github.com/andymass/vim-matchup', }
   use { p 'https://github.com/svermeulen/vim-cutlass', }
-  use { p 'https://github.com/antoinemadec/FixCursorHold.nvim', }
+  -- use { p 'https://github.com/antoinemadec/FixCursorHold.nvim', }
   use { p 'https://github.com/romainl/vim-cool', }
   use { p 'https://github.com/haya14busa/vim-asterisk', }
   use { p 'https://github.com/milkypostman/vim-togglelist', }

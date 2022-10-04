@@ -40,161 +40,72 @@ table.insert(plugins, {
 
 			-- Mappings.
 			local opts = { noremap = true, silent = true }
-			if client.server_capabilities.declaration then
-				buf_set_keymap(
-					"n",
-					"gD",
-					"<Cmd>lua vim.lsp.buf.declaration()<CR>",
-					opts
-				)
+			if client.server_capabilities.declarationProvider then
+				buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
 			end
-			if client.server_capabilities.goto_definition then
-				buf_set_keymap(
-					"n",
-					"gd",
-					"<Cmd>lua vim.lsp.buf.definition()<CR>",
-					opts
-				)
+			if client.server_capabilities.definitionProvider then
+				buf_set_keymap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
 			end
-			if client.server_capabilities.implementation then
-				buf_set_keymap(
-					"n",
-					"gi",
-					"<cmd>lua vim.lsp.buf.implementation()<CR>",
-					opts
-				)
+			if client.server_capabilities.implementationProvider then
+				buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
 			end
-			if client.server_capabilities.find_references then
-				buf_set_keymap(
-					"n",
-					"gr",
-					"<cmd>lua vim.lsp.buf.references()<CR>",
-					opts
-				)
+			if client.server_capabilities.referencesProvider then
+				buf_set_keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
 			end
-			if client.server_capabilities.hover then
-				buf_set_keymap(
-					"n",
-					"K",
-					"<Cmd>lua vim.lsp.buf.hover()<CR>",
-					opts
-				)
+			if client.server_capabilities.hoverProvider then
+				buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
 			end
-			if client.server_capabilities.signature_help then
-				buf_set_keymap(
-					"n",
-					"<C-k>",
-					"<cmd>lua vim.lsp.buf.signature_help()<CR>",
-					opts
-				)
-				buf_set_keymap(
-					"i",
-					"<C-k>",
-					"<c-o><cmd>lua vim.lsp.buf.signature_help()<CR>",
-					opts
-				)
+			if client.server_capabilities.signatureHelpProvider then
+				buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+				buf_set_keymap("i", "<C-k>", "<c-o><cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 			end
-			if client.server_capabilities.type_definition then
-				buf_set_keymap(
-					"n",
-					"<space>lt",
-					"<cmd>lua vim.lsp.buf.type_definition()<CR>",
-					opts
-				)
+			if client.server_capabilities.typeDefinitionProvider then
+				buf_set_keymap("n", "<space>lt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
 			end
-			if client.server_capabilities.rename then
-				buf_set_keymap(
-					"n",
-					"<space>lr",
-					"<cmd>lua vim.lsp.buf.rename()<CR>",
-					opts
-				)
+			if client.server_capabilities.renameProvider then
+				buf_set_keymap("n", "<space>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 			end
-			if client.server_capabilities.code_action then
-				buf_set_keymap(
-					"n",
-					"<space>la",
-					"<cmd>lua vim.lsp.buf.code_action()<CR>",
-					opts
-				)
+			if client.server_capabilities.codeActionProvider then
+				buf_set_keymap("n", "<space>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
 			end
-			if client.server_capabilities.workspace_symbol then
-				buf_set_keymap(
-					"n",
-					"<space>lS",
-					'<cmd>lua vim.lsp.buf.workspace_symbol("")<CR>',
-					opts
-				)
+			if client.server_capabilities.workspaceSymbolProvider then
+				buf_set_keymap("n", "<space>lS", '<cmd>lua vim.lsp.buf.workspace_symbol("")<CR>', opts)
 			end
-			if client.server_capabilities.document_symbol then
-				buf_set_keymap(
-					"n",
-					"<space>ls",
-					'<cmd>lua vim.lsp.buf.document_symbol("")<CR>',
-					opts
-				)
+			if client.server_capabilities.documentSymbolProvider then
+				buf_set_keymap("n", "<space>ls", '<cmd>lua vim.lsp.buf.document_symbol("")<CR>', opts)
 			end
-			if client.server_capabilities.document_formatting then
-				buf_set_keymap(
-					"n",
-					"<space>lf",
-					"<cmd>lua vim.lsp.buf.formatting()<CR>",
-					opts
-				)
+			if client.server_capabilities.documentFormattingProvider then
+				buf_set_keymap("n", "<space>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 			end
-			-- if client.server_capabilities.document_range_formatting then
-			--   buf_set_keymap("v", "<space>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-			-- end
+			if client.server_capabilities.documentRangeFormattingProvider then
+			  buf_set_keymap("v", "<space>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+			end
 
-			-- TODO add move to quickfix after document_symbol
-			-- TODO change codeAction to work with completion menu, and to autoselect, if theres only one choice
-			-- vim.lsp.handlers["textDocument/codeAction"] = my_custom_default_definition
-
-			-- buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-			-- buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-			-- buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-			buf_set_keymap(
-				"n",
-				"<space>le",
-				"<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>",
-				opts
-			)
-			buf_set_keymap(
-				"n",
-				"[d",
-				"<cmd>lua vim.diagnostic.goto_prev()<CR>",
-				opts
-			)
-			buf_set_keymap(
-				"n",
-				"]d",
-				"<cmd>lua vim.diagnostic.goto_next()<CR>",
-				opts
-			)
-			buf_set_keymap(
-				"n",
-				"<space>lq",
-				"<cmd>lua vim.diagnostic.set_loclist()<CR>",
-				opts
-			)
+			buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+			buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+			buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+			buf_set_keymap( "n", "<space>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+			buf_set_keymap( "n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+			buf_set_keymap( "n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
+			buf_set_keymap("n", "<space>lq", "<cmd>lua vim.diagnostic.setqflist()<CR>", opts)
 
 			-- Set autocommands conditional on server_capabilities
-			if client.server_capabilities.document_highlight then
-				vim.api.nvim_exec(
-					[[
-hi LspReferenceRead  cterm=underline term=underline gui=underline
-hi LspReferenceText  cterm=underline term=underline gui=underline
-hi LspReferenceWrite cterm=underline term=underline gui=underline
-augroup lsp_document_highlight
-  autocmd! * <buffer>
-  autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-  autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-augroup END
-]],
-					false
-				)
-			end
-		end
+-- 			if client.server_capabilities.documentHighlightProvider then
+-- 				vim.api.nvim_exec(
+-- 					[[
+-- hi LspReferenceRead  cterm=underline term=underline gui=underline
+-- hi LspReferenceText  cterm=underline term=underline gui=underline
+-- hi LspReferenceWrite cterm=underline term=underline gui=underline
+-- augroup lsp_document_highlight
+--   autocmd! * <buffer>
+--   autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+--   autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+-- augroup END
+-- ]],
+-- 					false
+-- 				)
+-- 			end
+    end
 
 		-------------------------------------------------------------------
 		-- snippets

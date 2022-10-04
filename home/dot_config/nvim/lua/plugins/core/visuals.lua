@@ -23,19 +23,19 @@ table.insert(plugins, {
 	end,
 })
 
-table.insert(plugins, {
-	name = "nvim-gps",
-	setup = function() end,
-	config = function()
-		require("nvim-gps").setup()
-	end,
-})
+-- table.insert(plugins, {
+-- 	name = "nvim-gps",
+-- 	setup = function() end,
+-- 	config = function()
+-- 		require("nvim-gps").setup()
+-- 	end,
+-- })
 
 table.insert(plugins, {
 	name = "lualine.nvim",
 	setup = function() end,
 	config = function()
-		local gps = require("nvim-gps")
+		-- local gps = require("nvim-gps")
 
 		local function ObsessionStatusMod()
 			return vim.fn.ObsessionStatus("Session", "")
@@ -296,10 +296,7 @@ local M = function(use)
 		after = "nvim-treesitter",
 		requires = {
 			{ p("https://github.com/navarasu/onedark.nvim") },
-			{
-				p("https://github.com/SmiteshP/nvim-gps"),
-				-- after = 'nvim-treesitter',
-			},
+			-- { p("https://github.com/SmiteshP/nvim-gps"), after = 'nvim-treesitter', },
 		},
 	})
   use {

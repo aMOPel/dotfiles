@@ -70,7 +70,7 @@ table.insert(plugins, {
     noremap('n', '<leader>gg', ':-tabnew<cr>:Git ++curwin<CR>')
     noremap('n', '<leader>gl', ':-tabnew<cr>:Gclog <CR>')
     noremap('n', '<leader>gd', ':-tabnew %<cr>:Gdiffsplit! <cr>')
-    vim.cmd [[au MyPlugins Filetype gitcommit nnoremap <buffer>  :wq<cr>]]
+    vim.cmd [[au MyPlugins Filetype gitcommit nnoremap <buffer> <c-s> :wq<cr>]]
   end,
   config = function()
   end,

@@ -77,6 +77,8 @@ local M = function(use)
   -- use { p "https://github.com/tpope/vim-dadbod", }
   -- use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
 
+  -- TODO: fix <c-s> in gitcommit
+  -- TODO: fix black git text
   -- TODO: fix <leader>l
   -- TODO: incorporate PackerUpdate --preview
   -- TODO: fix error with rg
