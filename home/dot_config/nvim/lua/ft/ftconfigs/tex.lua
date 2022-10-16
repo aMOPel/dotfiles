@@ -43,38 +43,38 @@ add(g.lsp.servers.lsp_installer, {
       }
     }
   end,
-  ltex = function(on_attach, capabilities)
-    function custom_on_attach(client, bufnr)
-      on_attach(client, bufnr)
-      require("ltex_extra").setup{
-        load_langs = { "de-DE" }, -- table <string> : languages for witch dictionaries will be loaded
-        init_check = true, -- boolean : whether to load dictionaries on startup
-        path = nil, -- string : path to store dictionaries. Relative path uses current working directory
-        log_level = "none", -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
-      }
-    end
-    return {
-      capabilities = capabilities,
-      on_attach = custom_on_attach,
-      settings = {
-        ltex = {
-      --     -- enabled = {},
-      --     enabled = { "latex", "tex", "bib", "markdown" },
-      --     language = "de",
-      --     diagnosticSeverity = "information",
-      --     setenceCacheSize = 2000,
-      --     additionalRules = {
-      --       enablePickyRules = true,
-      --       motherTongue = { "de" },
-      --     },
-      --     trace = { server = "verbose" },
-      --     -- dictionary = {};
-      --     -- disabledRules = {};
-      --     -- hiddenFalsePositives = {};
-        }
-      }
-    }
-  end,
+  -- ltex = function(on_attach, capabilities)
+  --   function custom_on_attach(client, bufnr)
+  --     on_attach(client, bufnr)
+  --     require("ltex_extra").setup{
+  --       load_langs = { "de-DE" }, -- table <string> : languages for witch dictionaries will be loaded
+  --       init_check = true, -- boolean : whether to load dictionaries on startup
+  --       path = nil, -- string : path to store dictionaries. Relative path uses current working directory
+  --       log_level = "none", -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
+  --     }
+  --   end
+  --   return {
+  --     capabilities = capabilities,
+  --     on_attach = custom_on_attach,
+  --     settings = {
+  --       ltex = {
+  --         enabled = {},
+  --     --     enabled = { "latex", "tex", "bib", "markdown" },
+  --     --     language = "de",
+  --     --     diagnosticSeverity = "information",
+  --     --     setenceCacheSize = 2000,
+  --     --     additionalRules = {
+  --     --       enablePickyRules = true,
+  --     --       motherTongue = { "de" },
+  --     --     },
+  --     --     trace = { server = "verbose" },
+  --     --     -- dictionary = {};
+  --     --     -- disabledRules = {};
+  --     --     -- hiddenFalsePositives = {};
+  --       }
+  --     }
+  --   }
+  -- end,
 })
 
 add(g.treesitter.ensure_installed, {

@@ -69,19 +69,55 @@ local plugins = require("globals").plugins
 --   end,
 -- })
 
+table.insert(plugins, {
+  name = 'live-command.nvim',
+  setup = function()
+  end,
+  config = function()
+    require("live-command").setup {
+      commands = {
+        Norm = { cmd = "norm" },
+        Reg = {
+          cmd = "norm",
+          -- This will transform ":5Reg a" into ":norm 5@a"
+          args = function(opts)
+            return (opts.count == -1 and "" or opts.count) .. "@" .. opts.args
+          end,
+          range = "",
+        },
+        Global = { cmd = "g" },
+      },
+      defaults = {
+        enable_highlighting = true,
+        inline_highlighting = true,
+        hl_groups = {
+          insertion = "DiffAdd",
+          deletion = "DiffDelete",
+          change = "DiffChange",
+        },
+      },
+      debug = false,
+    }
+  end,
+})
+
 local p = require("utils").p
 
 local M = function(use)
+
+  use {
+    p "https://github.com/smjonas/live-command.nvim",
+  }
 
 
   -- use { p "https://github.com/tpope/vim-dadbod", }
   -- use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
 
-  -- TODO: fix <c-s> in gitcommit
+  -- DONE: fix <c-s> in gitcommit
   -- TODO: fix black git text
-  -- TODO: fix <leader>l
+  -- DONE: fix <leader>l
   -- TODO: incorporate PackerUpdate --preview
-  -- TODO: fix error with rg
+  -- TODO: fix error with rg, something sets cmdheight=1, but what?
   -- TODO: fix error when closing zsh, probably due to change in zshrc
   -- TODO: test framework
   -- TODO: notes framework

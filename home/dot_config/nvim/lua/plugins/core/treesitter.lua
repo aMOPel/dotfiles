@@ -29,7 +29,7 @@ table.insert(plugins, {
       highlight = {
         enable = true,
         disable = g.treesitter.highlight.disable,
-        additional_vim_regex_highlighting = true,
+        additional_vim_regex_highlighting = false,
       },
       indent = {
         enable = false,

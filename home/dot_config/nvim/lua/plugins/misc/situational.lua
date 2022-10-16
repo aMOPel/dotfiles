@@ -24,8 +24,8 @@ table.insert(plugins, {
   setup = function()
     local noremap = require 'utils'.noremap
     local map = require 'utils'.map
-    noremap('n', '<leader>gr', ':Grepper -tool rg -grepprg rg -H --no-heading --vimgrep --smart-case --<CR>')
-    noremap('n', '<leader>*', ':Grepper -tool rg -cword -noprompt -grepprg rg -H --no-heading --vimgrep --smart-case --<cr>')
+    noremap('n', '<leader>gr', ':Grepper -tool rg<CR>')
+    noremap('n', '<leader>*', ':Grepper -tool rg -cword -noprompt<cr>')
 
     map('n', ',gr', '<Plug>(GrepperOperator)')
     map('x', ',gr', '<Plug>(GrepperOperator)')
@@ -47,6 +47,9 @@ aug END
       highlight = 1,
       dir = 'cwd',
       tools = { 'rg' },
+      rg = {
+        grepprg = 'rg -H --no-heading --vimgrep --smart-case --'
+      },
       operator = {
         open = 1,
         switch = 1,
@@ -56,6 +59,9 @@ aug END
         highlight = 1,
         dir = 'cwd',
         tools = { 'rg' },
+        rg = {
+          grepprg = 'rg -H --no-heading --vimgrep --smart-case --'
+        },
       },
     }
   end,

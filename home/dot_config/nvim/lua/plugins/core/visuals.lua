@@ -275,7 +275,7 @@ table.insert(plugins, {
     require("scrollbar.handlers.search").setup({
       auto_enable = true,
       enable_incsearch = true,
-      calm_down = false,
+      calm_down = true,
       nearest_only = true,
       nearest_float_when = 'always',
       float_shadow_blend = 50,

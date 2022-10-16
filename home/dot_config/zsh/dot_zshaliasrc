@@ -111,12 +111,31 @@ function ranger {
   )
 
   ${ranger_cmd[@]} "$@"
-  if [[ -f "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
-    cd -- "$(cat "$tempfile")" || return
-    command zoxide add "$(cat "$tempfile")"
+  if [[ -s "$tempfile" ]] && [[ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]]; then
+    command zoxide add "$(cat -- "$tempfile")" && cd -- "$(cat -- "$tempfile")" || return
   fi
   command rm -f -- "$tempfile" 2>/dev/null
 }
+
+# uses first argument as pattern for rg and following arguments or ./* as files to search
+# passes results to fzf with bat preview to pick one and finally open with nvim at that line
+function rg_fzf {
+  pattern=$1
+  if [[ -z $2 ]] then
+    filenames="./*"
+  else
+    filenames=$(echo $@ | cut -d " " --complement -f 1)
+  fi
+  echo $pattern
+  echo $filenames
+  results=`rg --with-filename --no-heading -n $pattern $filenames`
+  pick=`echo $results | fzf -d ":" --preview 'bat -H {2} --color=always --style=numbers --line-range={2}:+10 {1}'`
+  file=`echo $pick | cut -d ":" -f 1`
+  line=`echo $pick | cut -d ":" -f 2`
+  nvim $file +$line
+}
+
+alias rf=rg_fzf
 
 # --------------------
 # # bat

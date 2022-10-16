@@ -77,19 +77,17 @@ table.insert(plugins, {
 table.insert(plugins, {
   name = 'vim-asterisk',
   setup = function()
-  end,
-  config = function()
     -- local map = require 'utils'.map
     -- map('', '*', '<Plug>(asterisk-gz*)')
     vim.g['asterisk#keeppos'] = 1
+  end,
+  config = function()
   end,
 })
 
 table.insert(plugins, {
   name = 'vim-togglelist',
   setup = function()
-  end,
-  config = function()
     vim.g.toggle_list_no_mappings = 1
     local map = require 'utils'.map
     map('n', '<c-w>q', ':call ToggleQuickfixList()<cr>')
@@ -99,17 +97,19 @@ table.insert(plugins, {
       vim.g.toggle_list_copen_command = "Copen"
     end
   end,
-})
-
-table.insert(plugins, {
-  name = 'errormarker.vim',
-  setup = function()
-    vim.g.errormarker_errortext = ""
-    vim.g.errormarker_warningtext = ""
-  end,
   config = function()
   end,
 })
+
+-- table.insert(plugins, {
+--   name = 'errormarker.vim',
+--   setup = function()
+--     vim.g.errormarker_errortext = ""
+--     vim.g.errormarker_warningtext = ""
+--   end,
+--   config = function()
+--   end,
+-- })
 
 table.insert(plugins, {
   name = 'vim-highlightedyank',
@@ -128,10 +128,10 @@ local M = function(use)
   use { p 'https://github.com/andymass/vim-matchup', }
   use { p 'https://github.com/svermeulen/vim-cutlass', }
   -- use { p 'https://github.com/antoinemadec/FixCursorHold.nvim', }
-  use { p 'https://github.com/romainl/vim-cool', }
+  -- use { p 'https://github.com/romainl/vim-cool', }
   use { p 'https://github.com/haya14busa/vim-asterisk', }
   use { p 'https://github.com/milkypostman/vim-togglelist', }
-  use { p 'https://github.com/mh21/errormarker.vim', }
+  -- use { p 'https://github.com/mh21/errormarker.vim', }
   use { p 'https://github.com/tpope/vim-unimpaired', }
   use { p 'https://github.com/tpope/vim-obsession', }
   use { p 'https://github.com/deris/vim-shot-f', }

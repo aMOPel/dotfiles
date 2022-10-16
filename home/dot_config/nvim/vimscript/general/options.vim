@@ -24,9 +24,14 @@ set clipboard^=unnamedplus
 set nowrap
 
 " set number
-" set relativenumber
+set relativenumber
 " set numberwidth=1
-set signcolumn=yes:2
+set signcolumn=yes:1
+
+sign define DiagnosticSignError text= texthl=DiagnosticSignError linehl= numhl=
+sign define DiagnosticSignWarn text= texthl=DiagnosticSignWarn linehl= numhl=
+sign define DiagnosticSignInfo text= texthl=DiagnosticSignInfo linehl= numhl=
+sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=
 
 set showtabline=2
 
