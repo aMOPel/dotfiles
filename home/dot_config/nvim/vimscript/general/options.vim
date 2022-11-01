@@ -35,9 +35,9 @@ sign define DiagnosticSignHint text= texthl=DiagnosticSignHint linehl= numhl=
 
 set showtabline=2
 
-set foldenable
-set foldcolumn=auto
-set foldlevelstart=1
+set nofoldenable
+set foldcolumn=0
+set foldlevelstart=99
 set foldnestmax=1
 " set foldmethod=manual
 

@@ -1,6 +1,61 @@
 local plugins = require("globals").plugins
 
 table.insert(plugins, {
+  name = 'vim-exchange',
+  setup = function() 
+    vim.g.exchange_no_mappings = 1
+    vim.g.exchange_indent = '=='
+
+		local map = require("utils").map
+    map("n", "gx", "<Plug>(Exchange)")
+    map("x", "gx", "<Plug>(Exchange)")
+    map("n", "gX", "<Plug>(ExchangeClear)")
+    map("n", "gxx", "<Plug>(ExchangeLine)")
+
+  end,
+  config = function() end,
+})
+
+table.insert(plugins, {
+	name = "mini.ai",
+	setup = function()
+	end,
+	config = function()
+    local miniAiDiagnostics = function()
+      local diagnostics = vim.diagnostic.get(0)
+      diagnostics = vim.tbl_map(function(diagnostic)
+        local from_line = diagnostic.lnum + 1
+        local from_col = diagnostic.col + 1
+        local to_line = diagnostic.end_lnum + 1
+        local to_col = diagnostic.end_col + 1
+        return {
+          from = { line = from_line, col = from_col },
+          to = { line = to_line, col = to_col }
+        }
+      end, diagnostics)
+      return diagnostics
+    end
+    require("mini.ai").setup {
+      custom_textobjects = {
+        d = miniAiDiagnostics,
+      },
+      mappings = {
+        around = 'a',
+        inside = 'i',
+        around_next = '',
+        inside_next = '',
+        around_last = '',
+        inside_last = '',
+        goto_left = '',
+        goto_right = '',
+      },
+      n_lines = 50,
+      search_method = 'cover_or_nearest',
+    }
+  end,
+})
+
+table.insert(plugins, {
 	name = "vim-sandwich",
 	setup = function()
 		vim.cmd([[runtime vimscript/vim-sandwich/surround.vim]])
@@ -100,13 +155,9 @@ table.insert(plugins, {
 		map("", "gw", "<Plug>CamelCaseMotion_w")
 		map("", "gb", "<Plug>CamelCaseMotion_b")
 		map("", "ge", "<Plug>CamelCaseMotion_e")
-		-- map("", "ge", "<Plug>CamelCaseMotion_ge")
-    -- vim.cmd[[
-    -- sunmap w
-    -- sunmap b
-    -- sunmap e
-    -- ]]
-    -- sunmap ge
+    map({"x", "o"}, "igw", "<Plug>CamelCaseMotion_iw")
+    map({"x", "o"}, "igb", "<Plug>CamelCaseMotion_ib")
+    map({"x", "o"}, "ige", "<Plug>CamelCaseMotion_ie")
   end,
 	config = function()
 	end,
@@ -136,7 +187,7 @@ table.insert(plugins, {
 	name = "vim-argwrap",
 	setup = function()
 		local noremap = require("utils").noremap
-		noremap("n", "gJ", ":ArgWrap<CR>")
+		noremap("n", "gj", ":ArgWrap<CR>")
 		vim.g.argwrap_tail_comma_braces = "[{"
 	end,
 	config = function() end,
@@ -144,21 +195,142 @@ table.insert(plugins, {
 
 table.insert(plugins, {
 	name = "textobj-word-column.vim",
-	setup = function() end,
-	config = function()
+	setup = function()
 		vim.g.textobj_wordcolumn_no_default_key_mappings = 1
 
 		vim.fn["textobj#user#map"]("wordcolumn", {
 			word = {
-				["select-i"] = "ic",
-				["select-a"] = "ac",
+				["select-i"] = "io",
+				["select-a"] = "ao",
 			},
 			WORD = {
-				["select-i"] = "iC",
-				["select-a"] = "aC",
+				["select-i"] = "iO",
+				["select-a"] = "aO",
 			},
 		})
+  end,
+	config = function()
 	end,
+})
+
+table.insert(plugins, {
+  name = 'dial.nvim',
+  setup = function()
+  end,
+  config = function()
+    local augend = require('dial.augend')
+    local augend_leftright = augend.constant.new {
+        elements = { "left", "right" },
+        word = false,
+        cyclic = true,
+        preserve_case = true,
+    }
+    local augend_onoff = augend.constant.new {
+        elements = { "on", "off" },
+        word = false,
+        cyclic = true,
+        preserve_case = true,
+    }
+
+    require('dial.config').augends:register_group {
+      default = {
+        -- this disables the jumping for leftright and onoff
+        augend.user.new {
+            find = function (line, cursor)
+                local range = augend_leftright:find(line, cursor)
+                if range ~= nil then
+                    if range.from <= cursor and cursor <= range.to then
+                        return range
+                    end
+                end
+                return nil
+            end,
+            add = function (text, addend, cursor)
+                return augend_leftright:add(text, addend, cursor)
+            end
+        },
+        augend.user.new {
+            find = function (line, cursor)
+                local range = augend_onoff:find(line, cursor)
+                if range ~= nil then
+                    if range.from <= cursor and cursor <= range.to then
+                        return range
+                    end
+                end
+                return nil
+            end,
+            add = function (text, addend, cursor)
+                return augend_onoff:add(text, addend, cursor)
+            end
+        },
+
+        augend.integer.alias.decimal,
+        augend.integer.alias.hex,
+        augend.integer.alias.octal,
+        augend.integer.alias.binary,
+        augend.constant.alias.alpha,
+        augend.constant.alias.Alpha,
+        augend.constant.alias.bool,
+        augend.semver.alias.semver,
+        augend.date.alias['%Y/%m/%d'],
+        augend.date.alias['%m/%d/%Y'],
+        augend.date.alias['%d/%m/%Y'],
+        augend.date.alias['%m/%d/%y'],
+        augend.date.alias['%d/%m/%y'],
+        augend.date.alias['%m/%d'],
+        augend.date.alias['%-m/%-d'],
+        augend.date.alias['%Y-%m-%d'],
+        augend.date.alias['%H:%M:%S'],
+        augend.date.alias['%H:%M'],
+        augend.hexcolor.new {
+          case = 'lower',
+        },
+        -- augend.constant.new { elements = { 'and', 'or' }, word = true, cyclic = true, },
+        augend.constant.new { elements = { '&&', '||' }, word = false, cyclic = true, },
+        -- augend.constant.new { elements = { 'on', 'off' }, word = false, cyclic = true, },
+        -- augend.constant.new { elements = { 'right', 'left' }, word = true, cyclic = true, },
+        augend.constant.new { elements = { '!=', '==' }, word = false, cyclic = true, },
+        augend.constant.new {
+          elements = {
+            'TODO',
+            'DONE',
+            'HACK',
+            'FIX',
+            'WARN',
+            'PERF',
+            'NOTE',
+          },
+          word = true,
+          cyclic = true,
+        },
+        augend.constant.new {
+          elements = {
+            'pick',
+            'fixup',
+            'reword',
+            'edit',
+            'squash',
+            'exec',
+            'break',
+            'drop',
+            'label',
+            'reset',
+            'merge',
+          },
+          word = true,
+          cyclic = true,
+        },
+      },
+    }
+
+    local noremap = require 'utils'.noremap
+    noremap('n', '<C-a>', require('dial.map').inc_normal())
+    noremap('n', '<C-x>', require('dial.map').dec_normal())
+    noremap('v', '<C-a>', require('dial.map').inc_visual())
+    noremap('v', '<C-x>', require('dial.map').dec_visual())
+    noremap('v', 'g<C-a>', require('dial.map').inc_gvisual())
+    noremap('v', 'g<C-x>', require('dial.map').dec_gvisual())
+  end,
 })
 
 -- table.insert(plugins, {
@@ -170,19 +342,19 @@ table.insert(plugins, {
 --   end,
 -- })
 
-table.insert(plugins, {
-	name = "targets.vim",
-	setup = function() end,
-	config = function()
-		vim.g.targets_aiAI = { "a", "i", " ", " " }
-		vim.g.targets_nl = { " ", " " }
-		vim.g.targets_seekRanges =
-			"cc cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al"
-		vim.cmd([[
-autocmd MyPlugins User targets#mappings#user call targets#mappings#extend({
-    \ 'a': {'argument': [{'o': '[{([]', 'c': '[])}]', 's': ','}]},
-    \ })
-]])
+-- table.insert(plugins, {
+-- 	name = "targets.vim",
+-- 	setup = function() end,
+-- 	config = function()
+-- 		vim.g.targets_aiAI = { "a", "i", " ", " " }
+-- 		vim.g.targets_nl = { " ", " " }
+-- 		vim.g.targets_seekRanges =
+-- 			"cc cr cb cB lc ac Ac lr rr ll lb ar ab lB Ar aB Ab AB rb rB al Al"
+-- 		vim.cmd([[
+-- autocmd MyPlugins User targets#mappings#user call targets#mappings#extend({
+--     \ 'a': {'argument': [{'o': '[{([]', 'c': '[])}]', 's': ','}]},
+--     \ })
+-- ]])
 
 		-- vim.api.nvim_create_autocmd(
 		--   { 'User' },
@@ -196,8 +368,8 @@ autocmd MyPlugins User targets#mappings#user call targets#mappings#extend({
 		--   end,
 		--   once = true,
 		-- })
-	end,
-})
+-- 	end,
+-- })
 
 table.insert(plugins, {
 	name = "vim-ReplaceWithRegister",
@@ -214,29 +386,31 @@ table.insert(plugins, {
 	name = "text-case.nvim",
 	setup = function()
 		local noremap = require("utils").noremap
-    noremap("n", "gaU", ':lua require("textcase").lsp_rename("to_upper_case")<cr>')
-    noremap("n", "gaL", ':lua require("textcase").lsp_rename("to_lower_case")<cr>')
-    noremap("n", "gaS", ':lua require("textcase").lsp_rename("to_snake_case")<cr>')
-    noremap("n", "gaD", ':lua require("textcase").lsp_rename("to_dash_case")<cr>')
-    noremap("n", "gaN", ':lua require("textcase").lsp_rename("to_constant_case")<cr>')
-    noremap("n", "gaD", ':lua require("textcase").lsp_rename("to_dot_case")<cr>')
-    noremap("n", "gaA", ':lua require("textcase").lsp_rename("to_phrase_case")<cr>')
-    noremap("n", "gaC", ':lua require("textcase").lsp_rename("to_camel_case")<cr>')
-    noremap("n", "gaP", ':lua require("textcase").lsp_rename("to_pascal_case")<cr>')
-    noremap("n", "gaT", ':lua require("textcase").lsp_rename("to_title_case")<cr>')
-    noremap("n", "gaF", ':lua require("textcase").lsp_rename("to_path_case")<cr>')
+    noremap("n", "gu", '<nop>')
 
-    noremap("n", "gau", ':lua require("textcase").current_word("to_upper_case")<cr>')
-    noremap("n", "gal", ':lua require("textcase").current_word("to_lower_case")<cr>')
-    noremap("n", "gas", ':lua require("textcase").current_word("to_snake_case")<cr>')
-    noremap("n", "gad", ':lua require("textcase").current_word("to_dash_case")<cr>')
-    noremap("n", "gan", ':lua require("textcase").current_word("to_constant_case")<cr>')
-    noremap("n", "gad", ':lua require("textcase").current_word("to_dot_case")<cr>')
-    noremap("n", "gaa", ':lua require("textcase").current_word("to_phrase_case")<cr>')
-    noremap("n", "gac", ':lua require("textcase").current_word("to_camel_case")<cr>')
-    noremap("n", "gap", ':lua require("textcase").current_word("to_pascal_case")<cr>')
-    noremap("n", "gat", ':lua require("textcase").current_word("to_title_case")<cr>')
-    noremap("n", "gaf", ':lua require("textcase").current_word("to_path_case")<cr>')
+    noremap("v", "guu", ':lua require("textcase").visual("to_upper_case")<cr>')
+    noremap("v", "gul", ':lua require("textcase").visual("to_lower_case")<cr>')
+    noremap("v", "gus", ':lua require("textcase").visual("to_snake_case")<cr>')
+    noremap("v", "gud", ':lua require("textcase").visual("to_dash_case")<cr>')
+    noremap("v", "gun", ':lua require("textcase").visual("to_constant_case")<cr>')
+    noremap("v", "gud", ':lua require("textcase").visual("to_dot_case")<cr>')
+    noremap("v", "gua", ':lua require("textcase").visual("to_phrase_case")<cr>')
+    noremap("v", "guc", ':lua require("textcase").visual("to_camel_case")<cr>')
+    noremap("v", "gup", ':lua require("textcase").visual("to_pascal_case")<cr>')
+    noremap("v", "gut", ':lua require("textcase").visual("to_title_case")<cr>')
+    noremap("v", "guf", ':lua require("textcase").visual("to_path_case")<cr>')
+
+    noremap("n", "guu", ':lua require("textcase").operator("to_upper_case")<cr>')
+    noremap("n", "gul", ':lua require("textcase").operator("to_lower_case")<cr>')
+    noremap("n", "gus", ':lua require("textcase").operator("to_snake_case")<cr>')
+    noremap("n", "gud", ':lua require("textcase").operator("to_dash_case")<cr>')
+    noremap("n", "gun", ':lua require("textcase").operator("to_constant_case")<cr>')
+    noremap("n", "gud", ':lua require("textcase").operator("to_dot_case")<cr>')
+    noremap("n", "gua", ':lua require("textcase").operator("to_phrase_case")<cr>')
+    noremap("n", "guc", ':lua require("textcase").operator("to_camel_case")<cr>')
+    noremap("n", "gup", ':lua require("textcase").operator("to_pascal_case")<cr>')
+    noremap("n", "gut", ':lua require("textcase").operator("to_title_case")<cr>')
+    noremap("n", "guf", ':lua require("textcase").operator("to_path_case")<cr>')
 	end,
 	config = function() end,
 })
@@ -281,12 +455,13 @@ table.insert(plugins, {
       mappings = {
         start = '<leader>sw', -- Mark word / region
         start_word = '<leader>sW', -- Mark word / region. Edit only full word
-        -- start_and_edit = '<leader>cw', -- Mark word / region and also edit
-        -- start_and_edit_word = '<leader>cW', -- Mark word / region and also edit.  Edit only full word.
+        start_and_edit = '', -- Mark word / region and also edit
+        start_and_edit_word = '', -- Mark word / region and also edit.  Edit only full word.
         apply_substitute_and_next = '?', -- Start substitution / Go to next substitution
         apply_substitute_and_prev = '!', -- same as M but backwards
-        apply_substitute_all = 'g?', -- Substitute all
+        apply_substitute_all = '<leader>ss', -- Substitute all
         force_terminate_substitute = '<leader>sc', -- Terminate macro (if some bug happens)
+        redo_last_record = '',
         terminate_substitute = '<esc>',
         skip_substitute = '<cr>',
         goto_next = '<C-j>',
@@ -301,6 +476,30 @@ table.insert(plugins, {
   end,
 })
 
+table.insert(plugins, {
+  name = 'sideways.vim',
+  setup = function()
+		local noremap = require("utils").noremap
+    noremap("n", "<c-h>", ":SidewaysLeft<cr>")
+    noremap("n", "<c-l>", ":SidewaysRight<cr>")
+  end,
+  config = function() end,
+})
+
+table.insert(plugins, {
+	name = "mini.align",
+	setup = function()
+	end,
+	config = function()
+    require('mini.align').setup {
+      mappings = {
+        start = '',
+        start_with_preview = 'ga',
+      },
+    }
+  end,
+})
+
 local p = require("utils").p
 
 local M = function(use)
@@ -311,7 +510,7 @@ local M = function(use)
 	use { p "https://github.com/bkad/CamelCaseMotion" }
 	-- use { p 'https://github.com/AndrewRadev/deleft.vim', }
 	use { p "https://github.com/FooSoft/vim-argwrap" }
-	use { p "https://github.com/wellle/targets.vim" }
+	-- use { p "https://github.com/wellle/targets.vim" }
 	use { p "https://github.com/inkarkat/vim-ReplaceWithRegister" }
 	use {
 		p "https://github.com/aMOPel/vim-log-print",
@@ -320,24 +519,22 @@ local M = function(use)
 	use {
 		p "https://github.com/kana/vim-textobj-user",
 		requires = {
-			{
-				p "https://github.com/kana/vim-textobj-indent",
-				after = "vim-textobj-user",
-			},
-			{
-				p "https://github.com/kana/vim-textobj-entire",
-				after = "vim-textobj-user",
-			},
+			{ p "https://github.com/kana/vim-textobj-indent", },
+			{ p "https://github.com/kana/vim-textobj-entire", },
 			-- { p 'https://github.com/Chun-Yang/vim-textobj-chunk', after = 'vim-textobj-user', },
 			-- { p 'https://github.com/saaguero/vim-textobj-pastedtext', after = 'vim-textobj-user', },
-			{
-				p "https://github.com/idbrii/textobj-word-column.vim",
-				after = "vim-textobj-user",
-			},
+      { p "https://github.com/idbrii/textobj-word-column.vim", },
+			{ p "https://github.com/glts/vim-textobj-comment", },
+			{ p "https://github.com/kana/vim-textobj-line", },
+			-- { p "https://github.com/kana/vim-textobj-lastpat", },
 		},
 	}
 	use { p "https://github.com/johmsalas/text-case.nvim" }
   use { p "https://github.com/machakann/vim-columnmove" }
   use { p "https://github.com/otavioschwanck/cool-substitute.nvim", }
+  use { p "https://github.com/echasnovski/mini.ai", }
+  use { p "https://github.com/monaqa/dial.nvim", }
+  use { p "https://github.com/AndrewRadev/sideways.vim", }
+  use { p "https://github.com/echasnovski/mini.align" }
 end
 return M

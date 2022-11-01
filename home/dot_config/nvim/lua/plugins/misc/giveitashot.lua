@@ -1,102 +1,18 @@
 local plugins = require("globals").plugins
 
--- table.insert(plugins, {
---       name = 'cybu.nvim',
---       setup = function()
---       end,
---       config = function()
---       require("cybu").setup({
---         position = {
---           relative_to = "win",          -- win, editor, cursor
---           anchor = "center",         -- topleft, topcenter, topright,
---                                           -- centerleft, center, centerright,
---                                           -- bottomleft, bottomcenter, bottomright
---           vertical_offset = 0,         -- vertical offset from anchor in lines
---           horizontal_offset = 0,        -- vertical offset from anchor in columns
---           max_win_height = 10,           -- height of cybu window in lines
---           max_win_width = 0.5,          -- integer for absolute in columns
---                                           -- float for relative to win/editor width
---         },
---         style = {
---           path = "relative",            -- absolute, relative, tail (filename only)
---           border = "rounded",           -- single, double, rounded, none
---           separator = " ",              -- string used as separator
---           prefix = "…",                 -- string used as prefix for truncated paths
---           padding = 2,                  -- left & right padding in number of spaces
---           hide_buffer_id = true,        -- hide buffer IDs in window
---           devicons = {
---             enabled = true,             -- enable or disable web dev icons
---             colored = true,             -- enable color for web dev icons
---             truncate = false,            -- truncate wide icons to one char width
---           },
---           highlights = {                -- see highlights via :highlight
---             current_buffer = "CybuFocus",       -- current / selected buffer
---             adjacent_buffers = "CybuAdjacent",  -- buffers not in focus
---             background = "CybuBackground",      -- window background
---             border = "CybuBorder",              -- border of the window
---           },
---         },
---         behavior = {                    -- set behavior for different modes
---           mode = {
---             default = {
---               switch = "on_close",     -- immediate, on_close
---               view = "paging",         -- paging, rolling
---             },
---             last_used = {
---               switch = "on_close",      -- immediate, on_close
---               view = "paging",          -- paging, rolling
---             },
---           },
---         },
---         display_time = 1500,             -- time the cybu window is displayed
---         exclude = {                     -- filetypes, cybu will not be active
---           "neo-tree",
---           "fugitive",
---           "qf",
---         },
---     })
---     local map = require 'utils'.map
---     map('n', '\\', '<Plug>(CybuPrev)')
---     map('n', '\'', '<Plug>(CybuNext)')
---     -- map({'n', 'v'}, '<tab>', '<plug>(CybuLastusedPrev)')
---     -- map({'n', 'v'}, '<cr>', '<plug>(CybuLastusedNext)')
---     vim.cmd[[
---     highlight CybuFocus cterm=bold gui=bold guifg=#abb2bf guibg=#31353f guisp=none
---     highlight CybuAdjacent cterm=reverse guifg=#5c6370 guibg=#31353f guisp=none
---     highlight CybuBackground cterm=reverse guifg=#5c6370 guibg=#31353f guisp=none
---     highlight CybuBorder cterm=reverse guifg=#5c6370 guibg=#31353f guisp=none
---     ]]
---   end,
--- })
-
 table.insert(plugins, {
-  name = 'live-command.nvim',
-  setup = function()
-  end,
-  config = function()
-    require("live-command").setup {
-      commands = {
-        Norm = { cmd = "norm" },
-        Reg = {
-          cmd = "norm",
-          -- This will transform ":5Reg a" into ":norm 5@a"
-          args = function(opts)
-            return (opts.count == -1 and "" or opts.count) .. "@" .. opts.args
-          end,
-          range = "",
+	name = "delaytrain.nvim",
+	setup = function()
+	end,
+	config = function()
+    require('delaytrain').setup {
+        delay_ms = 1000,  -- How long repeated usage of a key should be prevented
+        grace_period = 2, -- How many repeated keypresses are allowed
+        keys = {          -- Which keys (in which modes) should be delayed
+            ['nv'] = {'w', 'W', 'b', 'B', 'e', 'E', 'h', 'j', 'k', 'l'},
+            ['nvi'] = {'<Left>', '<Down>', '<Up>', '<Right>'},
+            -- ['n'] = {'<c-d>', '<c-u>'},
         },
-        Global = { cmd = "g" },
-      },
-      defaults = {
-        enable_highlighting = true,
-        inline_highlighting = true,
-        hl_groups = {
-          insertion = "DiffAdd",
-          deletion = "DiffDelete",
-          change = "DiffChange",
-        },
-      },
-      debug = false,
     }
   end,
 })
@@ -105,20 +21,36 @@ local p = require("utils").p
 
 local M = function(use)
 
-  use {
-    p "https://github.com/smjonas/live-command.nvim",
-  }
-
+  use { p "https://github.com/ja-ford/delaytrain.nvim" }
 
   -- use { p "https://github.com/tpope/vim-dadbod", }
   -- use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
 
-  -- DONE: fix <c-s> in gitcommit
+  -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
+  -- TODO: look into gitsigns:
+  -- https://github.com/lewis6991/gitsigns.nvim
+  -- https://github.com/airblade/vim-gitgutter
+  -- https://github.com/mhinz/vim-signify
+  -- https://github.com/rhysd/git-messenger.vim
+  -- https://github.com/f-person/git-blame.nvim
+  -- https://github.com/APZelos/blamer.nvim
+  -- https://github.com/tveskag/nvim-blame-line
+  -- TODO: look into fugitive alternatives:
+  -- https://github.com/jreybert/vimagit
+  -- https://github.com/TimUntersberger/neogit
+  -- https://github.com/tanvirtin/vgit.nvim
+  -- https://github.com/akinsho/git-conflict.nvim
+  -- https://github.com/sindrets/diffview.nvim
+  -- TODO: look into gh plugins:
+  -- https://github.com/tpope/vim-rhubarb
+  -- https://github.com/pwntester/octo.nvim
+  -- https://github.com/ldelossa/gh.nvim
+  -- TODO: research: put dispatch results not always in qflist
+  -- TODO: disable file preview in cmp-cmdline
   -- TODO: fix black git text
-  -- DONE: fix <leader>l
   -- TODO: incorporate PackerUpdate --preview
   -- TODO: fix error with rg, something sets cmdheight=1, but what?
-  -- TODO: fix error when closing zsh, probably due to change in zshrc
+  -- also why does it print "no mapping found" the first time to begin with
   -- TODO: test framework
   -- TODO: notes framework
   -- TODO: which-key
@@ -130,12 +62,7 @@ local M = function(use)
   -- TODO: work with registers?
   -- TODO: work with folds?
   -- TODO: some regex plugin?
-  -- use {
-  --   p 'https://github.com/ghillb/cybu.nvim',
-  -- }
-  -- use {
-  --   p 'https://github.com/dstein64/vim-startuptime',
-  -- }
+
 end
 return M
 -- # [[plugins]]

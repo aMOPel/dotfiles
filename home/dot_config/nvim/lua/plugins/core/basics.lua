@@ -56,24 +56,6 @@ table.insert(plugins, {
   end,
 })
 
--- table.insert(plugins, {
---   name = 'FixCursorHold.nvim',
---   setup = function()
---   end,
---   config = function()
---     vim.g.cursorhold_updatetime = 100
---   end,
--- })
-
--- table.insert(plugins, {
---   name = 'vim-cool',
---   setup = function()
---   end,
---   config = function()
---     vim.g.CoolTotalMatches = 1
---   end,
--- })
-
 table.insert(plugins, {
   name = 'vim-asterisk',
   setup = function()
@@ -84,32 +66,6 @@ table.insert(plugins, {
   config = function()
   end,
 })
-
-table.insert(plugins, {
-  name = 'vim-togglelist',
-  setup = function()
-    vim.g.toggle_list_no_mappings = 1
-    local map = require 'utils'.map
-    map('n', '<c-w>q', ':call ToggleQuickfixList()<cr>')
-    map('n', '<c-w><c-q>', ':call ToggleQuickfixList()<cr>')
-    -- for vim-dispatch
-    if vim.g.loaded_dispatch == 1 then
-      vim.g.toggle_list_copen_command = "Copen"
-    end
-  end,
-  config = function()
-  end,
-})
-
--- table.insert(plugins, {
---   name = 'errormarker.vim',
---   setup = function()
---     vim.g.errormarker_errortext = ""
---     vim.g.errormarker_warningtext = ""
---   end,
---   config = function()
---   end,
--- })
 
 table.insert(plugins, {
   name = 'vim-highlightedyank',
@@ -127,11 +83,7 @@ local M = function(use)
   use { p 'https://github.com/lukas-reineke/indent-blankline.nvim', }
   use { p 'https://github.com/andymass/vim-matchup', }
   use { p 'https://github.com/svermeulen/vim-cutlass', }
-  -- use { p 'https://github.com/antoinemadec/FixCursorHold.nvim', }
-  -- use { p 'https://github.com/romainl/vim-cool', }
   use { p 'https://github.com/haya14busa/vim-asterisk', }
-  use { p 'https://github.com/milkypostman/vim-togglelist', }
-  -- use { p 'https://github.com/mh21/errormarker.vim', }
   use { p 'https://github.com/tpope/vim-unimpaired', }
   use { p 'https://github.com/tpope/vim-obsession', }
   use { p 'https://github.com/deris/vim-shot-f', }

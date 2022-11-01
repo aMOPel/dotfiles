@@ -11,6 +11,7 @@ table.insert(plugins, {
     local noremap = require 'utils'.noremap
     noremap('n', '<leader>ff', ':FloatermToggle<CR>')
     noremap('t', '<C-W>', '<C-\\><C-n>:FloatermToggle<CR>')
+    noremap('n', '<leader>fm', ':exec "FloatermNew --autoclose=0 --disposable " . &makeprg<CR>')
     noremap('n', '<leader>fg', ':FloatermNew --autoclose=1 --width=1.0 --height=1.0 lazygit<CR>')
     noremap('n', '<leader>ft', ':FloatermNew --autoclose=2 --disposable taskwarrior-tui<CR>')
     noremap('n', '<leader>fw', ':FloatermNew --autoclose=0 --disposable --width=0.9 timew week<CR>')
@@ -24,11 +25,11 @@ table.insert(plugins, {
   setup = function()
     local noremap = require 'utils'.noremap
     local map = require 'utils'.map
-    noremap('n', '<leader>gr', ':Grepper -tool rg<CR>')
-    noremap('n', '<leader>*', ':Grepper -tool rg -cword -noprompt<cr>')
+    noremap('n', '<c-f>', ':Grepper -tool rg<CR>')
+    -- noremap('n', '<leader>*', ':Grepper -tool rg -cword -noprompt<cr>')
 
-    map('n', ',gr', '<Plug>(GrepperOperator)')
-    map('x', ',gr', '<Plug>(GrepperOperator)')
+    map('n', 'gs', '<Plug>(GrepperOperator)')
+    map('x', 'gs', '<Plug>(GrepperOperator)')
 
     vim.cmd([[
 aug Grepper
@@ -86,7 +87,7 @@ table.insert(plugins, {
   name = 'rnvimr',
   setup = function()
     local noremap = require 'utils'.noremap
-    noremap('n', '<leader>rr', ':RnvimrToggle<CR>')
+    noremap('n', '-', ':RnvimrToggle<CR>')
   end,
   config = function()
     vim.g.rnvimr_enable_ex = 1
@@ -148,78 +149,12 @@ table.insert(plugins, {
 })
 
 table.insert(plugins, {
-  name = 'dial.nvim',
   setup = function()
   end,
   config = function()
-    local augend = require('dial.augend')
-    require('dial.config').augends:register_group {
-      default = {
-        augend.integer.alias.decimal,
-        augend.integer.alias.hex,
-        augend.integer.alias.octal,
-        augend.integer.alias.binary,
-        augend.constant.alias.alpha,
-        augend.constant.alias.Alpha,
-        augend.constant.alias.bool,
-        augend.semver.alias.semver,
-        augend.date.alias['%Y/%m/%d'],
-        augend.date.alias['%m/%d/%Y'],
-        augend.date.alias['%d/%m/%Y'],
-        augend.date.alias['%m/%d/%y'],
-        augend.date.alias['%d/%m/%y'],
-        augend.date.alias['%m/%d'],
-        augend.date.alias['%-m/%-d'],
-        augend.date.alias['%Y-%m-%d'],
-        augend.date.alias['%H:%M:%S'],
-        augend.date.alias['%H:%M'],
-        augend.hexcolor.new {
-          case = 'lower',
-        },
-        augend.constant.new { elements = { 'and', 'or' }, word = true, cyclic = true, },
-        augend.constant.new { elements = { '&&', '||' }, word = false, cyclic = true, },
-        augend.constant.new { elements = { 'on', 'off' }, word = false, cyclic = true, },
-        augend.constant.new { elements = { '!=', '==' }, word = false, cyclic = true, },
-        augend.constant.new {
-          elements = {
-            'TODO',
-            'DONE',
-            'HACK',
-            'FIX',
-            'WARN',
-            'PERF',
-            'NOTE',
-          },
-          word = true,
-          cyclic = true,
-        },
-        augend.constant.new {
-          elements = {
-            'pick',
-            'fixup',
-            'reword',
-            'edit',
-            'squash',
-            'exec',
-            'break',
-            'drop',
-            'label',
-            'reset',
-            'merge',
-          },
-          word = true,
-          cyclic = true,
         },
       },
-    }
 
-    local noremap = require 'utils'.noremap
-    noremap('n', '<C-a>', require('dial.map').inc_normal())
-    noremap('n', '<C-x>', require('dial.map').dec_normal())
-    -- noremap('v', '<C-a>', require('dial.map').inc_visual())
-    -- noremap('v', '<C-x>', require('dial.map').dec_visual())
-    -- noremap('v', 'g<C-a>', require('dial.map').inc_gvisual())
-    -- noremap('v', 'g<C-x>', require('dial.map').dec_gvisual())
   end,
 })
 
@@ -231,7 +166,6 @@ local M = function(use)
   use { p 'https://github.com/kevinhwang91/nvim-bqf', }
   use { p 'https://github.com/kevinhwang91/rnvimr', }
   use { p 'https://github.com/szw/vim-maximizer', }
-  use { p 'https://github.com/monaqa/dial.nvim', }
   use {
     p 'https://github.com/tpope/vim-fugitive',
     requires = { p 'https://github.com/tpope/vim-rhubarb', after = 'vim-fugitive' },

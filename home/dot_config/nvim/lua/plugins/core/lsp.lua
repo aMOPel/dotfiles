@@ -227,7 +227,7 @@ table.insert(plugins, {
 		})
 
 		local noremap = require("utils").noremap
-		noremap("n", "<leader>fm", ":FormatWrite<cr>")
+		noremap("n", "gq", ":FormatWrite<cr>")
 		-- vim.cmd([[autocmd MyAutoCmd BufWritePost * FormatWrite]])
 		vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 			pattern = g.formatter.on_save,
