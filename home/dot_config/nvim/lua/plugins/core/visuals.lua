@@ -62,7 +62,7 @@ table.insert(plugins, {
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = { "location", },
-				lualine_c = {},
+				lualine_c = { require'recipe'.statusline },
 				lualine_x = {
 					{
 						"diagnostics",

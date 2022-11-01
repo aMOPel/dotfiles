@@ -137,24 +137,125 @@ table.insert(plugins, {
   end,
 })
 
+-- table.insert(plugins, {
+--   name = 'vim-dispatch',
+--   setup = function()
+--     vim.g.dispatch_no_maps = 1
+--     local noremap = require 'utils'.noremap
+--     noremap('n', '<cr>', ':Make<cr>')
+--   end,
+--   config = function()
+--   end,
+-- })
+
 table.insert(plugins, {
-  name = 'vim-dispatch',
+  name = 'qf.nvim',
   setup = function()
-    vim.g.dispatch_no_maps = 1
     local noremap = require 'utils'.noremap
-    noremap('n', '<leader>m', ':Make<cr>')
+    noremap('n', 'Q', function () require'qf'.toggle('c', false) end)
   end,
   config = function()
+    require'qf'.setup{
+      l = {
+        auto_close = true, -- Automatically close location/quickfix list if empty
+        auto_follow = false, -- Follow current entry, possible values: prev,next,nearest, or false to disable
+        auto_follow_limit = 8, -- Do not follow if entry is further away than x lines
+        follow_slow = true, -- Only follow on CursorHold
+        auto_open = true, -- Automatically open list on QuickFixCmdPost
+        auto_resize = true, -- Auto resize and shrink location list if less than `max_height`
+        max_height = 8, -- Maximum height of location/quickfix list
+        min_height = 5, -- Minimum height of location/quickfix list
+        wide = true, -- Open list at the very bottom of the screen, stretching the whole width.
+        number = false, -- Show line numbers in list
+        relativenumber = true, -- Show relative line numbers in list
+        unfocus_close = false, -- Close list when window loses focus
+        focus_open = false, -- Auto open list on window focus if it contains items
+      },
+      -- Quickfix list configuration
+      c = {
+        auto_close = true, -- Automatically close location/quickfix list if empty
+        auto_follow = false, -- Follow current entry, possible values: prev,next,nearest, or false to disable
+        auto_follow_limit = 8, -- Do not follow if entry is further away than x lines
+        follow_slow = true, -- Only follow on CursorHold
+        auto_open = true, -- Automatically open list on QuickFixCmdPost
+        auto_resize = true, -- Auto resize and shrink location list if less than `max_height`
+        max_height = 8, -- Maximum height of location/quickfix list
+        min_height = 5, -- Minimum height of location/quickfix list
+        wide = true, -- Open list at the very bottom of the screen, stretching the whole width.
+        number = false, -- Show line numbers in list
+        relativenumber = true, -- Show relative line numbers in list
+        unfocus_close = false, -- Close list when window loses focus
+        focus_open = false, -- Auto open list on window focus if it contains items
+      },
+      close_other = true, -- Close location list when quickfix list opens
+      pretty = false, -- "Pretty print quickfix lists"
+    }
   end,
 })
 
 table.insert(plugins, {
+  name = 'recipe.nvim',
   setup = function()
+    local noremap = require 'utils'.noremap
+    noremap('n', '<leader>b', ':Bake')
+    noremap('n', '<cr>', ':Bake run<cr>')
   end,
   config = function()
+    local add = require("utils").addTable
+    local recipes = require("globals").recipes
+    add(recipes, require("recipe.ft"))
+
+    require'recipe'.setup{
+      term = {
+        height = 0.8,
+        width = 0.8,
+        kind = "float",
+        border = "single",
+        jump_to_end = true,
+        auto_close = false,
+      },
+      recipes_file = "recipes.json",
+      --- Define custom global recipes, either globally or by filetype as key
+      custom_recipes = recipes,
+      hooks = {
+        pre = {
+          function(_)
+            vim.cmd(":wa")
+          end,
         },
       },
 
+      ---@class Recipe
+      ---@field cmd string
+      ---@field cwd string
+      ---@field kind string one of build,term,dap or a custom adapter
+      ---@field plain boolean
+      ---@field env table|nil
+      ---@field opts table Extra options for the current backend
+      ---@field depends_on (string|Recipe)[]
+      default_recipe = {
+        cmd = "",
+        kind = "build",
+        opts = {},
+        restart = false,
+        plain = false,
+        depends_on = {},
+        env = { __type = "table" },
+      },
+
+      adapters = {
+        term = require("recipe.adapters.term"),
+        build = require("recipe.adapters.build"),
+        dap = require("recipe.adapters.dap"),
+      },
+
+      debug_adapters = {
+        rust = require("recipe.debug_adapters").codelldb,
+        c = require("recipe.debug_adapters").codelldb,
+        cpp = require("recipe.debug_adapters").codelldb,
+      },
+      dotenv = ".env",
+    }
   end,
 })
 
@@ -163,7 +264,6 @@ local p = require 'utils'.p
 local M = function(use)
   use { p 'https://github.com/voldikss/vim-floaterm', }
   use { p 'https://github.com/mhinz/vim-grepper', }
-  use { p 'https://github.com/kevinhwang91/nvim-bqf', }
   use { p 'https://github.com/kevinhwang91/rnvimr', }
   use { p 'https://github.com/szw/vim-maximizer', }
   use {
@@ -174,13 +274,19 @@ local M = function(use)
     p 'https://github.com/folke/todo-comments.nvim',
     requires = { p 'https://github.com/nvim-lua/plenary.nvim', },
   }
-  use {
-    p 'https://github.com/tpope/vim-dispatch',
-    requires = { p 'https://github.com/radenling/vim-dispatch-neovim', after = 'vim-dispatch', },
-  }
+  -- use {
+  --   p 'https://github.com/tpope/vim-dispatch',
+  --   requires = { p 'https://github.com/radenling/vim-dispatch-neovim', after = 'vim-dispatch', },
+  -- }
   use {
     p 'https://github.com/simnalamburt/vim-mundo',
     commit = '595ee332719f397c2441d85f79608113957cc78f',
+  }
+
+  use { p 'https://github.com/kevinhwang91/nvim-bqf', }
+  use {
+    p 'https://github.com/ten3roberts/recipe.nvim',
+    requires = { p 'https://github.com/ten3roberts/qf.nvim', },
   }
 end
 return M

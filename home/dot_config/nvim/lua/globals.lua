@@ -33,6 +33,9 @@ local M = {
 		filetype = {},
 		on_save = {},
 	},
+  recipes = {
+    global = {},
+  },
 }
 
 return M
