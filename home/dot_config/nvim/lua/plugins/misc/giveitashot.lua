@@ -46,10 +46,10 @@ local M = function(use)
   -- https://github.com/pwntester/octo.nvim
   -- https://github.com/ldelossa/gh.nvim
   -- TODO: research: put dispatch results not always in qflist
-  -- TODO: disable file preview in cmp-cmdline
+  -- DONE: disable file preview in cmp-cmdline
   -- TODO: fix black git text
   -- TODO: incorporate PackerUpdate --preview
-  -- TODO: fix error with rg, something sets cmdheight=1, but what?
+  -- DONE: fix error with rg, something sets cmdheight=1, but what?
   -- also why does it print "no mapping found" the first time to begin with
   -- TODO: test framework
   -- TODO: notes framework

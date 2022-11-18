@@ -10,16 +10,22 @@ table.insert(plugins, {
 
     local cmp = require 'cmp'
 
+    local compare = require('cmp.config.compare')
+
     cmp.setup({
       snippet = {
         expand = function(args)
           vim.fn["vsnip#anonymous"](args.body)
         end,
       },
+      window = {
+        -- completion = cmp.config.window.bordered{col_offset=-1},
+        documentation = cmp.config.disable,
+      },
       mapping = {
-        ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-        ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        ['<C-g>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        -- ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+        -- ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+        -- ['<C-g>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         ['<C-q>'] = cmp.mapping({
           i = cmp.mapping.abort(),
           c = cmp.mapping.close(),
@@ -41,36 +47,32 @@ table.insert(plugins, {
         end, { "i", "s", "c" })
       },
       sources = {
-        { name = 'cmp_tabnine', priority = 1000, max_item_count = 20 },
-        { name = 'vsnip', priority = 900, max_item_count = 10 },
-        -- { name = 'fuzzy_path', priority=900, max_item_count=10  },
+        -- { name = 'cmp_tabnine', priority = 1000, max_item_count = 20 },
+        { name = 'vsnip', priority = 900, max_item_count = 5 },
         { name = 'nvim_lsp', priority = 500, max_item_count = 20 },
-        -- { name = 'nvim_lsp_signature_help' },
         { name = 'nvim_lua', priority = 500, max_item_count = 20 },
-        -- { name = 'buffer', priority=100, keyword_length=3, max_item_count=5  },
+        { name = 'buffer', priority=700, keyword_length=3, max_item_count=5  },
         { name = 'emoji' },
-        { name = 'zsh' },
-        { name = 'git' },
-        { name = 'rg', priority = 500, keyword_length = 3, max_item_count = 10 },
+        { name = 'rg', priority = 500, keyword_length = 3, max_item_count = 5 },
         { name = 'calc', priority = 100 },
         -- { name = 'spell', priority=100 },
-        -- { name = 'neorg' },
       },
       formatting = {
         format = require('lspkind').cmp_format({
           with_text = true,
           maxwidth = 50,
           menu = {
-            cmp_tabnine = '[T9]',
+            -- cmp_tabnine = '[T9]',
             vsnip = '[VSNIP]',
-            fuzzy_path = '[PATH]',
+            fuzzy_path = '[FZYPATH]',
+            -- fuzzy_buffer = '[FZYBUF]',
             nvim_lsp = '[LSP]',
             nvim_lua = '[LUA]',
             buffer = '[BUF]',
             rg = '[RG]',
             cmdline = '[CMD]',
             calc = '[CLC]',
-            zsh = '[ZSH]',
+            -- zsh = '[ZSH]',
             git = '[GIT]',
           },
         })
@@ -78,21 +80,41 @@ table.insert(plugins, {
       experimental = {
         native_menu = false,
         ghost_text = true,
-      }
+      },
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          require('cmp_fuzzy_path.compare'),
+          -- require('cmp_fuzzy_buffer.compare'),
+          compare.offset,
+          compare.exact,
+          compare.score,
+          compare.recently_used,
+          compare.kind,
+          compare.sort_text,
+          compare.length,
+          compare.order,
+        },
+      },
     })
-    cmp.setup.cmdline('?', {
-      sources = {
-        { name = 'buffer', max_item_count = 30, }
-      }
+
+    cmp.setup.filetype('gitcommit', {
+      sources = cmp.config.sources({
+        { name = 'git' },
+      }, {
+        { name = 'buffer' },
+      })
     })
-    cmp.setup.cmdline('/', {
+
+    cmp.setup.cmdline({'/', '?'}, {
       sources = {
-        { name = 'buffer', max_item_count = 30, }
+        { name = 'buffer', max_item_count = 30, },
+        -- { name = 'fuzzy_buffer', max_item_count = 30, }
       }
     })
     cmp.setup.cmdline(':', {
       sources = cmp.config.sources({
-        { name = 'fuzzy_path', max_item_count = 20 }
+        { name = 'fuzzy_path', max_item_count = 20, option = {fd_timeout_msec = 1500} }
       }, {
         { name = 'cmdline', max_item_count = 30, }
       }),
@@ -115,49 +137,38 @@ smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-T
 ]]
   end })
 
-table.insert(plugins, {
-  name = 'cmp-zsh',
-  setup = function()
-  end,
-  config = function()
-    require 'cmp_zsh'.setup {
-      filetypes = { 'sh', 'zsh' }
-    }
-  end })
+-- table.insert(plugins, {
+--   name = 'cmp-zsh',
+--   setup = function()
+--   end,
+--   config = function()
+--     require 'cmp_zsh'.setup {
+--       filetypes = { 'sh', 'zsh' }
+--     }
+--   end })
 
 table.insert(plugins, {
   name = 'cmp-git',
   setup = function()
   end,
   config = function()
-    require 'cmp_git'.setup {
-      filetypes = { 'gitcommit' },
-      trigger_actions = {
-        {
-          debug_name = "git_commits",
-          trigger_character = "&",
-          action = function(sources, trigger_char, callback, params, git_info)
-            return sources.git:get_commits(callback, params, trigger_char)
-          end,
-        },
-      }
-    }
+    require 'cmp_git'.setup {}
   end })
 
-table.insert(plugins, {
-  name = 'cmp-tabnine',
-  setup = function()
-  end,
-  config = function()
-    local tabnine = require('cmp_tabnine.config')
-    tabnine:setup({
-      max_lines = 1000;
-      max_num_results = 20;
-      sort = true;
-      run_on_every_keystroke = true;
-      snippet_placeholder = '..';
-    })
-  end })
+-- table.insert(plugins, {
+--   name = 'cmp-tabnine',
+--   setup = function()
+--   end,
+--   config = function()
+--     local tabnine = require('cmp_tabnine.config')
+--     tabnine:setup({
+--       max_lines = 1000;
+--       max_num_results = 20;
+--       sort = true;
+--       run_on_every_keystroke = true;
+--       snippet_placeholder = '..';
+--     })
+--   end })
 
 table.insert(plugins, {
   name = 'cmp-cmdline',
@@ -165,8 +176,8 @@ table.insert(plugins, {
   end,
   config = function()
     local map = require 'utils'.map
-    map('c', '<tab>', '')
-    map('c', '<s-tab>', '')
+    map('c', '<tab>', '<nop>')
+    map('c', '<s-tab>', '<nop>')
     vim.opt.wildmenu = false
   end })
 
@@ -189,38 +200,50 @@ local M = function(use)
       { p 'https://github.com/hrsh7th/cmp-emoji', after = 'nvim-cmp', },
       { p 'https://github.com/hrsh7th/cmp-buffer', after = 'nvim-cmp', },
       { p 'https://github.com/hrsh7th/cmp-nvim-lua', after = 'nvim-cmp', },
-      { p 'https://github.com/hrsh7th/cmp-path', after = 'nvim-cmp', },
+      -- { p 'https://github.com/hrsh7th/cmp-path', after = 'nvim-cmp', },
       { p 'https://github.com/lukas-reineke/cmp-rg', after = 'nvim-cmp', },
-      { p 'https://github.com/f3fora/cmp-spell', after = 'nvim-cmp', },
+      -- { p 'https://github.com/f3fora/cmp-spell', after = 'nvim-cmp', },
       { p 'https://github.com/hrsh7th/cmp-cmdline', after = 'nvim-cmp', },
-      { p 'https://github.com/tamago324/cmp-zsh', after = 'nvim-cmp', },
+      -- { p 'https://github.com/tamago324/cmp-zsh', after = 'nvim-cmp', },
       -- { p 'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp', },
-      {
-        p 'https://github.com/petertriho/cmp-git',
-        after = 'nvim-cmp',
-        requires = { p 'https://github.com/nvim-lua/plenary.nvim' },
-      },
-      {
-        p 'https://github.com/tzachar/cmp-fuzzy-path',
-        requires = {
-          { p 'https://github.com/tzachar/fuzzy.nvim', },
-          { p 'https://github.com/nvim-telescope/telescope-fzf-native.nvim', run = 'make', },
-        },
-        after = 'nvim-cmp',
-      },
-      {
-        p 'https://github.com/tzachar/cmp-tabnine',
-        run = function()
-          vim.pretty_print(
-            vim.fn.system(
-              vim.fn.stdpath('data') .. '/site/pack/packer/opt/cmp-tabnine/install.sh'
-            )
-          )
-        end,
-        after = 'nvim-cmp',
-      },
+      -- {
+      --   p 'https://github.com/tzachar/cmp-tabnine',
+      --   run = function()
+      --     vim.pretty_print(
+      --       vim.fn.system(
+      --         vim.fn.stdpath('data') .. '/site/pack/packer/opt/cmp-tabnine/install.sh'
+      --       )
+      --     )
+      --   end,
+      --   after = 'nvim-cmp',
+      -- },
     },
   }
+
+  use {
+    p 'https://github.com/petertriho/cmp-git',
+    requires = {
+      { p 'https://github.com/hrsh7th/nvim-cmp', },
+      { p 'https://github.com/nvim-lua/plenary.nvim' },
+    },
+  }
+
+  use { p 'https://github.com/nvim-telescope/telescope-fzf-native.nvim', run = 'make', }
+  use {
+    p 'https://github.com/tzachar/cmp-fuzzy-path',
+    requires = {
+      { p 'https://github.com/hrsh7th/nvim-cmp', },
+      { p 'https://github.com/tzachar/fuzzy.nvim', },
+    },
+  }
+
+  -- use {
+  --   p 'https://github.com/tzachar/cmp-fuzzy-buffer',
+  --   requires = {
+  --     { p 'https://github.com/hrsh7th/nvim-cmp', },
+  --     { p 'https://github.com/tzachar/fuzzy.nvim', },
+  --   },
+  -- }
 
 end
 return M

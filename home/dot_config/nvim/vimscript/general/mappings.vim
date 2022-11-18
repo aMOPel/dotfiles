@@ -62,7 +62,7 @@ vnoremap <C-s> :<C-u>write<CR>
 " nnoremap <Leader>Y :let @+=expand("%:p")<CR>:echo 'Yanked absolute path'<CR>
 
 " make
-" nnoremap <cr> :make<CR>
+nnoremap <cr> :make<CR>
 
 " close all temp windows
 nnoremap <silent> <c-w>a :cclose<CR>:pclose<CR>:helpclose<CR>:lclose<CR>

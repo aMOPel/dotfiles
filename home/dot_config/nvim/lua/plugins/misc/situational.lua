@@ -10,7 +10,7 @@ table.insert(plugins, {
 
     local noremap = require 'utils'.noremap
     noremap('n', '<leader>ff', ':FloatermToggle<CR>')
-    noremap('t', '<C-W>', '<C-\\><C-n>:FloatermToggle<CR>')
+    noremap('t', '<C-W>', '<C-\\><C-n><C-W>c')
     noremap('n', '<leader>fm', ':exec "FloatermNew --autoclose=0 --disposable " . &makeprg<CR>')
     noremap('n', '<leader>fg', ':FloatermNew --autoclose=1 --width=1.0 --height=1.0 lazygit<CR>')
     noremap('n', '<leader>ft', ':FloatermNew --autoclose=2 --disposable taskwarrior-tui<CR>')
@@ -198,7 +198,7 @@ table.insert(plugins, {
   setup = function()
     local noremap = require 'utils'.noremap
     noremap('n', '<leader>b', ':Bake')
-    noremap('n', '<cr>', ':Bake run<cr>')
+    -- noremap('n', '<cr>', ':Bake run<cr>')
   end,
   config = function()
     local add = require("utils").addTable
@@ -254,7 +254,7 @@ table.insert(plugins, {
         c = require("recipe.debug_adapters").codelldb,
         cpp = require("recipe.debug_adapters").codelldb,
       },
-      dotenv = ".env",
+      dotenv = "",
     }
   end,
 })
