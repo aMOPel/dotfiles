@@ -2,13 +2,20 @@
 " mappings
 " inoremap jk <ESC>
 
+" incremental numbering visual selection
+xnoremap <leader>i1 :s/\%V/0<C-V><TAB>/<CR>gvg<C-A>gv:retab<ESC>gvI<C-G>u<ESC>gv/ <CR>:s/\%V /./<CR>
+
 " stop using S X
 nmap S <nop>
 nmap X <nop>
 
-" faster line movement
-nnoremap L $
-nnoremap H 0
+" faster line movement also for visual/operator pending
+noremap L $
+noremap H 0
+
+" stop using $ 0
+map $ <nop>
+map 0 <nop>
 
 " cycle changelist
 nnoremap ( g,
@@ -22,14 +29,19 @@ vnoremap / <esc>/\%V
 
 "Z to close
 noremap ZZ :qa<CR>
+noremap ZA :qa!<CR>
 noremap ZB :bdelete<CR>
 noremap ZW :close<CR>
 noremap ZT :tabclose<CR>
 noremap ZJ :helpclose<cr>:cclose<CR>:lclose<cr>
 
+" move vertical selection up/down and keep selection
+" vnoremap <silent> <c-k> :m '<-2<CR>gv
+" vnoremap <silent> <c-j> :m '>+1<CR>gv
+
 " Re-select blocks after indenting in visual/select mode
-xnoremap < <gv
-xnoremap > >gv|
+" xnoremap < <gv
+" xnoremap > >gv|
 
 " Indent and jump to first non-blank character linewise
 nnoremap >>  >>_
@@ -47,8 +59,16 @@ nnoremap <<  <<_
 nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
 " Quick substitute within selected area
-xnoremap <leader>sg :s//g<Left><Left>
-nnoremap <leader>sg mz*:%s///g\|norm g`z<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+xnoremap <leader>sg :S//g<Left><Left>
+nnoremap <leader>sg mz*:%S///g\|norm g`z<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+
+" undo points in insert
+inoremap <space> <c-g>u<space>
+inoremap { <c-g>u{
+inoremap [ <c-g>u[
+inoremap ( <c-g>u(
+inoremap , <c-g>u,
+inoremap . <c-g>u.
 
 " Open file under the cursor in a vsplit
 nnoremap gf :vertical wincmd f<CR>
@@ -111,8 +131,8 @@ endif
 " nnoremap <silent> <leader>ws mb:%s/\s*$//<cr>:nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>g'bzz
 
 " quick edit and buffer search
-nnoremap <C-e> :e 
-nnoremap <C-q> :b
+nmap <c-e> :e ./<c-s>
+nmap <c-q> :b <c-s>
 
 " insert date
 nmap <leader>id O<esc>v:!date --date='TZ="Berlin" now'<cr>

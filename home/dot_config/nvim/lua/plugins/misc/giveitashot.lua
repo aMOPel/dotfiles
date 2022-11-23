@@ -10,7 +10,7 @@ table.insert(plugins, {
         grace_period = 2, -- How many repeated keypresses are allowed
         keys = {          -- Which keys (in which modes) should be delayed
             ['nv'] = {'w', 'W', 'b', 'B', 'e', 'E', 'h', 'j', 'k', 'l'},
-            ['nvi'] = {'<Left>', '<Down>', '<Up>', '<Right>'},
+            ['i'] = {'<Left>', '<Down>', '<Up>', '<Right>'},
             -- ['n'] = {'<c-d>', '<c-u>'},
         },
     }
@@ -22,11 +22,9 @@ local p = require("utils").p
 local M = function(use)
 
   use { p "https://github.com/ja-ford/delaytrain.nvim" }
-
   -- use { p "https://github.com/tpope/vim-dadbod", }
   -- use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
 
-  -- TODO: https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
   -- TODO: look into gitsigns:
   -- https://github.com/lewis6991/gitsigns.nvim
   -- https://github.com/airblade/vim-gitgutter
@@ -46,11 +44,8 @@ local M = function(use)
   -- https://github.com/pwntester/octo.nvim
   -- https://github.com/ldelossa/gh.nvim
   -- TODO: research: put dispatch results not always in qflist
-  -- DONE: disable file preview in cmp-cmdline
   -- TODO: fix black git text
   -- TODO: incorporate PackerUpdate --preview
-  -- DONE: fix error with rg, something sets cmdheight=1, but what?
-  -- also why does it print "no mapping found" the first time to begin with
   -- TODO: test framework
   -- TODO: notes framework
   -- TODO: which-key

@@ -21,9 +21,9 @@ table.insert(plugins, {
 table.insert(plugins, {
   name = 'fzf-gitignore',
   setup = function()
+    vim.g.fzf_gitignore_no_maps = 1
   end,
   config = function()
-    vim.g.fzf_gitignore_no_maps = 1
   end,
 })
 

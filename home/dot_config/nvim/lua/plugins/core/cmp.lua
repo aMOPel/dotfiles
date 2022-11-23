@@ -25,7 +25,7 @@ table.insert(plugins, {
       mapping = {
         -- ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
         -- ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        -- ['<C-g>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+        ['<C-s>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         ['<C-q>'] = cmp.mapping({
           i = cmp.mapping.abort(),
           c = cmp.mapping.close(),

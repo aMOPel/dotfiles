@@ -196,9 +196,12 @@ table.insert(plugins, {
 table.insert(plugins, {
   name = 'recipe.nvim',
   setup = function()
-    local noremap = require 'utils'.noremap
-    noremap('n', '<leader>b', ':Bake')
-    -- noremap('n', '<cr>', ':Bake run<cr>')
+    -- needs to be vimscript so that <c-s> works
+    vim.cmd[[
+nmap <leader>m :Bake build<c-s>
+nmap <leader>n :Bake run<c-s>
+nmap <leader>t :Bake test<c-s>
+    ]]
   end,
   config = function()
     local add = require("utils").addTable

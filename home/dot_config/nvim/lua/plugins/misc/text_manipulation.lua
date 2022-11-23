@@ -1,16 +1,84 @@
 local plugins = require("globals").plugins
 
 table.insert(plugins, {
+  name = "vim-schlepp",
+  setup = function()
+
+    vim.g["Schlepp#useShiftWidthLines"] = 1
+    vim.g["Schlepp#dupLinesDir"] = "down"
+    vim.g["Schlepp#dupBlockDir"] = "right"
+
+    local map = require 'utils'.map
+    map("x", "gd", "<Plug>SchleppDupSmart")
+    map("x", "<up>", "<Plug>SchleppUp")
+    map("x", "<down>", "<Plug>SchleppDown")
+    map("x", "<left>", "<Plug>SchleppLeft")
+    map("x", "<right>", "<Plug>SchleppRight")
+
+  end,
+  config = function()
+  end,
+})
+
+table.insert(plugins, {
+  name = "vim-yoink",
+  setup = function()
+
+    vim.g.yoinkAutoFormatPaste = 1
+    vim.g.yoinkSavePersistently = 1
+    vim.g.yoinkIncludeDeleteOperations = 1
+
+    local map = require 'utils'.map
+    map("n", "<c-n>", "<plug>(YoinkPostPasteSwapBack)")
+    map("n", "<c-p>", "<plug>(YoinkPostPasteSwapForward)")
+    map("n", "p", "<plug>(YoinkPaste_p)")
+    map("n", "P", "<plug>(YoinkPaste_P)")
+    map("n", "[y", "<plug>(YoinkRotateBack)")
+    map("n", "]y", "<plug>(YoinkRotateForward)")
+    map("n", "y", "<plug>(YoinkYankPreserveCursorPosition)")
+    map("x", "y", "<plug>(YoinkYankPreserveCursorPosition)")
+  end,
+  config = function()
+  end,
+})
+
+table.insert(plugins, {
+  name = "vim-subversive",
+  setup = function()
+    vim.g.subversivePromptWithCurrent = 0
+    vim.g.subversiveCurrentTextRegister = "r"
+    vim.g.subversivePromptWithActualCommand = 1
+    vim.g.subversivePreserveCursorPosition = 1
+
+    local map = require 'utils'.map
+    map("n", "S", "<plug>(SubversiveSubstitute)")
+    map("n", "SS", "<plug>(SubversiveSubstituteLine)")
+    -- map("n", "SL", "<plug>(SubversiveSubstituteEndOfLine)")
+
+    map("x", "P", "<plug>(SubversiveSubstitute)")
+    map("x", "p", "<plug>(SubversiveSubstitute)")
+
+    local noremap = require 'utils'.noremap
+    noremap("n", "R", "<plug>(SubversiveSubvertRange)")
+    noremap("x", "R", "<plug>(SubversiveSubvertRange)")
+    noremap("n", "RR", "<plug>(SubversiveSubvertWordRange)")
+  end,
+  config = function()
+  end,
+})
+
+table.insert(plugins, {
   name = 'vim-exchange',
-  setup = function() 
+  setup = function()
     vim.g.exchange_no_mappings = 1
     vim.g.exchange_indent = '=='
 
 		local map = require("utils").map
     map("n", "gx", "<Plug>(Exchange)")
     map("x", "gx", "<Plug>(Exchange)")
-    map("n", "gX", "<Plug>(ExchangeClear)")
+    map("n", "gxc", "<Plug>(ExchangeClear)")
     map("n", "gxx", "<Plug>(ExchangeLine)")
+    map("n", "gX", "<Plug>(ExchangeLine):norm! $<cr>")
 
   end,
   config = function() end,
@@ -334,15 +402,6 @@ table.insert(plugins, {
 })
 
 -- table.insert(plugins, {
---   name = 'textobj-pastedtext.vim',
---   setup = function()
---     vim.g.pastedtext_select_key = 'gp'
---   end,
---   config = function()
---   end,
--- })
-
--- table.insert(plugins, {
 -- 	name = "targets.vim",
 -- 	setup = function() end,
 -- 	config = function()
@@ -371,117 +430,44 @@ table.insert(plugins, {
 -- 	end,
 -- })
 
-table.insert(plugins, {
-	name = "vim-ReplaceWithRegister",
-	setup = function()
-		local map = require("utils").map
-		map("n", "<c-p>", "<Plug>ReplaceWithRegisterOperator")
-		map("n", "<c-p><c-p>", "<Plug>ReplaceWithRegisterLine")
-		map("x", "<c-p>", "<Plug>ReplaceWithRegisterVisual")
-	end,
-	config = function() end,
-})
+-- table.insert(plugins, {
+--   name = 'cool-substitute.nvim',
+--   setup = function()
+--   end,
+--   config = function()
+--     require'cool-substitute'.setup({
+--       setup_keybindings = true,
+--       mappings = {
+--         start = '<leader>sw', -- Mark word / region
+--         start_word = '<leader>sW', -- Mark word / region. Edit only full word
+--         start_and_edit = '', -- Mark word / region and also edit
+--         start_and_edit_word = '', -- Mark word / region and also edit.  Edit only full word.
+--         apply_substitute_and_next = '?', -- Start substitution / Go to next substitution
+--         apply_substitute_and_prev = '!', -- same as M but backwards
+--         apply_substitute_all = '<leader>ss', -- Substitute all
+--         force_terminate_substitute = '<leader>sc', -- Terminate macro (if some bug happens)
+--         redo_last_record = '',
+--         terminate_substitute = '<esc>',
+--         skip_substitute = '<cr>',
+--         goto_next = '<C-j>',
+--         goto_previous = '<C-k>',
+--       },
+--       reg_char = 's', -- letter to save macro (Dont use number or uppercase here)
+--       mark_char = 's', -- mark the position at start of macro
+--       writing_substitution_color = "#ECBE7B", -- for status line
+--       applying_substitution_color = "#98be65", -- for status line
+--       edit_word_when_starting_with_substitute_key = true -- (press M to mark and edit when not executing anything anything)
+--     })
+--   end,
+-- })
 
-table.insert(plugins, {
-	name = "text-case.nvim",
-	setup = function()
-		local noremap = require("utils").noremap
-    noremap("n", "gu", '<nop>')
-
-    noremap("v", "guu", ':lua require("textcase").visual("to_upper_case")<cr>')
-    noremap("v", "gul", ':lua require("textcase").visual("to_lower_case")<cr>')
-    noremap("v", "gus", ':lua require("textcase").visual("to_snake_case")<cr>')
-    noremap("v", "gud", ':lua require("textcase").visual("to_dash_case")<cr>')
-    noremap("v", "gun", ':lua require("textcase").visual("to_constant_case")<cr>')
-    noremap("v", "gud", ':lua require("textcase").visual("to_dot_case")<cr>')
-    noremap("v", "gua", ':lua require("textcase").visual("to_phrase_case")<cr>')
-    noremap("v", "guc", ':lua require("textcase").visual("to_camel_case")<cr>')
-    noremap("v", "gup", ':lua require("textcase").visual("to_pascal_case")<cr>')
-    noremap("v", "gut", ':lua require("textcase").visual("to_title_case")<cr>')
-    noremap("v", "guf", ':lua require("textcase").visual("to_path_case")<cr>')
-
-    noremap("n", "guu", ':lua require("textcase").operator("to_upper_case")<cr>')
-    noremap("n", "gul", ':lua require("textcase").operator("to_lower_case")<cr>')
-    noremap("n", "gus", ':lua require("textcase").operator("to_snake_case")<cr>')
-    noremap("n", "gud", ':lua require("textcase").operator("to_dash_case")<cr>')
-    noremap("n", "gun", ':lua require("textcase").operator("to_constant_case")<cr>')
-    noremap("n", "gud", ':lua require("textcase").operator("to_dot_case")<cr>')
-    noremap("n", "gua", ':lua require("textcase").operator("to_phrase_case")<cr>')
-    noremap("n", "guc", ':lua require("textcase").operator("to_camel_case")<cr>')
-    noremap("n", "gup", ':lua require("textcase").operator("to_pascal_case")<cr>')
-    noremap("n", "gut", ':lua require("textcase").operator("to_title_case")<cr>')
-    noremap("n", "guf", ':lua require("textcase").operator("to_path_case")<cr>')
-	end,
-	config = function() end,
-})
-
-table.insert(plugins, {
-  name = 'vim-columnmove',
-  setup = function()
-		local map = require("utils").map
-    vim.g.columnmove_no_default_key_mappings = 1
-    map("n", ",w", "<Plug>(columnmove-W)")
-    map("n", ",ge", "<Plug>(columnmove-B)")
-    map("n", ",e", "<Plug>(columnmove-E)")
-    map("n", ",b", "<Plug>(columnmove-gE)")
-    map("o", ",w", "<Plug>(columnmove-W)")
-    map("o", ",ge", "<Plug>(columnmove-B)")
-    map("o", ",e", "<Plug>(columnmove-E)")
-    map("o", ",b", "<Plug>(columnmove-gE)")
-    map("x", ",w", "<Plug>(columnmove-W)")
-    map("x", ",ge", "<Plug>(columnmove-B)")
-    map("x", ",e", "<Plug>(columnmove-E)")
-    map("x", ",b", "<Plug>(columnmove-gE)")
-
-    vim.cmd[[
-for s:x in split('ftFT;,', '\zs')
-  call columnmove#utility#map('nxo', s:x, ',' . s:x, 'block')
-endfor
-unlet s:x
-]]
-  end,
-  config = function()
-    vim.cmd[[highlight ColumnmoveCandidates cterm=bold ctermfg=9 gui=bold guifg=red]]
-  end,
-})
-
-table.insert(plugins, {
-  name = 'cool-substitute.nvim',
-  setup = function()
-  end,
-  config = function()
-    require'cool-substitute'.setup({
-      setup_keybindings = true,
-      mappings = {
-        start = '<leader>sw', -- Mark word / region
-        start_word = '<leader>sW', -- Mark word / region. Edit only full word
-        start_and_edit = '', -- Mark word / region and also edit
-        start_and_edit_word = '', -- Mark word / region and also edit.  Edit only full word.
-        apply_substitute_and_next = '?', -- Start substitution / Go to next substitution
-        apply_substitute_and_prev = '!', -- same as M but backwards
-        apply_substitute_all = '<leader>ss', -- Substitute all
-        force_terminate_substitute = '<leader>sc', -- Terminate macro (if some bug happens)
-        redo_last_record = '',
-        terminate_substitute = '<esc>',
-        skip_substitute = '<cr>',
-        goto_next = '<C-j>',
-        goto_previous = '<C-k>',
-      },
-      reg_char = 's', -- letter to save macro (Dont use number or uppercase here)
-      mark_char = 's', -- mark the position at start of macro
-      writing_substitution_color = "#ECBE7B", -- for status line
-      applying_substitution_color = "#98be65", -- for status line
-      edit_word_when_starting_with_substitute_key = true -- (press M to mark and edit when not executing anything anything)
-    })
-  end,
-})
-
+-- DONE: mapping arrows?
 table.insert(plugins, {
   name = 'sideways.vim',
   setup = function()
 		local noremap = require("utils").noremap
-    noremap("n", "<c-h>", ":SidewaysLeft<cr>")
-    noremap("n", "<c-l>", ":SidewaysRight<cr>")
+    noremap("n", "<left>", ":SidewaysLeft<cr>")
+    noremap("n", "<right>", ":SidewaysRight<cr>")
   end,
   config = function() end,
 })
@@ -511,7 +497,6 @@ local M = function(use)
 	-- use { p 'https://github.com/AndrewRadev/deleft.vim', }
 	use { p "https://github.com/FooSoft/vim-argwrap" }
 	-- use { p "https://github.com/wellle/targets.vim" }
-	use { p "https://github.com/inkarkat/vim-ReplaceWithRegister" }
 	use {
 		p "https://github.com/aMOPel/vim-log-print",
 		requires = { p "https://github.com/Shougo/context_filetype.vim" },
@@ -529,12 +514,16 @@ local M = function(use)
 			-- { p "https://github.com/kana/vim-textobj-lastpat", },
 		},
 	}
-	use { p "https://github.com/johmsalas/text-case.nvim" }
-  use { p "https://github.com/machakann/vim-columnmove" }
-  use { p "https://github.com/otavioschwanck/cool-substitute.nvim", }
+  -- use { p "https://github.com/otavioschwanck/cool-substitute.nvim", }
   use { p "https://github.com/echasnovski/mini.ai", }
   use { p "https://github.com/monaqa/dial.nvim", }
   use { p "https://github.com/AndrewRadev/sideways.vim", }
   use { p "https://github.com/echasnovski/mini.align" }
+
+  use { p "https://github.com/aMOPel/vim-schlepp" }
+  use { p "https://github.com/svermeulen/vim-subversive" }
+  use { p "https://github.com/svermeulen/vim-yoink" }
+  use { p "https://github.com/tpope/vim-abolish" }
+
 end
 return M
