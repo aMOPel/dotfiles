@@ -9,14 +9,6 @@ xnoremap <leader>i1 :s/\%V/0<C-V><TAB>/<CR>gvg<C-A>gv:retab<ESC>gvI<C-G>u<ESC>gv
 nmap S <nop>
 nmap X <nop>
 
-" faster line movement also for visual/operator pending
-noremap L $
-noremap H 0
-
-" stop using $ 0
-map $ <nop>
-map 0 <nop>
-
 " cycle changelist
 nnoremap ( g,
 nnoremap ) g;
@@ -131,8 +123,8 @@ endif
 " nnoremap <silent> <leader>ws mb:%s/\s*$//<cr>:nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>g'bzz
 
 " quick edit and buffer search
-nmap <c-e> :e ./<c-s>
-nmap <c-q> :b <c-s>
+nmap <c-e> :e ./<c-n>
+nmap <c-q> :b <c-n>
 
 " insert date
 nmap <leader>id O<esc>v:!date --date='TZ="Berlin" now'<cr>
