@@ -10,41 +10,37 @@ sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply aMOPel
 
 ## Features:
 
-### config for:
-  * __kitty__
-  * __zsh__
-  * __nvim__ (large focus on nvim)
-  * __ranger__
+### Config For:
+  * __Kitty__
+  * __Zsh__
+  * __NeoVim__ (large focus on nvim)
+  * __Ranger__
   * bat
-  * cvim
   * git
-  * gitui
-  * zathura
+  * LazyGit
+  * Zathura
 
-### dependencies / programs I use:
+### Dependencies / Programs I Use:
   * kovidgoyal/kitty
   * neovim/neovim/nvim
   * x-motemen/ghq
-  * extrawurst/gitui
   * tree-sitter/tree-sitter
-  * charmbracelet/glow
   * karan/joe
   * ajeetdsouza/zoxide
   * burntsushi/ripgrep
   * sharkdp/fd
-  * godotengine/godot
   * junegunn/fzf
   * twpayne/chezmoi
 
-These are installed as binaries from github using a custom script. (to ensure latest version, regardless of os version)
+These are installed as binaries from GitHub using a custom script, to ensure a certain version, regardless of os version.
 Also many dependencies are installed with `apt` assuming you are on a debian based distro.
 Otherwise things will break unless you provide the dependencies.
 
-### font: 
+### Font 
 (already embedded in the repo)
   * FiraCode NerdFont (https://www.nerdfonts.com/font-downloads)
 
-### colorscheme:
+### Colorscheme
 (already embedded in the repo)
   * in kitty and nvim: onedark
       (https://github.com/navarasu/onedark.nvim)
