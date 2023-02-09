@@ -57,7 +57,7 @@ table.insert(plugins, {
 			end
 			if client.server_capabilities.signatureHelpProvider then
 				buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-				buf_set_keymap("i", "<C-k>", "<c-o><cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+				-- buf_set_keymap("i", "<C-k>", "<c-o><cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 			end
 			if client.server_capabilities.typeDefinitionProvider then
 				buf_set_keymap("n", "<space>lt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)

@@ -77,6 +77,15 @@ else
 fi
 }
 
+website () {
+  p=~/Documents/website
+  pn=$p/nim
+  kitty @ launch --type=window --cwd=$pn --keep-focus zsh -c "nim c --outDir:bin --verbosity:0 --listfullpaths ./transpileMarkdown.nim && ./bin/transpileMarkdown -w"
+  kitty @ launch --type=window --cwd=$pn --keep-focus zsh -c "./nimbledeps/bin/karun -r -w ./src/website.nim"
+  kitty @ launch --type=window --cwd=$pn --keep-focus zsh -c "npx tailwindcss -i ./prestyles.css -o ./assets/styles.css --watch"
+  kitty @ launch --type=tab --cwd=$p zsh -c "nvim -S Session.vim"
+}
+
 gdd () {
 cd $GDSESSIONS/`ls $GDSESSIONS/  | fzf`;gd
 }

@@ -16,7 +16,12 @@ add(g.lsp.servers.lsp_installer, {
     end
 
     return {
-      filetypes = { 'html', 'vue', 'css' },
+      init_options = {
+        userLanguages = {
+          nim = "twig",
+        },
+      },
+      filetypes = { 'html', 'vue', 'css', 'nim'},
       capabilities = capabilities,
       on_attach = add_on_attach,
     }
