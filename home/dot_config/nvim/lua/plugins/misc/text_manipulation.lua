@@ -24,7 +24,7 @@ table.insert(plugins, {
   name = "vim-yoink",
   setup = function()
 
-    vim.g.yoinkAutoFormatPaste = 1
+    vim.g.yoinkAutoFormatPaste = 0
     vim.g.yoinkSavePersistently = 1
     vim.g.yoinkIncludeDeleteOperations = 1
 

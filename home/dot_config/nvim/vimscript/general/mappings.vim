@@ -51,8 +51,8 @@ nnoremap <<  <<_
 nnoremap <expr> gp '`['.strpart(getregtype(), 0, 1).'`]'
 
 " Quick substitute within selected area
-xnoremap <leader>sg :S//g<Left><Left>
-nnoremap <leader>sg mz*:%S///g\|norm g`z<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
+xnoremap <leader>sg :s//g<Left><Left>
+nnoremap <leader>sg mz*:%s///g\|norm g`z<Left><Left><Left><Left><Left><Left><Left><Left><Left><Left><Left>
 
 " undo points in insert
 inoremap <space> <c-g>u<space>
@@ -127,7 +127,9 @@ nmap <c-e> :e ./<c-n>
 nmap <c-q> :b <c-n>
 
 " insert date
-nmap <leader>id O<esc>v:!date --date='TZ="Berlin" now'<cr>
+nmap <leader>id O<esc>v:!date +"\%b \%e. \%Y"<cr>
+vmap <leader>id :!date +"\%b \%e. \%Y"<cr>
+nmap <leader>idr idMddf"Siqj0
 
 " <esc> in terminal mode
 tnoremap <F11> <C-\><C-n>
