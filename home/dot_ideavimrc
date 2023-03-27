@@ -1,0 +1,141 @@
+" ==========================================================
+" options
+
+set ideajoin
+set ideaput
+set clipboard^=unnamedplus
+
+set autoindent
+set autoread
+set smarttab
+set incsearch
+set hlsearch
+set showcmd
+set wildmenu
+
+set nowrap
+
+" set number
+set relativenumber
+
+set tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
+set scrolloff=10
+set sidescrolloff=1
+set noruler
+set cursorline
+set colorcolumn=80
+
+set autowriteall
+
+set ignorecase
+set smartcase
+
+set magic
+
+set noerrorbells
+set novisualbell
+
+set splitright
+
+" ==========================================================
+" mappings
+
+let mapleader = ' '
+
+" Release keymappings for plug-in.
+nnoremap <space> <Nop>
+nnoremap \  <Nop>
+
+" stop using S X
+nmap S <nop>
+nmap X <nop>
+map Q <nop>
+
+"jump to alternative last edited
+nnoremap <space><space> :b#<CR>
+
+nnoremap Y y$
+
+" Indent and jump to first non-blank character linewise
+nnoremap >>  >>_
+nnoremap <<  <<_
+
+xnoremap <leader>sg :s//g<Left><Left>
+nnoremap <leader>sg *:%s///g<Left><Left>
+
+" Fast saving from normal/visual
+nmap <C-s> <action>(SaveAll)
+vmap <C-s> <action>(SaveAll)
+
+nmap <cr> <action>(Run)
+
+nmap <C-t>n <action>(NewScratchFile)
+nmap <C-t>o <action>(CloseAllEditorsButActive)
+nmap <C-t>c <action>(CloseEditor)
+
+nmap <c-e> <action>(SearchEverywhere)
+nmap <c-q> <action>(SearchEverywhere)
+nmap <c-f> <action>(SearchEverywhere)
+
+" ==========================================================
+" mappings
+
+Plug 'tpope/vim-surround'
+
+Plug 'tpope/vim-commentary'
+
+Plug 'vim-scripts/ReplaceWithRegister'
+nmap S gr
+nmap SS grr
+vmap S gr
+
+Plug 'vim-scripts/argtextobj.vim'
+
+Plug 'tommcdo/vim-exchange'
+nmap gx cx
+nmap gxx cxx
+nmap gxc cxc
+vmap gx X
+
+Plug 'kana/vim-textobj-entire'
+
+Plug 'machakann/vim-highlightedyank'
+
+Plug 'michaeljsmith/vim-indent-object'
+
+Plug 'vim-matchit'
+
+" unimpaired
+nmap ]<space> o<esc>k
+nmap [<space> O<esc>j
+nmap ]e <action>(MoveLineDown)
+nmap [e <action>(MoveLineUp)
+
+" floaterm
+nmap <leader>ff <action>(ActivateTerminalToolWindow)
+
+" fugitive
+nmap <leader>gg <action>(ActivateVersionControlToolWindow)
+
+" rnvimr
+nmap - <action>(ActivateProjectToolWindow)
+
+" cutlass
+nnoremap m d
+xnoremap m d
+nnoremap mm dd
+nnoremap M D
+
+nnoremap s \"_s
+nnoremap d \"_d
+xnoremap d \"_d
+nnoremap dd \"_dd
+nnoremap D \"_D
+nnoremap x \"_x
+
+" schlepp
+vmap <up> <action>(MoveLineUp)
+vmap <down> <action>(MoveLineDown)
+vmap <right> <action>(EditorIndentSelection)
+vmap <left> <action>(EditorUnindentSelection)
