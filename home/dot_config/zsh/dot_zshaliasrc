@@ -86,6 +86,13 @@ website () {
   kitty @ launch --type=tab --cwd=$p zsh -c "nvim -S Session.vim"
 }
 
+learn () {
+  l=~/Documents/uni
+  cd $l
+  kitty @ launch --type=background --cwd=$l --keep-focus zsh -c "zathura ./current_vl.pdf"
+  v
+}
+
 gdd () {
 cd $GDSESSIONS/`ls $GDSESSIONS/  | fzf`;gd
 }
