@@ -1,27 +1,26 @@
 local plugins = require("globals").plugins
 
-table.insert(plugins, {
-	name = "delaytrain.nvim",
-	setup = function()
-	end,
-	config = function()
-    require('delaytrain').setup {
-        delay_ms = 1000,  -- How long repeated usage of a key should be prevented
-        grace_period = 2, -- How many repeated keypresses are allowed
-        keys = {          -- Which keys (in which modes) should be delayed
-            ['nv'] = {'w', 'W', 'b', 'B', 'e', 'E', 'h', 'j', 'k', 'l'},
-            ['i'] = {'<Left>', '<Down>', '<Up>', '<Right>'},
-            -- ['n'] = {'<c-d>', '<c-u>'},
-        },
-    }
-  end,
-})
+-- table.insert(plugins, {
+-- 	name = "delaytrain.nvim",
+-- 	setup = function()
+-- 	end,
+-- 	config = function()
+--     require('delaytrain').setup {
+--         delay_ms = 1000,  -- How long repeated usage of a key should be prevented
+--         grace_period = 2, -- How many repeated keypresses are allowed
+--         keys = {          -- Which keys (in which modes) should be delayed
+--             ['nv'] = {'w', 'W', 'b', 'B', 'e', 'E', 'h', 'j', 'k', 'l'},
+--             ['i'] = {'<Left>', '<Down>', '<Up>', '<Right>'},
+--             -- ['n'] = {'<c-d>', '<c-u>'},
+--         },
+--     }
+--   end,
+-- })
 
 local p = require("utils").p
 
 local M = function(use)
-
-  use { p "https://github.com/ja-ford/delaytrain.nvim" }
+  -- use { p "https://github.com/ja-ford/delaytrain.nvim" }
   -- use { p "https://github.com/tpope/vim-dadbod", }
   -- use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
 
