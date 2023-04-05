@@ -1,0 +1,88 @@
+# =============================================================================
+# ENV
+
+# pager editor etc
+export EDITOR=nvim
+export PAGER=less
+export MANPAGER="nvim +Man!"
+
+# XDG
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+
+# bash
+export BASH_CONFIG=$XDG_CONFIG_HOME/bash
+export INPUTRC=$BASH_CONFIG/inputrc
+export HISTFILE=$BASH_CONFIG/.bash_history
+
+# go
+export PATH=$HOME/.local/go/bin:$PATH
+export GOPATH=$HOME/.local/go
+
+# node
+# export PATH=$HOME/.local/npm-global/bin:$PATH
+export PATH=$PATH:$HOME/node_modules/.bin
+export NPM_CONFIG_PREFIX=$HOME/.local/npm-global
+
+# python
+export PYTHONPATH=$HOME/.local/lib/python3.8/site-packages
+
+# nim
+export PATH=$HOME/.nimble/bin:$PATH
+
+# rust
+. "$HOME/.cargo/env"
+
+# bat
+export BAT_THEME=base16
+
+# timew
+export TIMEWARRIORDB=$XDG_DATA_HOME/twarrior/timew
+
+# task
+export TASKRC=$XDG_DATA_HOME/twarrior/task/taskrc
+export TASKDATA=$XDG_DATA_HOME/twarrior/task
+
+# zoxide
+export _ZO_RESOLVE_SYMLINKS=1
+
+# ranger
+export RANGER_LOAD_DEFAULT_RC=FALSE
+
+# godot
+export GODOT_BIN=$HOME/.local/bin/godot
+
+# =============================================================================
+# SETTINGS
+
+export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+export HISTSIZE=10000                   # big big history
+export HISTFILESIZE=10000               # big big history
+shopt -s histappend                      # append to history, don't overwrite it
+
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+
+shopt -s autocd
+shopt -s cdspell
+shopt -s dirspell
+shopt -s extglob
+shopt -s dotglob
+
+set -o vi
+
+# =============================================================================
+# other scripts
+
+. $BASH_CONFIG/bash_prompt
+. $BASH_CONFIG/bash_aliases
+
+kitty + complete setup bash | source /dev/stdin
+
+# zoxide
+eval "$(zoxide init bash)"
+# direnv
+eval "$(direnv hook bash)"
+
+# vim:ft=sh
