@@ -3,7 +3,7 @@ local plugins = require 'globals'.plugins
 table.insert(plugins, {
   name = 'vim-floaterm',
   setup = function()
-    vim.g.floaterm_shell = 'zsh'
+    vim.g.floaterm_shell = 'bash'
     vim.g.floaterm_width = 0.9
     vim.g.floaterm_height = 0.8
     vim.g.floaterm_opener = 'tabe'

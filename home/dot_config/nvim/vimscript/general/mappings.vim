@@ -135,7 +135,6 @@ nmap <leader>idr idMddf"Siqj0
 tnoremap <F11> <C-\><C-n>
 
 " custom filetypes
-autocmd CustomFileType BufEnter *dot_zshenv,*dot_zshrc,*dot_zshaliasrc,*dot_profile set ft=zsh
 autocmd CustomFileType BufEnter *kitty*.conf set ft=kitty
 autocmd CustomFileType BufEnter *.tscn,*.tres,*.import,*.godot set filetype=dosini
 

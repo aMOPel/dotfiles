@@ -12,7 +12,7 @@ sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply aMOPel
 
 ### Config For:
   * __Kitty__
-  * __Zsh__
+  * __Bash__
   * __NeoVim__ (large focus on nvim)
   * __Ranger__
   * bat

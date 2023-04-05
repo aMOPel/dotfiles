@@ -14,8 +14,8 @@ sudo apt update
 sudo apt install nala
 sudo nala fetch --ubuntu {{ .chezmoi.osRelease.ubuntuCodename }}
 
-sudo nala install -y zsh
-chsh -s $(which zsh) $USER
+sudo nala install -y bash
+chsh -s $(which bash) $USER
 sudo nala install -y atool
 $get_github x-motemen ghq
 $get_github kovidgoyal kitty

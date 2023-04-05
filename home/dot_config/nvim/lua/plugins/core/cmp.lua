@@ -71,7 +71,6 @@ table.insert(plugins, {
             rg = '[RG]',
             cmdline = '[CMD]',
             calc = '[CLC]',
-            -- zsh = '[ZSH]',
             git = '[GIT]',
           },
         })
@@ -136,16 +135,6 @@ smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-T
 ]]
   end })
 
--- table.insert(plugins, {
---   name = 'cmp-zsh',
---   setup = function()
---   end,
---   config = function()
---     require 'cmp_zsh'.setup {
---       filetypes = { 'sh', 'zsh' }
---     }
---   end })
-
 table.insert(plugins, {
   name = 'cmp-git',
   setup = function()
@@ -203,7 +192,6 @@ local M = function(use)
       { p 'https://github.com/lukas-reineke/cmp-rg', after = 'nvim-cmp', },
       -- { p 'https://github.com/f3fora/cmp-spell', after = 'nvim-cmp', },
       { p 'https://github.com/hrsh7th/cmp-cmdline', after = 'nvim-cmp', },
-      -- { p 'https://github.com/tamago324/cmp-zsh', after = 'nvim-cmp', },
       -- { p 'https://github.com/hrsh7th/cmp-nvim-lsp-signature-help', after = 'nvim-cmp', },
       -- {
       --   p 'https://github.com/tzachar/cmp-tabnine',
