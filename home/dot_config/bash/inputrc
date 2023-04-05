@@ -17,9 +17,8 @@ set show-all-if-unmodified on
 set mark-symlinked-directories on
 
 set show-mode-in-prompt on
-set vi-cmd-mode-string "\1\e[7;1;32m\2 NORMAL \1\e[00m\2 "
-set vi-ins-mode-string "\1\e[7;1;34m\2 INSERT \1\e[00m\2 "
-
+set vi-ins-mode-string "\1\e[5 q\2"
+set vi-cmd-mode-string "\1\e[2 q\2"
 
 TAB:menu-complete
 # shift tab

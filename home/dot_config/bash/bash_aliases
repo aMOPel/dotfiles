@@ -3,8 +3,8 @@ dotfiles=$dotfiles_repo/home
 dotfiles_config=$dotfiles/dot_config
 
 # rcs
-zrc () {
-cd $dotfiles_config/zsh; v
+brc () {
+cd $dotfiles_config/bash; v
 }
 vimrc () {
 cd $dotfiles_config/nvim; v
@@ -14,6 +14,9 @@ cd $dotfiles_config/ranger; v
 }
 kittyrc () {
 cd $dotfiles_config/kitty; v
+}
+dfrc () {
+nvim $dotfiles/.chezmoiscripts/run_once_install_dependencies.sh.tmpl
 }
 
 # vim

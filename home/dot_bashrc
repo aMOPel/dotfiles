@@ -75,14 +75,16 @@ set -o vi
 # =============================================================================
 # other scripts
 
-. $BASH_CONFIG/bash_prompt
-. $BASH_CONFIG/bash_aliases
-
 kitty + complete setup bash | source /dev/stdin
 
 # zoxide
 eval "$(zoxide init bash)"
 # direnv
 eval "$(direnv hook bash)"
+# fzf
+[ -f $BASH_CONFIG/fzf-key-bindings.bash ] && . $BASH_CONFIG/fzf-key-bindings.bash
+
+. $BASH_CONFIG/bash_prompt
+. $BASH_CONFIG/bash_aliases
 
 # vim:ft=sh

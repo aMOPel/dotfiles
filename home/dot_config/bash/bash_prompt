@@ -20,12 +20,11 @@ if tput setaf 1 &> /dev/null; then
 
   # If the terminal supports at least 256 colors, write out our 256 color based set
   if [[ "$(tput colors)" -ge 256 ]] &> /dev/null; then
-    sexy_bash_prompt_user_color="$sexy_bash_prompt_bold$(tput setaf 27)" # BOLD BLUE
-    sexy_bash_prompt_preposition_color="$sexy_bash_prompt_bold$(tput setaf 7)" # BOLD WHITE
-    sexy_bash_prompt_device_color="$sexy_bash_prompt_bold$(tput setaf 39)" # BOLD CYAN
-    sexy_bash_prompt_dir_color="$sexy_bash_prompt_bold$(tput setaf 76)" # BOLD GREEN
-    sexy_bash_prompt_git_status_color="$sexy_bash_prompt_bold$(tput setaf 32)" # BOLD YELLOW
-    sexy_bash_prompt_git_progress_color="$sexy_bash_prompt_bold$(tput setaf 9)" # BOLD RED
+    sexy_bash_prompt_user_color="$sexy_bash_prompt_bold$(tput rev)$(tput setaf 5)" # BOLD BLUE
+    sexy_bash_prompt_device_color="$sexy_bash_prompt_bold$(tput rev)$(tput setaf 3)" # BOLD CYAN
+    sexy_bash_prompt_dir_color="$sexy_bash_prompt_bold$(tput rev)$(tput setaf 4)" # BOLD GREEN
+    sexy_bash_prompt_git_status_color="$sexy_bash_prompt_bold$(tput rev)$(tput setaf 2)" # BOLD YELLOW
+    sexy_bash_prompt_git_progress_color="$sexy_bash_prompt_bold$(tput rev)$(tput setaf 6)" # BOLD RED
   else
   # Otherwise, use colors from our set of 8
     sexy_bash_prompt_user_color="$sexy_bash_prompt_bold$(tput setaf 4)" # BOLD BLUE
@@ -37,7 +36,7 @@ if tput setaf 1 &> /dev/null; then
   fi
 
   sexy_bash_prompt_symbol_color="$sexy_bash_prompt_bold" # BOLD
-  sexy_bash_prompt_symbol_error_color="$sexy_bash_prompt_bold$(tput setaf 1)" # BOLD RED
+  sexy_bash_prompt_symbol_error_color="$sexy_bash_prompt_bold$(tput rev)$(tput setaf 1)" # BOLD RED
 else
 # Otherwise, use ANSI escape sequences for coloring
   # If you would like to customize your colors, use
@@ -297,6 +296,14 @@ sexy_bash_prompt_get_symbol_color () {
   echo "$symbol_color"
 }
 
+last_exit_code () {
+  if [[ "$sexy_bash_prompt_exit_code" != "0" ]]; then
+    echo "  ($sexy_bash_prompt_exit_code) "
+  else
+    echo ""
+  fi
+}
+
 # Define our hooks for storing the exit code and past commands
 sexy_bash_prompt_current_command=""
 sexy_bash_prompt_command () {
@@ -317,18 +324,20 @@ else
   PROMPT_COMMAND="sexy_bash_prompt_command"
 fi
 
-# \[$sexy_bash_prompt_user_color\]\u\[$sexy_bash_prompt_reset\] \
-# \[$sexy_bash_prompt_preposition_color\]@\[$sexy_bash_prompt_reset\] \
-# \[$sexy_bash_prompt_device_color\]\h\[$sexy_bash_prompt_reset\] \
-# \[$sexy_bash_prompt_preposition_color\]:\[$sexy_bash_prompt_reset\] \
 # \[$sexy_bash_prompt_dir_color\]\w\[$sexy_bash_prompt_reset\]\
 
+# PS0='\[\e[3 q\]'
 # Define the sexy-bash-prompt
-PS1="\[$sexy_bash_prompt_reset\]\
-\w\
-\$( sexy_bash_prompt_is_on_git && \
-  echo -n \" \[$sexy_bash_prompt_preposition_color\]\[$sexy_bash_prompt_reset\] \" && \
-  echo -n \"\[$sexy_bash_prompt_git_status_color\]\$(sexy_bash_prompt_get_git_info)\" && \
-  echo -n \"\[$sexy_bash_prompt_git_progress_color\]\$(sexy_bash_prompt_get_git_progress)\" && \
-  echo -n \"\[$sexy_bash_prompt_reset\]\")\n\
-\[\$(sexy_bash_prompt_get_symbol_color)\]$sexy_bash_prompt_symbol \[$sexy_bash_prompt_reset\]"
+PS1="\[$sexy_bash_prompt_reset\]\n\
+\[$sexy_bash_prompt_user_color\]  \u \[$sexy_bash_prompt_reset\]\
+\[$sexy_bash_prompt_device_color\]  \h \[$sexy_bash_prompt_reset\]\
+\[$sexy_bash_prompt_dir_color\]  \w \[$sexy_bash_prompt_reset\]\
+\$(sexy_bash_prompt_is_on_git && \
+  echo -n \"\[$sexy_bash_prompt_git_status_color\]  \$(sexy_bash_prompt_get_git_info) \" && \
+  echo -n \"\[$sexy_bash_prompt_git_progress_color\]\$(sexy_bash_prompt_get_git_progress)\"; \
+  echo -n \"\[$sexy_bash_prompt_symbol_error_color\]\$(last_exit_code)\"; \
+  echo -n \"\[$sexy_bash_prompt_reset\]\"\
+)
+$sexy_bash_prompt_symbol \
+"
+
