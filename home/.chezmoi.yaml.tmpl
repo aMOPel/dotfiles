@@ -6,10 +6,10 @@ data:
     githubUserName: {{ $githubUserName | quote }}
 
 diff:
-  #  command : "nvim"
-  #  args : ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Target }}`}}"]
   exclude : ["scripts"]
-  pager : "diff-so-fancy"
+  command : "nvim"
+  args : ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Target }}`}}"]
+  #  pager : "diff-so-fancy"
 
 merge:
     command : "nvim"
