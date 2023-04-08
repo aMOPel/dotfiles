@@ -16,7 +16,7 @@ kittyrc () {
 cd $dotfiles_config/kitty; v
 }
 dfrc () {
-nvim $dotfiles/.chezmoiscripts/run_once_install_dependencies.sh.tmpl
+cd $dotfiles; nvim .chezmoiscripts/run_once_install_dependencies.sh.tmpl
 }
 
 # vim

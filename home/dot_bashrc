@@ -1,3 +1,5 @@
+# vim:ft=sh
+
 # =============================================================================
 # ENV
 
@@ -75,16 +77,40 @@ set -o vi
 # =============================================================================
 # other scripts
 
-kitty + complete setup bash | source /dev/stdin
-
-# zoxide
-eval "$(zoxide init bash)"
-# direnv
-eval "$(direnv hook bash)"
-# fzf
-[ -f $BASH_CONFIG/fzf-key-bindings.bash ] && . $BASH_CONFIG/fzf-key-bindings.bash
+# enable bash completion in interactive shells
+if ! shopt -oq posix; then
+ if [ -f /usr/share/bash-completion/bash_completion ]; then
+   . /usr/share/bash-completion/bash_completion
+ elif [ -f /etc/bash_completion ]; then
+   . /etc/bash_completion
+ fi
+fi
 
 . $BASH_CONFIG/bash_prompt
 . $BASH_CONFIG/bash_aliases
 
-# vim:ft=sh
+ifHasBin () {
+bin=$1
+thenDo=$2
+if [[ $(command -v $bin) ]]; then
+  eval $thenDo
+else
+  echo "$bin not found"
+fi
+}
+
+ifHasBin kitty 'kitty + complete setup bash | source /dev/stdin'
+
+# zoxide
+ifHasBin zoxide 'eval "$(zoxide init bash)"'
+# direnv
+ifHasBin direnv 'eval "$(direnv hook bash)"'
+# fzf
+[ -f $HOME/.fzf.bash ] && . $HOME/.fzf.bash
+# github cli
+ifHasBin gh 'eval "$(gh completion -s bash)"'
+
+# shsh
+export SHSH_ROOT="/home/momo/.local/share/shsh"
+export PATH="$SHSH_ROOT/bin:$PATH"
+ifHasBin shsh 'eval "$(shsh init bash)"'
