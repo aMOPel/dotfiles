@@ -8,7 +8,7 @@ add(g.lsp.fts, {
 })
 
 add(g.lsp.servers.lsp_installer, {
-	sumneko_lua = function(on_attach, capabilities)
+	lua_ls = function(on_attach, capabilities)
 		local runtime_path = vim.split(package.path, ";")
 		table.insert(runtime_path, "lua/?.lua")
 		table.insert(runtime_path, "lua/?/init.lua")

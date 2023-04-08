@@ -1,14 +1,14 @@
 local plugins = require 'globals'.plugins
 
-table.insert(plugins, {
-  name = 'vim-localvimrc',
-  setup = function()
-    vim.g.localvimrc_persistent = 2
-    vim.g.localvimrc_persistence_file = vim.fn.expand('$XDG_DATA_HOME/nvim/.localvimrc_persistent')
-  end,
-  config = function()
-  end,
-})
+-- table.insert(plugins, {
+--   name = 'vim-localvimrc',
+--   setup = function()
+--     vim.g.localvimrc_persistent = 2
+--     vim.g.localvimrc_persistence_file = vim.fn.expand('$XDG_DATA_HOME/nvim/.localvimrc_persistent')
+--   end,
+--   config = function()
+--   end,
+-- })
 
 table.insert(plugins, {
   name = 'indent_blankline.nvim',
@@ -83,7 +83,7 @@ table.insert(plugins, {
 local p = require 'utils'.p
 
 local M = function(use)
-  use { p 'https://github.com/embear/vim-localvimrc', }
+  -- use { p 'https://github.com/embear/vim-localvimrc', }
   use { p 'https://github.com/lukas-reineke/indent-blankline.nvim', }
   use { p 'https://github.com/andymass/vim-matchup', }
   use { p 'https://github.com/svermeulen/vim-cutlass', }

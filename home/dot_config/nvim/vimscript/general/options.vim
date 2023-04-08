@@ -83,8 +83,12 @@ set lazyredraw
 " set tildeop
 
 " external vimrc
-set noexrc
-set secure
+set exrc
+" set secure
+
+set diffopt+=linematch:60
+
+let g:editorconfig = v:true
 
 "spell checking
 " set spell

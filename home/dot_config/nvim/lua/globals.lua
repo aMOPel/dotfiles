@@ -15,6 +15,7 @@ local M = {
 			-- 'http',
 			-- 'norg',
 
+			"vimdoc",
 			"regex",
 			"comment",
 		},
