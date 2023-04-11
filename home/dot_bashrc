@@ -3,6 +3,11 @@
 # =============================================================================
 # ENV
 
+# clean PATH when in distrobox
+if [[ -f /.dockerenv ]]; then
+  export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/sbin:/usr/games:/usr/local/games:/snap/bin"
+fi
+
 # pager editor etc
 export EDITOR=nvim
 export PAGER=less
@@ -34,7 +39,7 @@ export PYTHONPATH=$HOME/.local/lib/python3.8/site-packages
 export PATH=$HOME/.nimble/bin:$PATH
 
 # rust
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # bat
 export BAT_THEME=base16
@@ -99,18 +104,38 @@ else
 fi
 }
 
-ifHasBin kitty 'kitty + complete setup bash | source /dev/stdin'
+# shsh
+export SHSH_ROOT="$HOME/.local/share/shsh"
+export PATH="$SHSH_ROOT/bin:$PATH"
+ifHasBin shsh 'eval "$(shsh init bash)"'
+
+# setup kitty only if using distrobox and inside box
+if [[ $(command -v distrobox) || $(command -v distrobox-export) ]]; then
+  if [[ -f /.dockerenv ]]; then
+    ifHasBin kitty 'kitty + complete setup bash | source /dev/stdin'
+    export LANG=en_US.UTF-8
+    cd ~
+  fi
+else
+  ifHasBin kitty 'kitty + complete setup bash | source /dev/stdin'
+fi
 
 # zoxide
 ifHasBin zoxide 'eval "$(zoxide init bash)"'
 # direnv
 ifHasBin direnv 'eval "$(direnv hook bash)"'
 # fzf
-[ -f $HOME/.fzf.bash ] && . $HOME/.fzf.bash
+if [[ -f $HOME/.fzf.bash ]]; then 
+  . $HOME/.fzf.bash
+  export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always {}'"
+  export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window up:3:hidden:wrap"
+  export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
+
+  export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
+" --color=bg+:#353b45,bg:#282c34,spinner:#56b6c2,hl:#61afef"\
+" --color=fg:#565c64,header:#61afef,info:#e5c07b,pointer:#56b6c2"\
+" --color=marker:#56b6c2,fg+:#b6bdca,prompt:#e5c07b,hl+:#61afef"
+fi
+
 # github cli
 ifHasBin gh 'eval "$(gh completion -s bash)"'
-
-# shsh
-export SHSH_ROOT="/home/momo/.local/share/shsh"
-export PATH="$SHSH_ROOT/bin:$PATH"
-ifHasBin shsh 'eval "$(shsh init bash)"'

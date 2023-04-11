@@ -86,7 +86,7 @@ set lazyredraw
 set exrc
 " set secure
 
-set diffopt+=linematch:60
+" set diffopt^=linematch:60
 
 let g:editorconfig = v:true
 

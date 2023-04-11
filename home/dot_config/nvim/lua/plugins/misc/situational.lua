@@ -206,7 +206,7 @@ nmap <leader>t :Bake test<c-s>
   config = function()
     local add = require("utils").addTable
     local recipes = require("globals").recipes
-    add(recipes, require("recipe.ft"))
+    -- add(recipes, require("recipe.ft"))
 
     require'recipe'.setup{
       term = {
@@ -289,6 +289,7 @@ local M = function(use)
   use { p 'https://github.com/kevinhwang91/nvim-bqf', }
   use {
     p 'https://github.com/ten3roberts/recipe.nvim',
+    commit = '2eccba2d041722bfa8b7cc657007a13e93f482b9',
     requires = { p 'https://github.com/ten3roberts/qf.nvim', },
   }
 end

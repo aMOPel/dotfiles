@@ -1,9 +1,9 @@
 {{ $email := promptString "email" -}}
-{{ $githubUserName := promptString "githubUserName" -}}
+{{ $githubusername := promptString "githubusername" -}}
 
 data:
     email: {{ $email | quote }}
-    githubUserName: {{ $githubUserName | quote }}
+    githubusername: {{ $githubusername | quote }}
 
 diff:
   exclude : ["scripts"]

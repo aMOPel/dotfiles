@@ -169,12 +169,12 @@ table.insert(plugins, {
 
 			if config["capabilities"] ~= nil then
 				config.capabilities =
-					require("cmp_nvim_lsp").update_capabilities(
+					require("cmp_nvim_lsp").default_capabilities(
 						config.capabilities
 					)
 			else
 				config.capabilities =
-					require("cmp_nvim_lsp").update_capabilities(
+					require("cmp_nvim_lsp").default_capabilities(
 						vim.lsp.protocol.make_client_capabilities()
 					)
 			end

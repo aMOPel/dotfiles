@@ -3,8 +3,84 @@
 
 managed by [chezmoi](https://www.chezmoi.io/)
 
+## Installation
+
+### (Optionally) Install in a Distrobox
+Install docker, distrobox and start a distrobox
+
+```shell
+# install docker
+sudo apt install -y ca-certificates lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io
+sudo docker run hello-world
+sudo groupadd docker
+sudo usermod -aG docker $USER
+echo "restart now"
+```
+
+```shell
+# install distrobox
+curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sudo sh
+```
+
+```shell
+# create distrobox
+BOX_HOME=/home/devenv
+
+sudo rm -rf $BOX_HOME
+sudo mkdir $BOX_HOME
+sudo chown "$USER":"$USER" $BOX_HOME
+
+distrobox create -i ubuntu:22.04 -n devenv -H $BOX_HOME
+```
+
+```shell
+# enter distrobox (takes a little while)
+distrobox enter devenv
+```
+
+```shell
+# setup XDG vars
+echo "cd ~"
+cd ~
+
+if [ -n "$SHSH_ROOT" ]; then
+  echo '$SHSH_ROOT defined'; exit 1
+fi
+case "$PATH" in
+  *fzf*)
+    echo 'FZF already in $PATH'; exit 1
+  ;;
+esac
+
+echo "setup XDG vars"
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+```
+
+```shell
+# add links in box to host apps
+TARGET_APP=docker
+echo "#! /bin/bash
+distrobox-host-exec $TARGET_APP \$@" > ~/.local/bin/$TARGET_APP
+chmod +x ~/.local/bin/$TARGET_APP
+```
+
+```shell
+# add links in host to box apps
+TARGET_APP=brave-browser
+distrobox-export --bin "$(which $TARGET_APP)" --export-path $DISTROBOX_HOST_HOME/.local/bin
+```
+
+## Install Dotfiles
 __WARNING:__ this will not just clone but also apply these dotfiles to your home directory!
 ```shell
+cd ~
 sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply aMOPel
 ```
 
