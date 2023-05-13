@@ -48,6 +48,8 @@ table.insert(plugins, {
 local p = require 'utils'.p
 
 local M = function(use)
+  -- is setup with lsp
+  use { p 'https://github.com/jose-elias-alvarez/typescript.nvim', }
   use { p 'https://github.com/mattn/emmet-vim', }
   use {
     p 'https://github.com/vuki656/package-info.nvim',

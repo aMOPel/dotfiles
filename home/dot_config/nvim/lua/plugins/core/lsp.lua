@@ -75,11 +75,11 @@ table.insert(plugins, {
 				buf_set_keymap("n", "<space>ls", '<cmd>lua vim.lsp.buf.document_symbol("")<CR>', opts)
 			end
 			if client.server_capabilities.documentFormattingProvider then
-				buf_set_keymap("n", "<space>lf", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+				buf_set_keymap("n", "<space>lf", "<cmd>lua vim.lsp.buf.format({async = true})<CR>", opts)
 			end
-			if client.server_capabilities.documentRangeFormattingProvider then
-			  buf_set_keymap("v", "<space>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-			end
+			-- if client.server_capabilities.documentRangeFormattingProvider then
+			--   buf_set_keymap("v", "<space>lf", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+			-- end
 
 			buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
 			buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
@@ -134,6 +134,7 @@ table.insert(plugins, {
 		local g = require("globals")
 		local lsp_installer_servers = g.lsp.servers.lsp_installer
 		local other_servers = g.lsp.servers.other
+		local special_setups = g.lsp.servers.special_setup
 
 		local keys = {}
 		local n = 0
@@ -178,7 +179,12 @@ table.insert(plugins, {
 						vim.lsp.protocol.make_client_capabilities()
 					)
 			end
-			lspconfig[server_name].setup(config)
+
+			if special_setups[server_name] ~= nil then
+        special_setups[server_name](config)
+      else
+        lspconfig[server_name].setup(config)
+      end
 			-- vim.cmd [[ do User LspAttachBuffers ]]
 		end
 

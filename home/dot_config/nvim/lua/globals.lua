@@ -6,13 +6,14 @@ local M = {
 		fts = {},
 		servers = {
 			lsp_installer = {},
+      special_setup = {},
 			other = {},
 		},
 	},
 	treesitter = {
 		ensure_installed = {
 			-- 'viml',
-			-- 'http',
+			'http',
 			-- 'norg',
 
 			"vimdoc",
