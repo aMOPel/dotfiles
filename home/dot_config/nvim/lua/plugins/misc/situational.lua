@@ -9,12 +9,12 @@ table.insert(plugins, {
     vim.g.floaterm_opener = 'tabe'
 
     local noremap = require 'utils'.noremap
-    noremap('n', '<leader>ff', ':FloatermToggle<CR>')
+    noremap('n', '<leader>ff', ':FloatermToggle --cwd=<buffer> <CR>')
     noremap('t', '<C-W>', '<C-\\><C-n><C-W>c')
-    noremap('n', '<leader>fm', ':exec "FloatermNew --autoclose=0 --disposable " . &makeprg<CR>')
-    noremap('n', '<leader>fg', ':FloatermNew --autoclose=1 --width=1.0 --height=1.0 lazygit<CR>')
-    noremap('n', '<leader>ft', ':FloatermNew --autoclose=2 --disposable taskwarrior-tui<CR>')
-    noremap('n', '<leader>fw', ':FloatermNew --autoclose=0 --disposable --width=0.9 timew week<CR>')
+    noremap('n', '<leader>fm', ':exec "FloatermNew --cwd=<buffer> --autoclose=0 --disposable " . &makeprg<CR>')
+    noremap('n', '<leader>fg', ':FloatermNew --cwd=<buffer> --autoclose=1 --width=1.0 --height=1.0 lazygit<CR>')
+    noremap('n', '<leader>ft', ':FloatermNew --cwd=<buffer> --autoclose=2 --disposable taskwarrior-tui<CR>')
+    noremap('n', '<leader>fw', ':FloatermNew --cwd=<buffer> --autoclose=0 --disposable --width=0.9 timew week<CR>')
   end,
   config = function()
   end,
