@@ -53,12 +53,20 @@ alias fd='fd --ignore-case --hidden --follow'
 alias rg='rg --smart-case --hidden --follow'
 
 website () {
-  p=~/Documents/website
+  p=$DISTROBOX_HOST_HOME/Documents/website
   pn=$p/nim
   kitty @ launch --type=window --cwd=$pn --keep-focus bash -c "nim c --outDir:bin --verbosity:0 --listfullpaths ./tools/build.nim && ./bin/build -w"
   kitty @ launch --type=window --cwd=$pn --keep-focus bash -c "./nimbledeps/bin/nimhttpd -p:8080 ../build"
   kitty @ launch --type=window --cwd=$p/devtools --keep-focus bash -c "npx tailwindcss -i ./prestyles.css -o ../build/styles.css --watch"
   kitty @ launch --type=tab --cwd=$p bash -c "nvim -S Session.vim"
+}
+
+loockook () {
+  p=$DISTROBOX_HOST_HOME/Documents/loockook/loockook_backend
+  kitty @ launch --type=tab --cwd=$p --keep-focus bash -l -c "npm run start:dev"
+  kitty @ launch --type=tab --cwd=$p --keep-focus bash -l -c "docker compose up"
+  kitty @ launch --type=tab --cwd=$p/test --keep-focus bash -l -c "docker compose up"
+  cd $p; v
 }
 
 gd () {

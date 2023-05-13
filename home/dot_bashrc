@@ -28,7 +28,7 @@ export PATH=$HOME/.local/go/bin:$PATH
 export GOPATH=$HOME/.local/go
 
 # node
-# export PATH=$HOME/.local/npm-global/bin:$PATH
+export PATH=$HOME/.local/npm-global/bin:$PATH
 export PATH=$PATH:$HOME/node_modules/.bin
 export NPM_CONFIG_PREFIX=$HOME/.local/npm-global
 
@@ -139,3 +139,7 @@ fi
 
 # github cli
 ifHasBin gh 'eval "$(gh completion -s bash)"'
+
+
+# Load Angular CLI autocompletion.
+ifHasBin ng 'source <(ng completion script)'
