@@ -45,6 +45,7 @@ function ranger {
 }
 
 alias g=lazygit
+alias d=lazydocker
 alias t=taskwarrior-tui
 alias r=ranger
 
