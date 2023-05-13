@@ -20,6 +20,8 @@ sudo docker run hello-world
 sudo groupadd docker
 sudo usermod -aG docker $USER
 echo "restart now"
+
+sudo apt install -y docker-compose-plugin
 ```
 
 ```shell
@@ -64,6 +66,8 @@ export XDG_CACHE_HOME=$HOME/.cache
 ```
 
 ```shell
+# link docker
+sudo ln -s /usr/bin/distrobox-host-exec /usr/bin/docker
 # add links in box to host apps
 TARGET_APP=docker
 echo "#! /bin/bash
