@@ -114,7 +114,7 @@ if [[ $(command -v distrobox) || $(command -v distrobox-export) ]]; then
   if [[ -f /.dockerenv ]]; then
     ifHasBin kitty 'kitty + complete setup bash | source /dev/stdin'
     export LANG=en_US.UTF-8
-    cd ~
+    [ "$(pwd)" == "/run/host/home/$USER" ] && cd ~
   fi
 else
   ifHasBin kitty 'kitty + complete setup bash | source /dev/stdin'
