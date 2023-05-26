@@ -4,7 +4,7 @@ table.insert(plugins, {
   name = 'emmet-vim',
   setup = function()
     -- vim.g.user_emmet_leader_key = '<C-v>'
-    vim.g.user_emmet_mode = 'in'
+    -- vim.g.user_emmet_mode = 'in'
   end,
   config = function()
   end,

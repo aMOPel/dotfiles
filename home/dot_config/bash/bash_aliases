@@ -61,11 +61,17 @@ website () {
   kitty @ launch --type=tab --cwd=$p bash -c "nvim -S Session.vim"
 }
 
-loockook () {
+backend () {
   p=$DISTROBOX_HOST_HOME/Documents/loockook/loockook_backend
   kitty @ launch --type=tab --cwd=$p --keep-focus bash -l -c "npm run start:dev"
   kitty @ launch --type=tab --cwd=$p --keep-focus bash -l -c "docker compose up"
   kitty @ launch --type=tab --cwd=$p/test --keep-focus bash -l -c "docker compose up"
+  cd $p; v
+}
+
+frontend () {
+  p=$DISTROBOX_HOST_HOME/Documents/loockook/loockook_frontend
+  kitty @ launch --type=tab --cwd=$p --keep-focus bash -l -c "npm run start"
   cd $p; v
 }
 
