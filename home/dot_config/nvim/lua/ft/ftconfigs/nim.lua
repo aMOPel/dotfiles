@@ -8,8 +8,12 @@ add(g.lsp.fts, {
 	-- 'nims',
 })
 
-add(g.lsp.servers.lsp_installer, {
-	nimls = "default",
+-- add(g.lsp.servers.lsp_installer, {
+-- 	nimls = "default",
+-- })
+
+add(g.lsp.servers.other, {
+	nim_langserver = "default",
 })
 
 -- add(g.treesitter.ensure_installed, {
