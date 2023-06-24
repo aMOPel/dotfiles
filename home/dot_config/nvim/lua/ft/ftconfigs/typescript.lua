@@ -9,29 +9,7 @@ add(g.lsp.fts, {
 })
 
 add(g.lsp.servers.lsp_installer, {
-  tsserver = function(on_attach, capabilities)
-    local add_on_attach = function(client, bufnr)
-      client.server_capabilities.document_formatting = false
-      client.server_capabilities.document_range_formatting = false
-      on_attach(client, bufnr)
-    end
-    return {
-      capabilities = capabilities,
-      -- handlers = { ['textDocument/publishDiagnostics'] = function(...) end },
-      on_attach = add_on_attach,
-    }
-  end,
-  eslint = function(on_attach, capabilities)
-    return {
-      on_attach = function(client, bufnr)
-        client.server_capabilities.document_formatting = true
-        on_attach(client, bufnr)
-      end,
-      settings = {
-        format = { enable = false },
-      },
-    }
-  end,
+  tsserver = "default",
 })
 
 add(g.lsp.servers.special_setup, {
@@ -50,6 +28,11 @@ add(g.lsp.servers.special_setup, {
 add(g.treesitter.ensure_installed, {
   ft,
   'javascript',
+})
+
+add(g.linter.filetype, {
+  [ft] = {"eslint"},
+  javascript = {"eslint"},
 })
 
 add(g.formatter.ensure_installed, {

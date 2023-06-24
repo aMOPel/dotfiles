@@ -6,14 +6,14 @@ local M = {
 		fts = {},
 		servers = {
 			lsp_installer = {},
-      special_setup = {},
+			special_setup = {},
 			other = {},
 		},
 	},
 	treesitter = {
 		ensure_installed = {
 			-- 'viml',
-			'http',
+			"http",
 			-- 'norg',
 
 			"vimdoc",
@@ -30,14 +30,18 @@ local M = {
 			disable = {},
 		},
 	},
+	linter = {
+		ensure_installed = {},
+		filetype = {},
+	},
 	formatter = {
 		ensure_installed = {},
 		filetype = {},
 		on_save = {},
 	},
-  recipes = {
-    global = {},
-  },
+	recipes = {
+		global = {},
+	},
 }
 
 return M

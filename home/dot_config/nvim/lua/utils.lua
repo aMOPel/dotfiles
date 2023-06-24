@@ -67,4 +67,17 @@ M.addTable = function(table1, table2)
   end
 end
 
+---@param t1 {}
+---@param t2 {}
+M.tableConcat = function (t1,t2)
+    local tOut = {}
+    for i = 1, #t1 do
+        tOut[i] = t1[i]
+    end
+    for i = 1, #t2 do
+        tOut[i+#t1] = t2[i]
+    end
+    return tOut
+end
+
 return M

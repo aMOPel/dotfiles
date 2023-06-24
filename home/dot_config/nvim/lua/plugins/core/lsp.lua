@@ -13,8 +13,13 @@ table.insert(plugins, {
 	setup = function() end,
 	config = function()
 		local g = require("globals")
+		local concat = require("utils").tableConcat
+
 		require("mason-tool-installer").setup {
-      ensure_installed = g.formatter.ensure_installed,
+      ensure_installed = concat(
+        g.formatter.ensure_installed,
+        g.linter.ensure_installed
+      ),
     }
 	end,
 })
@@ -129,7 +134,22 @@ table.insert(plugins, {
 -- 		-- require('dd').setup { timeout = 1000, }
 -- 	end,
 -- })
---
+
+table.insert(plugins, {
+	name = "nvim-lint",
+	setup = function() end,
+	config = function()
+		local g = require("globals")
+		require('lint').linters_by_ft = g.linter.filetype
+    vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+      group = "MyAutoCmd",
+      callback = function()
+        require("lint").try_lint()
+      end,
+    })
+	end,
+})
+
 table.insert(plugins, {
 	name = "formatter.nvim",
 	setup = function() end,
@@ -187,6 +207,9 @@ local M = function(use)
 		},
 	})
 
+	use({
+		p("https://github.com/mfussenegger/nvim-lint"),
+	})
 	use({
 		p("https://github.com/mhartington/formatter.nvim"),
 	})
