@@ -122,8 +122,6 @@ table.insert(plugins, {
 table.insert(plugins, {
   name = 'vim-vsnip',
   setup = function()
-  end,
-  config = function()
     -- local map = require 'utils'.map
     vim.g.vsnip_snippet_dir = vim.fn.expand("$XDG_CONFIG_HOME/nvim/snippets")
 
@@ -133,6 +131,8 @@ smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<tab
 imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 ]]
+  end,
+  config = function()
   end })
 
 table.insert(plugins, {

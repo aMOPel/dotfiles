@@ -18,6 +18,15 @@ local plugins = require("globals").plugins
 -- })
 
 table.insert(plugins, {
+	name = "neogen",
+	setup = function()
+	end,
+	config = function()
+    require('neogen').setup{ snippet_engine = "vsnip" }
+  end,
+})
+
+table.insert(plugins, {
 	name = "rest.nvim",
 	setup = function()
     local map = require 'utils'.map
@@ -135,6 +144,7 @@ local M = function(use)
     requires = { p 'https://github.com/nvim-lua/plenary.nvim', },
   }
 
+  use { p "https://github.com/danymat/neogen", }
 
   -- TODO: look into gitsigns:
   -- https://github.com/lewis6991/gitsigns.nvim

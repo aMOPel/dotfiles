@@ -1,15 +1,25 @@
--- local configs = {}
---
--- configs[''] = function()
--- end
---
--- local p = require 'utils'.p
+local plugins = require'globals'.plugins
+
+table.insert(plugins, {
+  name = 'dap',
+  setup = function()
+  end,
+  config = function()
+
+		local g = require("globals")
+		for filetype, callback in pairs(g.dap.filetype) do
+      vim.print("configuring " .. filetype)
+      callback()
+		end
+  end,
+})
+
+local p = require 'utils'.p
 
 local M = function(use)
-  -- use {
-  --   p '',
-  --   config = configs['']
-  -- }
+  use {
+    p 'https://github.com/mfussenegger/nvim-dap',
+  }
 end
 return M
 

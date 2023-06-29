@@ -39,6 +39,10 @@ local M = {
 		filetype = {},
 		on_save = {},
 	},
+  dap = {
+		ensure_installed = {},
+		filetype = {},
+  },
 	recipes = {
 		global = {},
 	},

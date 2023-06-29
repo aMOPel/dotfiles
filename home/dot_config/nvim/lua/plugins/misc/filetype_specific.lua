@@ -61,6 +61,8 @@ local M = function(use)
     p 'https://github.com/whatyouhide/vim-textobj-xmlattr',
     requires = { p 'https://github.com/kana/vim-textobj-user', },
   }
+
+  use { p 'https://github.com/johnpapa/vscode-angular-snippets', }
 end
 return M
 

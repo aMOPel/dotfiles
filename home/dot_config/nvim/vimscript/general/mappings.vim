@@ -129,7 +129,7 @@ nmap <c-q> :b <c-n>
 " insert date
 nmap <leader>id O<esc>v:!date +"\%b \%e. \%Y"<cr>
 vmap <leader>id :!date +"\%b \%e. \%Y"<cr>
-nmap <leader>idr idMddf"Siqj0
+nmap <leader>idr <space>idMddf"Siqj0
 
 " <esc> in terminal mode
 tnoremap <F11> <C-\><C-n>
