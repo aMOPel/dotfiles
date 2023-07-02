@@ -220,7 +220,7 @@ local M = function(use)
 			-- { p("https://gitlab.com/yorickpeterse/nvim-dd") },
 			-- { p("https://github.com/j-hui/fidget.nvim") },
 			{ p("https://github.com/b0o/SchemaStore.nvim") },
-			{ p("https://github.com/barreiroleo/ltex_extra.nvim") },
+			-- { p("https://github.com/barreiroleo/ltex_extra.nvim") },
 			-- { p("https://github.com/SmiteshP/nvim-navic") },
 		},
 	})
