@@ -8,7 +8,6 @@ table.insert(plugins, {
 
 		local g = require("globals")
 		for filetype, callback in pairs(g.dap.filetype) do
-      vim.print("configuring " .. filetype)
       callback()
 		end
   end,
