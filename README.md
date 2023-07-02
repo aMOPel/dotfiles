@@ -25,8 +25,8 @@ sudo apt install -y docker-compose-plugin
 ```
 
 ```shell
-# install distrobox
-curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sudo sh
+# install distrobox 1.4.2
+curl -s https://raw.githubusercontent.com/89luca89/distrobox/1.4.2/install | sudo sh
 ```
 
 ```shell
@@ -78,6 +78,8 @@ chmod +x ~/.local/bin/$TARGET_APP
 ```shell
 # add links in host to box apps
 TARGET_APP=brave-browser
+distrobox-export --bin "$(which $TARGET_APP)" --export-path $DISTROBOX_HOST_HOME/.local/bin
+TARGET_APP=kitty
 distrobox-export --bin "$(which $TARGET_APP)" --export-path $DISTROBOX_HOST_HOME/.local/bin
 ```
 

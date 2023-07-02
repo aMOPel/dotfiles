@@ -36,13 +36,11 @@ sudo apt install -y cmake
 curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
 sudo apt install -y nodejs
 
-curl https://nim-lang.org/choosenim/init.sh -sSf | sh
+sh -c "$(curl -sSf https://nim-lang.org/choosenim/init.sh)" -- -y
 
 sudo apt install -y python3
 sudo apt install -y python3-pip
 sudo apt install -y python3-venv
-/usr/bin/pip3 install pynvim
-/usr/bin/pip3 install grip
 
 sudo apt install -y unzip
 sudo apt install -y xclip
