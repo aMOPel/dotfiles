@@ -11,7 +11,7 @@ local p = utils.p
 
 
 -- vim.cmd [[packadd packer.nvim]]
-require('packer').startup(function(use)
+require('packer').startup({function(use)
   local core_prefix = 'plugins/core/'
   local misc_prefix = 'plugins/misc/'
 
@@ -43,7 +43,13 @@ augroup END
 
   -- importing all misc scripts
   useDir(misc_prefix)
-end)
+end,
+-- loading maintained snapshot named 'base'
+config={
+  snapshot='base',
+  snapshot_path=vim.fn.expand('$XDG_DATA_HOME/chezmoi/home/dot_config/nvim/packer-snapshots'),
+},
+})
 
 local noremap = utils.noremap
 noremap('n', '<leader>pu', ':PackerSync<cr>')
