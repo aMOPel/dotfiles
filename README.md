@@ -3,9 +3,7 @@
 
 managed by [chezmoi](https://www.chezmoi.io/)
 
-## Installation
-
-### (Optionally) Install in a Distrobox
+## Install in a Distrobox
 Install docker, distrobox and start a distrobox
 
 ```shell
@@ -50,6 +48,7 @@ distrobox enter devenv
 echo "cd ~"
 cd ~
 
+# make sure environment is not polluted
 if [ -n "$SHSH_ROOT" ]; then
   echo '$SHSH_ROOT defined'; exit 1
 fi
@@ -65,30 +64,48 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 ```
 
+__WARNING:__ this will not just clone but also apply these dotfiles to your home directory!
 ```shell
-# link docker
+cd ~
+sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply aMOPel
+exit
+```
+
+It'll open neovim in the end to install plugins. After it's done:
+1. close neovim (`:q` or `ZZ`)
+1. exit the box (`$ exit`)
+1. enter the box again
+1. open neovim
+1. generate packer cache (`:PackerCompile` or `<space>pr`)
+
+```shell
+# link host's docker
 sudo ln -s /usr/bin/distrobox-host-exec /usr/bin/docker
-# add links in box to host apps
-TARGET_APP=docker
+```
+
+```shell
+# make host's app available in box
+TARGET_APP=<some app>
 echo "#! /bin/bash
 distrobox-host-exec $TARGET_APP \$@" > ~/.local/bin/$TARGET_APP
 chmod +x ~/.local/bin/$TARGET_APP
 ```
 
 ```shell
-# add links in host to box apps
+# make box's app available in host
 TARGET_APP=brave-browser
 distrobox-export --bin "$(which $TARGET_APP)" --export-path $DISTROBOX_HOST_HOME/.local/bin
 TARGET_APP=kitty
 distrobox-export --bin "$(which $TARGET_APP)" --export-path $DISTROBOX_HOST_HOME/.local/bin
 ```
 
-## Install Dotfiles
+## Install Dotfiles Without Distrobox
 __WARNING:__ this will not just clone but also apply these dotfiles to your home directory!
 ```shell
 cd ~
 sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply aMOPel
 ```
+
 
 ## Features:
 
