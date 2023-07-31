@@ -78,11 +78,10 @@ shsh install --gh-release BurntSushi/ripgrep@13.0.0
 shsh install --gh-release ajeetdsouza/zoxide@v0.9.0
 shsh install --gh-release kovidgoyal/kitty@v0.27.1
 shsh install --gh-release neovim/neovim@v0.9.0
-shsh install --gh-release twpayne/chezmoi@v2.27.0
+shsh install -h pre='mv ./completions/chezmoi-completion.bash ./completions/chezmoi.bash' --gh-release twpayne/chezmoi@v2.27.0
 shsh install --gh-release sharkdp/bat@v0.23.0
 shsh install --gh-release cli/cli@v2.27.0
 shsh install --gh-release jesseduffield/lazygit@v0.37.0
-shsh install --gh-release kdheepak/taskwarrior-tui@v0.23.7
 shsh install -h pre="mv direnv.linux-amd64 direnv; chmod +x direnv" --gh-release direnv/direnv@v2.32.2
 shsh install -v BINS= -v BASH_COMPLETIONS= -v ZSH_COMPLETIONS= -v DEPS= -v MANS= -h pre='./install --key-bindings --completion --no-update-rc --no-zsh --no-fish' -h uninstall=./uninstall junegunn/fzf@0.39.0
 
