@@ -33,6 +33,7 @@ local M = {
 	linter = {
 		ensure_installed = {},
 		filetype = {},
+		custom_linter = {},
 	},
 	formatter = {
 		ensure_installed = {},

@@ -48,7 +48,13 @@ local M = function(use)
   use { p 'https://github.com/posva/vim-vue', }
   use { p 'https://github.com/preservim/vim-markdown', }
   use { p 'https://github.com/leafgarland/typescript-vim', }
-  use { p 'https://github.com/habamax/vim-godot', }
+  use {
+    p 'https://github.com/habamax/vim-godot',
+    requires = {
+      p 'https://github.com/junegunn/fzf',
+      p 'https://github.com/junegunn/fzf.vim',
+    },
+  }
   use { p 'https://github.com/ekalinin/Dockerfile.vim', }
   use { p 'https://github.com/raimon49/requirements.txt.vim', }
   use { p 'https://github.com/SirJson/fzf-gitignore', }

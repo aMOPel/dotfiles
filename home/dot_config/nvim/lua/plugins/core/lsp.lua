@@ -134,19 +134,19 @@ table.insert(plugins, {
 })
 
 -- table.insert(plugins, {
--- 	name = "fidget.nvim",
--- 	setup = function() end,
--- 	config = function()
--- 		require("fidget").setup({})
--- 	end,
+--  name = "fidget.nvim",
+--  setup = function() end,
+--  config = function()
+--    require("fidget").setup({})
+--  end,
 -- })
 
 -- table.insert(plugins, {
--- 	name = "nvim-dd",
--- 	setup = function() end,
--- 	config = function()
--- 		-- require('dd').setup { timeout = 1000, }
--- 	end,
+--  name = "nvim-dd",
+--  setup = function() end,
+--  config = function()
+--    -- require('dd').setup { timeout = 1000, }
+--  end,
 -- })
 
 table.insert(plugins, {
@@ -154,11 +154,14 @@ table.insert(plugins, {
 	setup = function() end,
 	config = function()
 		local g = require("globals")
-		require("lint").linters_by_ft = g.linter.filetype
+		local add = require("utils").addTable
+		local lint = require("lint")
+		add(lint.linters, g.linter.custom_linter)
+		lint.linters_by_ft = g.linter.filetype
 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
 			group = "MyAutoCmd",
 			callback = function()
-				require("lint").try_lint()
+				lint.try_lint()
 			end,
 		})
 	end,
@@ -196,11 +199,11 @@ table.insert(plugins, {
 })
 
 -- table.insert(plugins, {
--- 	name = "nvim-navic",
--- 	setup = function() end,
--- 	config = function()
--- 		require("nvim-navic").setup()
--- 	end,
+--  name = "nvim-navic",
+--  setup = function() end,
+--  config = function()
+--    require("nvim-navic").setup()
+--  end,
 -- })
 
 local p = require("utils").p
