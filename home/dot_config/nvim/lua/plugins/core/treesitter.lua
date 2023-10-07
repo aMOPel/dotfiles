@@ -49,6 +49,7 @@ table.insert(plugins, {
       },
       matchup = {
         enable = true,
+        disable_virtual_text = {"nim"},
       },
       textsubjects = {
         enable = true,
@@ -120,6 +121,14 @@ local M = function(use)
       { p 'https://github.com/RRethy/nvim-treesitter-textsubjects', after = 'nvim-treesitter', },
       -- { p'https://github.com/jasonmchan/ts-textobjects', after = 'nvim-treesitter', },
       { p 'https://github.com/nvim-treesitter/nvim-treesitter-context', after = 'nvim-treesitter', },
+      {
+        p 'https://github.com/aMOPel/nvim-treesitter-nim',
+        run = {
+          ':TSUpdate nim',
+          ':TSUpdate nim_format_string',
+        },
+        after = 'nvim-treesitter',
+      },
     },
     run = ':TSUpdate',
   }
