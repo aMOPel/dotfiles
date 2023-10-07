@@ -25,6 +25,7 @@ add(g.lsp.servers.lsp_installer, {
 
 add(g.treesitter.ensure_installed, {
 	ft,
+	"xml",
 })
 
 add(g.formatter.ensure_installed, {

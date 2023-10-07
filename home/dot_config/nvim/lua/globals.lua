@@ -16,7 +16,22 @@ local M = {
 			"http",
 			-- 'norg',
 
+			"gitignore",
+			"gitattributes",
+			"gitcommit",
+			"git_config",
+			"git_rebase",
+			"diff",
+
+			"gpg",
+			"ini",
+			"make",
+      "rst",
+      "csv",
+      "ssh_config",
+
 			"vimdoc",
+      "sql",
 			"regex",
 			"comment",
 		},

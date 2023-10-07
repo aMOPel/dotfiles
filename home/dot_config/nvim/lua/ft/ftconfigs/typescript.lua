@@ -28,6 +28,7 @@ add(g.lsp.servers.special_setup, {
 add(g.treesitter.ensure_installed, {
 	ft,
 	"javascript",
+	"jsdoc",
 })
 
 add(g.linter.ensure_installed, {

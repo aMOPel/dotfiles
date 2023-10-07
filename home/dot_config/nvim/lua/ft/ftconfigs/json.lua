@@ -24,10 +24,12 @@ add(g.lsp.servers.lsp_installer, {
 
 add(g.treesitter.ensure_installed, {
 	ft,
+	"json5",
+	"jsonc",
 })
 
 add(g.formatter.ensure_installed, {
-  "jq",
+	"jq",
 })
 
 add(g.formatter.filetype, {

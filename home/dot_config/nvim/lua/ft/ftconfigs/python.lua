@@ -13,6 +13,7 @@ add(g.lsp.servers.lsp_installer, {
 
 add(g.treesitter.ensure_installed, {
 	ft,
+  "requirements",
 })
 
 add(g.treesitter.indent.disable, {

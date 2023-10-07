@@ -5,6 +5,7 @@ local ft = "markdown"
 
 add(g.lsp.fts, {
 	ft,
+	"markdown_inline",
 })
 
 add(g.lsp.servers.lsp_installer, {
