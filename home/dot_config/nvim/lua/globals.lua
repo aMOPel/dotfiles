@@ -55,10 +55,10 @@ local M = {
 		filetype = {},
 		on_save = {},
 	},
-  dap = {
+	dap = {
 		ensure_installed = {},
 		filetype = {},
-  },
+	},
 	recipes = {
 		global = {},
 	},

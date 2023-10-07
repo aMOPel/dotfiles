@@ -1,5 +1,5 @@
-local plugins = require'globals'.plugins
+local plugins = require("globals").plugins
 
 for _, data in pairs(plugins) do
-  data.setup()
+	data.setup()
 end
