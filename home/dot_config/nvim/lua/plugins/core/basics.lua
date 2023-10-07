@@ -38,7 +38,11 @@ table.insert(plugins, {
     vim.g.matchup_mappings_enabled = 0
     vim.g.matchup_text_obj_enabled = 0
     vim.g.matchup_surround_enabled = 0
-    vim.g.matchup_matchparen_offscreen = { method = 'popup' }
+    vim.g.matchup_matchparen_offscreen = {
+      method = 'popup',
+      scrolloff = 1,
+      fullwidth = 1,
+    }
 
     local map = require 'utils'.map
     map({"n", "x"}, "%", "<plug>(matchup-%)")
