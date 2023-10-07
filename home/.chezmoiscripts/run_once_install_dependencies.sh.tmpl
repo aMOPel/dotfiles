@@ -84,6 +84,8 @@ shsh install --gh-release cli/cli@v2.27.0
 shsh install --gh-release jesseduffield/lazygit@v0.37.0
 shsh install -h pre="mv direnv.linux-amd64 direnv; chmod +x direnv" --gh-release direnv/direnv@v2.32.2
 shsh install -v BINS= -v BASH_COMPLETIONS= -v ZSH_COMPLETIONS= -v DEPS= -v MANS= -h pre='./install --key-bindings --completion --no-update-rc --no-zsh --no-fish' -h uninstall=./uninstall junegunn/fzf@0.39.0
+shsh install --gh-release sharkdp/hyperfine@v1.17.0
+shsh install --gh-release nishanths/license@v5.0.4 # doesn't link correctly
 
 # packer
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
