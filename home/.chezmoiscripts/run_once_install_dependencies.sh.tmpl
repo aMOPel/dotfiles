@@ -93,6 +93,21 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 
 # sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 100
 
+# go
+sudo apt install curl git mercurial make binutils bison gcc build-essential
+bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+
+source $HOME/.gvm/scripts/gvm
+
+gvm install go1.4 -B
+gvm use go1.4
+export GOROOT_BOOTSTRAP=$GOROOT
+gvm install go1.17.13
+gvm use go1.17.13
+export GOROOT_BOOTSTRAP=$GOROOT
+gvm install go1.20
+gvm use go1.20
+
 # # python
 # sudo apt install -y python3
 # sudo apt install -y python3-pip

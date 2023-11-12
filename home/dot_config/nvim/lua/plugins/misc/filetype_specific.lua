@@ -45,6 +45,15 @@ table.insert(plugins, {
   end,
 })
 
+table.insert(plugins, {
+  name = 'nvim-dap-go',
+  setup = function()
+  end,
+  config = function()
+    require('dap-go').setup()
+  end,
+})
+
 local p = require 'utils'.p
 
 local M = function(use)
@@ -63,6 +72,10 @@ local M = function(use)
   }
 
   use { p 'https://github.com/johnpapa/vscode-angular-snippets', }
+  use {
+    p 'https://github.com/leoluz/nvim-dap-go',
+    requires = { p 'https://github.com/mfussenegger/nvim-dap', },
+  }
 end
 return M
 

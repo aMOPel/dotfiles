@@ -39,6 +39,27 @@ table.insert(plugins, {
 --   end,
 -- })
 
+table.insert(plugins, {
+  name = 'vim-go',
+  setup = function()
+  end,
+  config = function()
+    vim.g.go_echo_go_info = 0
+    vim.g.go_template_autocreate = 0
+    vim.g.go_gopls_enabled = 0
+    vim.g.go_metalinter_autosave = 0
+    vim.g.go_textobj_include_variable = 0
+    vim.g.go_textobj_include_function_doc = 0
+    vim.g.go_textobj_enabled = 0
+    vim.g.go_def_mapping_enabled = 0
+    vim.g.go_doc_keywordprg_enabled = 0
+    vim.g.go_mod_fmt_autosave = 0
+    vim.g.go_imports_autosave = 0
+    vim.g.go_fmt_autosave = 0
+    vim.g.go_code_completion_enabled = 0
+  end,
+})
+
 local p = require 'utils'.p
 
 local M = function(use)
@@ -59,5 +80,6 @@ local M = function(use)
   use { p 'https://github.com/raimon49/requirements.txt.vim', }
   use { p 'https://github.com/SirJson/fzf-gitignore', }
   use { p 'https://github.com/aliev/vim-compiler-python', }
+  use { p 'https://github.com/fatih/vim-go', }
 end
 return M
