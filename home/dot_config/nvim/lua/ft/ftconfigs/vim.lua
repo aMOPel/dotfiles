@@ -11,14 +11,15 @@ local ft = "vim"
 -- 	server_name = function(on_attach, capabilities) end,
 -- })
 
-add(g.treesitter.highlight.disable, {
-	-- ft,
-  'help'
-})
-
--- add(g.treesitter.ensure_installed, {
--- 	ft,
+-- add(g.treesitter.highlight.disable, {
+-- 	-- ft,
+--   'help'
 -- })
+
+add(g.treesitter.ensure_installed, {
+	ft,
+	"vimdoc",
+})
 
 -- add(g.formatter.ensure_installed, {
 -- 	"prettierd",

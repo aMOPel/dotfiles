@@ -13,7 +13,7 @@ add(g.lsp.servers.lsp_installer, {
 
 add(g.treesitter.ensure_installed, {
 	ft,
-  "requirements",
+	"requirements",
 })
 
 add(g.treesitter.indent.disable, {
@@ -21,8 +21,8 @@ add(g.treesitter.indent.disable, {
 })
 
 add(g.formatter.ensure_installed, {
-  "black",
-  "isort",
+	"black",
+	"isort",
 })
 
 add(g.formatter.filetype, {

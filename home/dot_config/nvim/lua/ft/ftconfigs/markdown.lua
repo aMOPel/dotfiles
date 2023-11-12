@@ -5,11 +5,15 @@ local ft = "markdown"
 
 add(g.lsp.fts, {
 	ft,
-	"markdown_inline",
 })
 
 add(g.lsp.servers.lsp_installer, {
 	prosemd_lsp = "default",
+})
+
+add(g.treesitter.ensure_installed, {
+  ft,
+	"markdown_inline",
 })
 
 add(g.formatter.ensure_installed, {
@@ -23,10 +27,6 @@ add(g.formatter.filetype, {
 add(g.formatter.on_save, {
 	"*." .. ft,
 })
-
--- add(g.treesitter.ensure_installed, {
---   ft,
--- })
 
 local configs = {}
 

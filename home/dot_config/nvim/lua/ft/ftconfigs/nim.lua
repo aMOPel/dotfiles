@@ -16,8 +16,14 @@ add(g.lsp.servers.other, {
 	nim_langserver = "default",
 })
 
--- add(g.treesitter.ensure_installed, {
--- })
+add(g.treesitter.ensure_installed, {
+	ft,
+	"nim_format_string",
+})
+
+add(g.treesitter.indent.disable, {
+	ft,
+})
 
 add(g.formatter.filetype, {
 	[ft] = function()

@@ -54,7 +54,7 @@ add(g.formatter.filetype, {
 	},
 })
 
-add(g.formatter.ensure_installed, {
+add(g.dap.ensure_installed, {
 	"js-debug-adapter",
 })
 
