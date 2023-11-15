@@ -5,24 +5,6 @@ table.insert(plugins, {
   setup = function()
   end,
   config = function()
-    -- local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
-
-    -- parser_configs.norg = {
-    --     install_info = {
-    --         url = "https://github.com/nvim-neorg/tree-sitter-norg",
-    --         files = { "src/parser.c", "src/scanner.cc" },
-    --         branch = "main"
-    --     },
-    -- }
-
-    -- parser_configs.http = {
-    --   install_info = {
-    --     url = "https://github.com/NTBBloodbath/tree-sitter-http",
-    --     files = { "src/parser.c" },
-    --     branch = "main",
-    --   },
-    -- }
-
     local g = require 'globals'
     require 'nvim-treesitter.configs'.setup {
       ensure_installed = g.treesitter.ensure_installed,
@@ -51,35 +33,41 @@ table.insert(plugins, {
         enable = true,
         disable_virtual_text = {"nim"},
       },
-      textsubjects = {
-        enable = true,
-        keymaps = {
-          ['<cr>'] = 'textsubjects-smart',
-        }
+      textobjects = {
+        select = {
+          enable = {"nim"},
+          lookahead = true,
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ["iz"] = "@assignment.inner",
+            ["az"] = "@assignment.outer",
+            ["if"] = "@function.inner",
+            ["af"] = "@function.outer",
+            -- @loop.inner
+            -- @loop.outer
+            -- @block.inner
+            -- @block.outer
+            -- @call.inner
+            -- @call.outer
+            ["ia"] = "@parameter.inner",
+            ["aa"] = "@parameter.outer",
+            ["ic"] = "@comment.inner",
+            ["ac"] = "@comment.outer",
+            -- @assignment.inner
+            -- @assignment.outer
+            ["im"] = "@assignment.rhs",
+            ["am"] = "@assignment.lhs",
+            ["ir"] = "@return.inner",
+            ["ar"] = "@return.outer",
+            ["as"] = "@statement.outer",
+            ["in"] = "@number.inner",
+          },
+          -- selection_modes = {
+          --   ['@function.outer'] = 'v', -- linewise
+          -- },
+          include_surrounding_whitespace = false,
+        },
       },
-      --  element_textobject = {
-      --    enable = true,
-      --    set_jumps = true,
-      --    keymaps = {
-      --      ['ga'] = 'goto_next_element',
-      --      ['gA'] = 'goto_prev_element',
-      --      [']a'] = 'swap_next_element',
-      --      ['[a'] = 'swap_prev_element',
-      --      ['ia'] = 'inner_element',
-      --      ['aa'] = 'an_element',
-      --    }
-      --  },
-      --  scope_textobject = {
-      --    enable = true,
-      --    set_jumps = true,
-      --    keymaps = {
-      --      ['go'] = 'incremental_outer_scope',
-      --      [']o'] = 'goto_next_scope',
-      --      ['[o'] = 'goto_prev_scope',
-      --      ['ao'] = 'a_scope',
-      --      ['io'] = 'a_scope',
-      --    }
-      --  },
     }
   end,
 })
@@ -115,20 +103,11 @@ local p = require 'utils'.p
 
 local M = function(use)
   use {
-    p 'nvim-treesitter/nvim-treesitter',
+    p 'https://github.com/nvim-treesitter/nvim-treesitter',
     requires = {
       { p 'https://github.com/JoosepAlviste/nvim-ts-context-commentstring', after = 'nvim-treesitter', },
-      { p 'https://github.com/RRethy/nvim-treesitter-textsubjects', after = 'nvim-treesitter', },
-      -- { p'https://github.com/jasonmchan/ts-textobjects', after = 'nvim-treesitter', },
       { p 'https://github.com/nvim-treesitter/nvim-treesitter-context', after = 'nvim-treesitter', },
-      {
-        p 'https://github.com/aMOPel/nvim-treesitter-nim',
-        run = {
-          ':TSUpdate nim',
-          ':TSUpdate nim_format_string',
-        },
-        after = 'nvim-treesitter',
-      },
+      { p 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter', },
     },
     run = ':TSUpdate',
   }

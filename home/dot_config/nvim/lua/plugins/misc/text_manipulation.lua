@@ -127,21 +127,6 @@ table.insert(plugins, {
 	name = "vim-sandwich",
 	setup = function()
 		vim.cmd([[runtime vimscript/vim-sandwich/surround.vim]])
-
-		local map = require("utils").map
-		map("x", "is", "<Plug>(textobj-sandwich-query-i)")
-		map("x", "as", "<Plug>(textobj-sandwich-query-a)")
-		map("o", "is", "<Plug>(textobj-sandwich-query-i)")
-		map("o", "as", "<Plug>(textobj-sandwich-query-a)")
-		map("x", "iss", "<Plug>(textobj-sandwich-auto-i)")
-		map("x", "ass", "<Plug>(textobj-sandwich-auto-a)")
-		map("o", "iss", "<Plug>(textobj-sandwich-auto-i)")
-		map("o", "ass", "<Plug>(textobj-sandwich-auto-a)")
-		--   " example: dim( in 'outer(in|ner())' would delete 'inner', not 'inner()'
-		-- 	" xmap im <Plug>(textobj-sandwich-literal-query-i)
-		-- 	" xmap am <Plug>(textobj-sandwich-literal-query-a)
-		-- 	" omap im <Plug>(textobj-sandwich-literal-query-i)
-		-- 	" omap am <Plug>(textobj-sandwich-literal-query-a)
 	end,
 	config = function() end,
 })
@@ -190,26 +175,6 @@ table.insert(plugins, {
 		map("n", "csF", "<Plug>(ChangeSurroundingFUNCTION)")
 		map("n", "ysf", "<Plug>(YankSurroundingFunction)")
 		map("n", "ysF", "<Plug>(YankSurroundingFUNCTION)")
-		map("x", "af", "<Plug>(SelectWholeFunction)")
-		map("o", "af", "<Plug>(SelectWholeFunction)")
-		map("x", "aF", "<Plug>(SelectWholeFUNCTION)")
-		map("o", "aF", "<Plug>(SelectWholeFUNCTION)")
-		map("x", "if", "<Plug>(SelectWholeFunction)")
-		map("o", "if", "<Plug>(SelectWholeFunction)")
-		map("x", "iF", "<Plug>(SelectWholeFUNCTION)")
-		map("o", "iF", "<Plug>(SelectWholeFUNCTION)")
-		map("x", "an", "<Plug>(SelectFunctionName)")
-		map("o", "an", "<Plug>(SelectFunctionName)")
-		map("x", "aN", "<Plug>(SelectFunctionNAME)")
-		map("o", "aN", "<Plug>(SelectFunctionNAME)")
-		map("x", "in", "<Plug>(SelectFunctionName)")
-		map("o", "in", "<Plug>(SelectFunctionName)")
-		map("x", "iN", "<Plug>(SelectFunctionNAME)")
-		map("o", "iN", "<Plug>(SelectFunctionNAME)")
-		-- map('n', 'gpf', '<Plug>(GripSurroundObject)')
-		-- map('v', 'gpf', '<Plug>(GripSurroundObject)')
-		-- nmap <silent> gS <Plug>(GripSurroundObjectNoPaste)
-		-- vmap <silent> gS <Plug>(GripSurroundObjectNoPaste)
   end,
 	config = function()
 	end,
