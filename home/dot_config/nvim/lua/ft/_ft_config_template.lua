@@ -8,10 +8,15 @@ add(g.lsp.fts, {
 })
 
 add(g.lsp.servers.lsp_installer, {
-	server_name = function(on_attach, capabilities) end,
+	-- server_name = function(on_attach, capabilities) end,
+	server_name = "default",
 })
 
 add(g.treesitter.ensure_installed, {
+	ft,
+})
+
+add(g.treesitter.indent.disable, {
 	ft,
 })
 
@@ -25,6 +30,26 @@ add(g.formatter.filetype, {
 
 add(g.formatter.on_save, {
 	"*." .. ft,
+})
+
+add(g.linter.ensure_installed, {
+	"",
+})
+
+add(g.linter.filetype, {
+	"",
+})
+
+add(g.linter.custom_linter, {
+	"",
+})
+
+add(g.dap.ensure_installed, {
+	"",
+})
+
+add(g.dap.filetype, {
+	"",
 })
 
 local configs = {}
