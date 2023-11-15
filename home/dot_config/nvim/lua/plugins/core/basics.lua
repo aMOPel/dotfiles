@@ -96,6 +96,7 @@ local M = function(use)
   use { p 'https://github.com/tpope/vim-obsession', }
   use { p 'https://github.com/deris/vim-shot-f', }
   use { p 'https://github.com/machakann/vim-highlightedyank', }
+  use { p 'https://github.com/justinmk/vim-ipmotion', }
   use {
     p "https://github.com/inkarkat/vim-visualrepeat",
     requires = {
