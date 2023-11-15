@@ -59,9 +59,6 @@ local M = {
 		ensure_installed = {},
 		filetype = {},
 	},
-	recipes = {
-		global = {},
-	},
 }
 
 return M

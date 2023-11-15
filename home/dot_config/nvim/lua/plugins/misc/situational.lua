@@ -193,75 +193,6 @@ table.insert(plugins, {
   end,
 })
 
-table.insert(plugins, {
-  name = 'recipe.nvim',
-  setup = function()
-    -- needs to be vimscript so that <c-s> works
-    vim.cmd[[
-nmap <leader>m :Bake build<c-s>
-nmap <leader>n :Bake run<c-s>
-nmap <leader>t :Bake test<c-s>
-    ]]
-  end,
-  config = function()
-    local add = require("utils").addTable
-    local recipes = require("globals").recipes
-    -- add(recipes, require("recipe.ft"))
-
-    require'recipe'.setup{
-      term = {
-        height = 0.8,
-        width = 0.8,
-        kind = "float",
-        border = "single",
-        jump_to_end = true,
-        auto_close = false,
-      },
-      recipes_file = "recipes.json",
-      --- Define custom global recipes, either globally or by filetype as key
-      custom_recipes = recipes,
-      hooks = {
-        pre = {
-          function(_)
-            vim.cmd(":wa")
-          end,
-        },
-      },
-
-      ---@class Recipe
-      ---@field cmd string
-      ---@field cwd string
-      ---@field kind string one of build,term,dap or a custom adapter
-      ---@field plain boolean
-      ---@field env table|nil
-      ---@field opts table Extra options for the current backend
-      ---@field depends_on (string|Recipe)[]
-      default_recipe = {
-        cmd = "",
-        kind = "build",
-        opts = {},
-        restart = false,
-        plain = false,
-        depends_on = {},
-        env = { __type = "table" },
-      },
-
-      adapters = {
-        term = require("recipe.adapters.term"),
-        build = require("recipe.adapters.build"),
-        dap = require("recipe.adapters.dap"),
-      },
-
-      debug_adapters = {
-        rust = require("recipe.debug_adapters").codelldb,
-        c = require("recipe.debug_adapters").codelldb,
-        cpp = require("recipe.debug_adapters").codelldb,
-      },
-      dotenv = "",
-    }
-  end,
-})
-
 local p = require 'utils'.p
 
 local M = function(use)
@@ -287,10 +218,6 @@ local M = function(use)
   }
 
   use { p 'https://github.com/kevinhwang91/nvim-bqf', }
-  use {
-    p 'https://github.com/ten3roberts/recipe.nvim',
-    commit = '2eccba2d041722bfa8b7cc657007a13e93f482b9',
-    requires = { p 'https://github.com/ten3roberts/qf.nvim', },
-  }
+  use { p 'https://github.com/ten3roberts/qf.nvim', }
 end
 return M

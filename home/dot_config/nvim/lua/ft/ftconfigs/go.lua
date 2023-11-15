@@ -45,18 +45,6 @@ add(g.dap.ensure_installed, {
 })
 
 
--- g.recipes[ft] = {
---   build = {
---     cmd = "",
---     kind = "build",
---     opts = {},
---     restart = false,
---     plain = false,
---     depends_on = {},
---     env = { __type = "table" },
---   },
--- }
-
 local configs = {}
 
 configs[ft] = function()

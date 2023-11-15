@@ -27,18 +27,6 @@ add(g.formatter.on_save, {
 	"*." .. ft,
 })
 
-g.recipes[ft] = {
-  build = {
-    cmd = "",
-    kind = "build",
-    opts = {},
-    restart = false,
-    plain = false,
-    depends_on = {},
-    env = { __type = "table" },
-  },
-}
-
 local configs = {}
 
 configs[ft] = function()
