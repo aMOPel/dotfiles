@@ -5,6 +5,10 @@
 echo 'running "install_dependencies.sh"'
 read -p "Install All? [y/n]" choice && [[ "$choice" == [yY] ]] || exit 0
 
+# setup env vars
+if [[ -z "$XDG_DATA_HOME" ]]; then
+  XDG_DATA_HOME=~/.local/share
+fi
 sudo apt update
 
 # sudo apt install -y bash
@@ -33,6 +37,7 @@ sudo apt install -y brave-browser
 sudo apt install -y gcc
 sudo apt install -y g++
 sudo apt install -y cmake
+# TODO: deprecated method of installation
 curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
 sudo apt install -y nodejs
 
@@ -94,7 +99,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim\
 # sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator ~/.local/bin/kitty 100
 
 # go
-sudo apt install curl git mercurial make binutils bison gcc build-essential
+sudo apt install -y curl git mercurial make binutils bison gcc build-essential
 bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
 
 source $HOME/.gvm/scripts/gvm
@@ -107,6 +112,9 @@ gvm use go1.17.13
 export GOROOT_BOOTSTRAP=$GOROOT
 gvm install go1.20
 gvm use go1.20
+
+go install github.com/posener/complete/v2/gocomplete@v2.1.0
+COMP_INSTALL=1 gocomplete
 
 # # python
 # sudo apt install -y python3

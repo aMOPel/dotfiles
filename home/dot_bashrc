@@ -140,6 +140,11 @@ fi
 # github cli
 ifHasBin gh 'eval "$(gh completion -s bash)"'
 
-
 # Load Angular CLI autocompletion.
 ifHasBin ng 'source <(ng completion script)'
+
+# setup go version manager
+[[ -s "$HOME/.gvm/scripts/gvm" ]] && source "$HOME/.gvm/scripts/gvm"
+# and gvm completion
+[[ -s "$HOME/.gvm/scripts/completion" ]] && source "$HOME/.gvm/scripts/completion"
+complete -C $GOPATH/bin/gocomplete go
