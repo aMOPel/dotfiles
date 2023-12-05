@@ -10,7 +10,12 @@ table.insert(plugins, {
 
     local noremap = require 'utils'.noremap
     noremap('n', '<leader>ff', ':FloatermToggle --cwd=<buffer> <CR>')
-    noremap('t', '<C-W>', '<C-\\><C-n><C-W>c')
+    noremap('t', '<C-W>c', '<C-\\><C-n><C-W>c')
+    noremap('t', '<C-W><c-c>', '<C-\\><C-n><C-W>c')
+    noremap('t', '<C-W>w', '<C-\\>:FloatermNext<cr>')
+    noremap('t', '<C-W><c-w>', '<C-\\>:FloatermNext<cr>')
+    noremap('t', '<C-W>n', '<C-\\>:FloatermNew<cr>')
+    noremap('t', '<C-W><c-n>', '<C-\\>:FloatermNew<cr>')
     noremap('n', '<leader>fm', ':exec "FloatermNew --cwd=<buffer> --autoclose=0 --disposable " . &makeprg<CR>')
     noremap('n', '<leader>fg', ':FloatermNew --cwd=<buffer> --autoclose=1 --width=1.0 --height=1.0 lazygit<CR>')
     noremap('n', '<leader>ft', ':FloatermNew --cwd=<buffer> --autoclose=2 --disposable taskwarrior-tui<CR>')
