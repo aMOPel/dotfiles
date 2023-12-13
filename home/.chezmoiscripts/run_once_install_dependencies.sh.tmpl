@@ -92,6 +92,7 @@ shsh install -h pre='mv direnv.linux-amd64 direnv; chmod +x direnv' --gh-release
 shsh install -v BINS= -v BASH_COMPLETIONS= -v ZSH_COMPLETIONS= -v DEPS= -v MANS= -h pre='./install --key-bindings --completion --no-update-rc --no-zsh --no-fish' -h uninstall=./uninstall junegunn/fzf@0.39.0
 shsh install --gh-release sharkdp/hyperfine@v1.18.0
 shsh install -h pre='mv license-* license && chmod +x license' --gh-release nishanths/license@v5.0.4
+shsh install -h pre='mkdir completion && mv ./share/bash-completion/completions/rr ./completion/rr.bash' --gh-release rr-debugger/rr@5.7.0
 
 # packer
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
