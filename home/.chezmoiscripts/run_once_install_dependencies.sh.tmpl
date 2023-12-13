@@ -78,19 +78,20 @@ export SHSH_ROOT="$HOME/.local/share/shsh"
 export PATH="$SHSH_ROOT/bin:$PATH"
 eval "$(shsh init bash)"
 
-shsh install --gh-release sharkdp/fd@v8.7.0
-shsh install --gh-release BurntSushi/ripgrep@13.0.0
-shsh install --gh-release ajeetdsouza/zoxide@v0.9.0
-shsh install --gh-release kovidgoyal/kitty@v0.27.1
+shsh install --gh-release sharkdp/fd@v8.7.1
+shsh install --gh-release BurntSushi/ripgrep@14.0.3
+shsh install --gh-release ajeetdsouza/zoxide@v0.9.2
+shsh install --gh-release kovidgoyal/kitty@v0.31.0
 shsh install --gh-release neovim/neovim@v0.9.4
+# TODO: bump chezmoi, it breaks shsh, since it has too many assets and json response breaks jq limits
 shsh install -h pre='mv ./completions/chezmoi-completion.bash ./completions/chezmoi.bash' --gh-release twpayne/chezmoi@v2.27.0
-shsh install --gh-release sharkdp/bat@v0.23.0
-shsh install --gh-release cli/cli@v2.27.0
-shsh install --gh-release jesseduffield/lazygit@v0.37.0
-shsh install -h pre="mv direnv.linux-amd64 direnv; chmod +x direnv" --gh-release direnv/direnv@v2.32.2
+shsh install --gh-release sharkdp/bat@v0.24.0
+shsh install --gh-release cli/cli@v2.40.0
+shsh install --gh-release jesseduffield/lazygit@v0.40.2
+shsh install -h pre='mv direnv.linux-amd64 direnv; chmod +x direnv' --gh-release direnv/direnv@v2.33.0
 shsh install -v BINS= -v BASH_COMPLETIONS= -v ZSH_COMPLETIONS= -v DEPS= -v MANS= -h pre='./install --key-bindings --completion --no-update-rc --no-zsh --no-fish' -h uninstall=./uninstall junegunn/fzf@0.39.0
-shsh install --gh-release sharkdp/hyperfine@v1.17.0
-shsh install --gh-release nishanths/license@v5.0.4 # doesn't link correctly
+shsh install --gh-release sharkdp/hyperfine@v1.18.0
+shsh install -h pre='mv license-* license && chmod +x license' --gh-release nishanths/license@v5.0.4
 
 # packer
 git clone --depth 1 https://github.com/wbthomason/packer.nvim\
@@ -112,6 +113,9 @@ gvm use go1.17.13
 export GOROOT_BOOTSTRAP=$GOROOT
 gvm install go1.20
 gvm use go1.20
+export GOROOT_BOOTSTRAP=$GOROOT
+gvm install go1.21.0
+gvm use go1.21.0
 
 go install github.com/posener/complete/v2/gocomplete@v2.1.0
 COMP_INSTALL=1 gocomplete
