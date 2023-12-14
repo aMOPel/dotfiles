@@ -27,6 +27,8 @@ local M = {
 			"sql",
 			"regex",
 			"comment",
+
+			"dap_repl",
 		},
 		highlight = {
 			disable = {},

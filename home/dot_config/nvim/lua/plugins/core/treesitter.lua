@@ -5,6 +5,10 @@ table.insert(plugins, {
 	setup = function() end,
 	config = function()
 		local g = require("globals")
+
+		-- NOTE: has to happen before ensure installed
+		require("nvim-dap-repl-highlights").setup()
+
 		require("nvim-treesitter.configs").setup({
 			ensure_installed = g.treesitter.ensure_installed,
 			highlight = {
@@ -126,5 +130,6 @@ local M = function(use)
 		run = ":TSUpdate",
 	})
 	use({ p("https://github.com/JoosepAlviste/nvim-ts-context-commentstring") })
+	use({ p("https://github.com/LiadOz/nvim-dap-repl-highlights") })
 end
 return M
