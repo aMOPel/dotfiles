@@ -43,8 +43,7 @@ add(g.formatter.filetype, {
 
 local configs = {}
 
-configs[ft] = function()
-end
+configs[ft] = function() end
 
 vim.api.nvim_create_autocmd({ "Filetype" }, {
 	group = "MyFt",

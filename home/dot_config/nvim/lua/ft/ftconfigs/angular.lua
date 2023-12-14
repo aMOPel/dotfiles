@@ -8,7 +8,7 @@ local add = require("utils").addTable
 -- })
 
 add(g.lsp.servers.lsp_installer, {
-	angularls = 'default',
+	angularls = "default",
 })
 
 -- add(g.treesitter.ensure_installed, {

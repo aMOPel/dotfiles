@@ -19,166 +19,191 @@ local plugins = require("globals").plugins
 
 table.insert(plugins, {
 	name = "neogen",
-	setup = function()
-	end,
+	setup = function() end,
 	config = function()
-    require('neogen').setup{ snippet_engine = "vsnip" }
-  end,
+		require("neogen").setup({ snippet_engine = "vsnip" })
+	end,
 })
 
 table.insert(plugins, {
 	name = "rest.nvim",
 	setup = function()
-    local map = require 'utils'.map
+		local map = require("utils").map
 		vim.api.nvim_create_autocmd({ "FileType" }, {
 			pattern = "http",
 			group = "MyAutoCmd",
 			callback = function()
-        map('n', '<leader>rr', '<Plug>RestNvim', { buffer=true })
+				map("n", "<leader>rr", "<Plug>RestNvim", { buffer = true })
 			end,
 		})
-    map('n', '<leader>rr', '<Plug>RestNvimLast')
-    -- map('n', '<leader>rp', '<Plug>RestNvimPreview')
+		map("n", "<leader>rr", "<Plug>RestNvimLast")
+		-- map('n', '<leader>rp', '<Plug>RestNvimPreview')
 	end,
 	config = function()
-    require('rest-nvim').setup({
-      -- -- Open request results in a horizontal split
-      -- result_split_horizontal = false,
-      -- -- Keep the http file buffer above|left when split horizontal|vertical
-      -- result_split_in_place = false,
-      -- -- Skip SSL verification, useful for unknown certificates
-      -- skip_ssl_verification = false,
-      -- -- Encode URL before making request
-      -- encode_url = true,
-      -- -- Highlight request on run
-      -- highlight = {
-      --   enabled = true,
-      --   timeout = 150,
-      -- },
-      -- result = {
-      --   -- toggle showing URL, HTTP info, headers at top the of result window
-      --   show_url = true,
-      --   show_http_info = true,
-      --   show_headers = true,
-      --   -- executables or functions for formatting response body [optional]
-      --   -- set them to false if you want to disable them
-      --   formatters = {
-      --     json = "jq",
-      --     html = function(body)
-      --       return vim.fn.system({"tidy", "-i", "-q", "-"}, body)
-      --     end
-      --   },
-      -- },
-      -- -- Jump to request line on run
-      -- jump_to_request = false,
-      -- env_file = '.env',
-      -- custom_dynamic_variables = {},
-      -- yank_dry_run = true,
-    })
-  end,
+		require("rest-nvim").setup({
+			-- -- Open request results in a horizontal split
+			-- result_split_horizontal = false,
+			-- -- Keep the http file buffer above|left when split horizontal|vertical
+			-- result_split_in_place = false,
+			-- -- Skip SSL verification, useful for unknown certificates
+			-- skip_ssl_verification = false,
+			-- -- Encode URL before making request
+			-- encode_url = true,
+			-- -- Highlight request on run
+			-- highlight = {
+			--   enabled = true,
+			--   timeout = 150,
+			-- },
+			-- result = {
+			--   -- toggle showing URL, HTTP info, headers at top the of result window
+			--   show_url = true,
+			--   show_http_info = true,
+			--   show_headers = true,
+			--   -- executables or functions for formatting response body [optional]
+			--   -- set them to false if you want to disable them
+			--   formatters = {
+			--     json = "jq",
+			--     html = function(body)
+			--       return vim.fn.system({"tidy", "-i", "-q", "-"}, body)
+			--     end
+			--   },
+			-- },
+			-- -- Jump to request line on run
+			-- jump_to_request = false,
+			-- env_file = '.env',
+			-- custom_dynamic_variables = {},
+			-- yank_dry_run = true,
+		})
+	end,
 })
 
 table.insert(plugins, {
 	name = "numb.nvim",
-	setup = function()
-	end,
+	setup = function() end,
 	config = function()
-    require('numb').setup {
-      show_numbers = true, -- Enable 'number' for the window while peeking
-      show_cursorline = true, -- Enable 'cursorline' for the window while peeking
-      hide_relativenumbers = true, -- Enable turning off 'relativenumber' for the window while peeking
-      number_only = false, -- Peek only when the command is only a number instead of when it starts with a number
-      centered_peeking = true, -- Peeked line will be centered relative to window
-    }
-  end,
+		require("numb").setup({
+			show_numbers = true, -- Enable 'number' for the window while peeking
+			show_cursorline = true, -- Enable 'cursorline' for the window while peeking
+			hide_relativenumbers = true, -- Enable turning off 'relativenumber' for the window while peeking
+			number_only = false, -- Peek only when the command is only a number instead of when it starts with a number
+			centered_peeking = true, -- Peeked line will be centered relative to window
+		})
+	end,
 })
 
 table.insert(plugins, {
 	name = "neotest",
 	setup = function()
-    local noremap = require 'utils'.noremap
-    noremap('n', '<leader>tt', "<cmd>lua require('neotest').run.run()<cr>", {})
-    noremap('n', '<leader>tc', "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", {})
-    noremap('n', '<leader>to', '<cmd>lua require("neotest").output_panel.toggle()<cr>', {})
+		local noremap = require("utils").noremap
+		noremap(
+			"n",
+			"<leader>tt",
+			"<cmd>lua require('neotest').run.run()<cr>",
+			{}
+		)
+		noremap(
+			"n",
+			"<leader>tc",
+			"<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>",
+			{}
+		)
+		noremap(
+			"n",
+			"<leader>to",
+			'<cmd>lua require("neotest").output_panel.toggle()<cr>',
+			{}
+		)
 	end,
 	config = function()
-    require('neotest').setup {
-      adapters = {
-        require('neotest-jest')({
-          jestCommand = "npx jest",
-          jestConfigFile = "package.json",
-          -- env = { CI = true },
-          cwd = function(path)
-            return vim.fn.getcwd()
-          end,
-        }),
-        -- require("neotest-vim-test")({ allow_file_types = { "javascript", "typescript" } }),
-      },
-    }
-  end,
+		require("neotest").setup({
+			adapters = {
+				require("neotest-jest")({
+					jestCommand = "npx jest",
+					jestConfigFile = "package.json",
+					-- env = { CI = true },
+					cwd = function(path)
+						return vim.fn.getcwd()
+					end,
+				}),
+				-- require("neotest-vim-test")({ allow_file_types = { "javascript", "typescript" } }),
+			},
+		})
+	end,
 })
 
 local p = require("utils").p
 
 local M = function(use)
-  -- use { p "https://github.com/ja-ford/delaytrain.nvim" }
+	-- use { p "https://github.com/ja-ford/delaytrain.nvim" }
 
-  use {
-    p "https://github.com/nvim-neotest/neotest",
-    requires = {
-      p 'https://github.com/nvim-lua/plenary.nvim',
-      p 'https://github.com/antoinemadec/FixCursorHold.nvim',
-      {
-        p 'https://github.com/nvim-neotest/neotest-jest',
-        commit = '3853b842b5d4850a2d5495f75802dabb3cda246c',
-      },
-      -- p 'https://github.com/nvim-neotest/neotest-vim-test',
-      -- p 'https://github.com/vim-test/vim-test',
-    },
-  }
-  use { p "https://github.com/nacro90/numb.nvim", }
-  use { p "https://github.com/tpope/vim-dadbod", }
-  use { p "https://github.com/kristijanhusak/vim-dadbod-ui", }
-  use {
-    p "https://github.com/rest-nvim/rest.nvim",
-    requires = { p 'https://github.com/nvim-lua/plenary.nvim', },
-  }
+	use({
+		p("https://github.com/nvim-neotest/neotest"),
+		requires = {
+			p("https://github.com/nvim-lua/plenary.nvim"),
+			p("https://github.com/antoinemadec/FixCursorHold.nvim"),
+			{
+				p("https://github.com/nvim-neotest/neotest-jest"),
+				commit = "3853b842b5d4850a2d5495f75802dabb3cda246c",
+			},
+			-- p 'https://github.com/nvim-neotest/neotest-vim-test',
+			-- p 'https://github.com/vim-test/vim-test',
+		},
+	})
+	use({ p("https://github.com/nacro90/numb.nvim") })
+	use({ p("https://github.com/tpope/vim-dadbod") })
+	use({ p("https://github.com/kristijanhusak/vim-dadbod-ui") })
+	use({
+		p("https://github.com/rest-nvim/rest.nvim"),
+		requires = { p("https://github.com/nvim-lua/plenary.nvim") },
+	})
 
-  use { p "https://github.com/danymat/neogen", }
+	use({ p("https://github.com/danymat/neogen") })
 
-  -- TODO: look into gitsigns:
-  -- https://github.com/lewis6991/gitsigns.nvim
-  -- https://github.com/airblade/vim-gitgutter
-  -- https://github.com/mhinz/vim-signify
-  -- https://github.com/rhysd/git-messenger.vim
-  -- https://github.com/f-person/git-blame.nvim
-  -- https://github.com/APZelos/blamer.nvim
-  -- https://github.com/tveskag/nvim-blame-line
-  -- TODO: look into fugitive alternatives:
-  -- https://github.com/jreybert/vimagit
-  -- https://github.com/TimUntersberger/neogit
-  -- https://github.com/tanvirtin/vgit.nvim
-  -- https://github.com/akinsho/git-conflict.nvim
-  -- https://github.com/sindrets/diffview.nvim
-  -- TODO: look into gh plugins:
-  -- https://github.com/tpope/vim-rhubarb
-  -- https://github.com/pwntester/octo.nvim
-  -- https://github.com/ldelossa/gh.nvim
-  -- TODO: research: put dispatch results not always in qflist
-  -- TODO: fix black git text
-  -- TODO: incorporate PackerUpdate --preview
-  -- TODO: test framework
-  -- TODO: notes framework
-  -- TODO: which-key
-  -- TODO: hydra
-  -- TODO: code runner framework
-  -- TODO: buffer switcher?
-  -- TODO: easy motion?
-  -- TODO: work with marks?
-  -- TODO: work with registers?
-  -- TODO: work with folds?
-  -- TODO: some regex plugin?
+	use({
+		p("https://github.com/mikesmithgh/kitty-scrollback.nvim"),
+		disable = false,
+		opt = true,
+		cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
+		event = { "User KittyScrollbackLaunch" },
+		-- tag = '*', -- latest stable version, may have breaking changes if major version changed
+		-- tag = 'v2.0.0', -- pin specific tag
+		config = function()
+			require("kitty-scrollback").setup()
+		end,
+	})
 
+	-- TODO: look into gitsigns:
+	-- https://github.com/lewis6991/gitsigns.nvim
+	-- https://github.com/airblade/vim-gitgutter
+	-- https://github.com/mhinz/vim-signify
+	-- https://github.com/rhysd/git-messenger.vim
+	-- https://github.com/f-person/git-blame.nvim
+	-- https://github.com/APZelos/blamer.nvim
+	-- https://github.com/tveskag/nvim-blame-line
+	-- TODO: look into fugitive alternatives:
+	-- https://github.com/jreybert/vimagit
+	-- https://github.com/TimUntersberger/neogit
+	-- https://github.com/tanvirtin/vgit.nvim
+	-- https://github.com/akinsho/git-conflict.nvim
+	-- https://github.com/sindrets/diffview.nvim
+	-- TODO: look into gh plugins:
+	-- https://github.com/tpope/vim-rhubarb
+	-- https://github.com/pwntester/octo.nvim
+	-- https://github.com/ldelossa/gh.nvim
+	-- TODO: research: put dispatch results not always in qflist
+	-- TODO: fix black git text
+	-- TODO: incorporate PackerUpdate --preview
+	-- TODO: test framework
+	-- TODO: notes framework
+	-- TODO: which-key
+	-- TODO: hydra
+	-- TODO: code runner framework
+	-- TODO: buffer switcher?
+	-- TODO: easy motion?
+	-- TODO: work with marks?
+	-- TODO: work with registers?
+	-- TODO: work with folds?
+	-- TODO: some regex plugin?
 end
 return M
 -- # [[plugins]]

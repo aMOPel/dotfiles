@@ -1,26 +1,26 @@
-local g = require 'globals'
-local add = require 'utils'.addTable
+local g = require("globals")
+local add = require("utils").addTable
 
 add(g.lsp.fts, {
-  'c',
-  'cpp',
-  'objc',
-  'objcpp',
+	"c",
+	"cpp",
+	"objc",
+	"objcpp",
 })
 
 add(g.lsp.servers.lsp_installer, {
-  clangd = 'default',
+	clangd = "default",
 })
 
 add(g.treesitter.ensure_installed, {
-  'c',
-  'cpp',
+	"c",
+	"cpp",
 })
 
 local configs = {}
 
-configs['cpp'] = function()
-vim.cmd[[
+configs["cpp"] = function()
+	vim.cmd([[
 if !exists("current_compiler")
   let current_compiler = "cpp"
 
@@ -36,25 +36,26 @@ endif
 if !exists("current_compiler")
   compiler cpp
 endif
-]]
-  -- vim.g.LanguageClient_serverCommands = {
-  --   cpp = {'clangd'},
-  -- }
+]])
+	-- vim.g.LanguageClient_serverCommands = {
+	--   cpp = {'clangd'},
+	-- }
 
-  -- local optl = vim.opt_local
-  -- optl.cindent = true
-  -- optl.foldmethod = 'syntax'
+	-- local optl = vim.opt_local
+	-- optl.cindent = true
+	-- optl.foldmethod = 'syntax'
 
-  local optl = vim.opt_local
-  local noremap = require 'utils'.noremap_buffer
-  noremap('n', '<leader>n', ':FloatermNew --autoclose=0 --disposable ./release/binary<CR>')
+	local optl = vim.opt_local
+	local noremap = require("utils").noremap_buffer
+	noremap(
+		"n",
+		"<leader>n",
+		":FloatermNew --autoclose=0 --disposable ./release/binary<CR>"
+	)
 end
 
-vim.api.nvim_create_autocmd(
-  {'Filetype'},
-  {
-    group = 'MyFt',
-    pattern = { 'cpp', },
-    callback = configs['cpp'],
-  }
-)
+vim.api.nvim_create_autocmd({ "Filetype" }, {
+	group = "MyFt",
+	pattern = { "cpp" },
+	callback = configs["cpp"],
+})

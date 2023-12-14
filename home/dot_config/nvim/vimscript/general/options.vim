@@ -18,7 +18,8 @@ if (!has("nvim"))
 endif
 
 set fileformats=unix,dos,mac
-set nolist listchars=trail:·,nbsp:·
+set list 
+set listchars=tab:»\ ,trail:·,nbsp:·
 set clipboard^=unnamedplus
 
 set nowrap

@@ -1,16 +1,16 @@
-local g = require 'globals'
-local add = require 'utils'.addTable
+local g = require("globals")
+local add = require("utils").addTable
 
-local ft = 'dockerfile'
+local ft = "dockerfile"
 
 add(g.lsp.fts, {
-  ft,
+	ft,
 })
 
 add(g.lsp.servers.lsp_installer, {
-  dockerls = 'default',
+	dockerls = "default",
 })
 
 add(g.treesitter.ensure_installed, {
-  ft,
+	ft,
 })

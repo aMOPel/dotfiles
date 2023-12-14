@@ -44,7 +44,6 @@ add(g.dap.ensure_installed, {
 	"delve",
 })
 
-
 local configs = {}
 
 configs[ft] = function()

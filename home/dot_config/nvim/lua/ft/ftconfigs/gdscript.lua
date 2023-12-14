@@ -46,23 +46,23 @@ add(g.linter.filetype, {
 })
 
 add(g.dap.filetype, {
-  [ft] = function()
-    local dap = require('dap')
-    dap.adapters.godot = {
-      type = "server",
-      host = '127.0.0.1',
-      port = 6006,
-    }
-    dap.configurations.gdscript = {
-      {
-        type = "godot",
-        request = "launch",
-        name = "Launch scene",
-        project = "${workspaceFolder}",
-        launch_scene = true,
-      }
-    }
-  end
+	[ft] = function()
+		local dap = require("dap")
+		dap.adapters.godot = {
+			type = "server",
+			host = "127.0.0.1",
+			port = 6006,
+		}
+		dap.configurations.gdscript = {
+			{
+				type = "godot",
+				request = "launch",
+				name = "Launch scene",
+				project = "${workspaceFolder}",
+				launch_scene = true,
+			},
+		}
+	end,
 })
 
 local configs = {}
@@ -71,7 +71,7 @@ configs[ft] = function()
 	local optl = vim.opt_local
 	local noremap = require("utils").noremap_buffer
 
-  -- gdscript styleguide
+	-- gdscript styleguide
 	optl.fileformat = "unix"
 	optl.fixendofline = true
 	optl.fileencoding = "utf-8"
@@ -80,7 +80,7 @@ configs[ft] = function()
 	optl.tabstop = 2
 	optl.shiftwidth = 2
 
-  optl.makeprg = "godot --headless --script %"
+	optl.makeprg = "godot --headless --script %"
 	-- noremap('n', '<leader>lf', ':exec "!gdformat -l 80 "  .  resolve(expand("%:p"))<cr>')
 end
 

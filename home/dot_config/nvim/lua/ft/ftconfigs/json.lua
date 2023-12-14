@@ -10,7 +10,6 @@ add(g.lsp.fts, {
 add(g.lsp.servers.lsp_installer, {
 	jsonls = function(on_attach, capabilities)
 		return {
-			filetypes = { "json" },
 			capabilities = capabilities,
 			on_attach = on_attach,
 			settings = {

@@ -1,4 +1,4 @@
-local plugins = require'globals'.plugins
+local plugins = require("globals").plugins
 
 -- table.insert(plugins, {
 --   name = 'editorconfig.vim',
@@ -23,11 +23,11 @@ local plugins = require'globals'.plugins
 -- end,
 -- })
 
-local p = require 'utils'.p
+local p = require("utils").p
 
 local M = function(use)
-  -- use { p 'https://github.com/editorconfig/editorconfig-vim', }
-  use { p 'https://github.com/tpope/vim-dotenv', }
+	-- use { p 'https://github.com/editorconfig/editorconfig-vim', }
+	use({ p("https://github.com/tpope/vim-dotenv") })
 end
 return M
 -- https://github.com/tpope/vim-dotenv
