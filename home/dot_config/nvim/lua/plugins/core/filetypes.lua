@@ -59,8 +59,7 @@ table.insert(plugins, {
 local p = require("utils").p
 
 local M = function(use)
-	-- use { p 'https://github.com/alaviss/nim.nvim', }
-	-- use { p 'https://github.com/zah/nim.vim', }
+	use { p 'https://github.com/alaviss/nim.nvim', }
 	use({ p("https://github.com/fladson/vim-kitty") })
 	use({ p("https://github.com/posva/vim-vue") })
 	use({ p("https://github.com/preservim/vim-markdown") })

@@ -79,15 +79,15 @@ add(g.formatter.filetype, {
 	end,
 })
 
--- add(g.formatter.on_save, {
--- 	"*." .. ft,
--- })
+add(g.formatter.on_save, {
+	"*." .. ft,
+})
 
 local configs = {}
 
 configs[ft] = function()
 	local optl = vim.opt_local
-  optl.expandtab = false
+	optl.expandtab = false
 	local noremap = require("utils").noremap_buffer
 	noremap(
 		"n",

@@ -2,8 +2,7 @@ local plugins = require("globals").plugins
 
 table.insert(plugins, {
 	name = "nvim-treesitter",
-	setup = function()
-	end,
+	setup = function() end,
 	config = function()
 		local g = require("globals")
 		require("nvim-treesitter.configs").setup({
@@ -59,29 +58,6 @@ table.insert(plugins, {
 					-- },
 					include_surrounding_whitespace = false,
 				},
-				-- element_textobject = {
-				--   enable = true,
-				--   set_jumps = true,
-				--   keymaps = {
-				--     ['ga'] = 'goto_next_element',
-				--     ['gA'] = 'goto_prev_element',
-				--     [']a'] = 'swap_next_element',
-				--     ['[a'] = 'swap_prev_element',
-				--     ['ia'] = 'inner_element',
-				--     ['aa'] = 'an_element',
-				--   }
-				-- },
-				-- scope_textobject = {
-				--   enable = true,
-				--   set_jumps = true,
-				--   keymaps = {
-				--     ['go'] = 'incremental_outer_scope',
-				--     [']o'] = 'goto_next_scope',
-				--     ['[o'] = 'goto_prev_scope',
-				--     ['ao'] = 'a_scope',
-				--     ['io'] = 'a_scope',
-				--   }
-				-- },
 			},
 		})
 	end,
@@ -146,8 +122,6 @@ local M = function(use)
 				),
 				after = "nvim-treesitter",
 			},
-
-			-- { p 'https://github.com/RRethy/nvim-treesitter-textsubjects', after = 'nvim-treesitter', },
 		},
 		run = ":TSUpdate",
 	})
