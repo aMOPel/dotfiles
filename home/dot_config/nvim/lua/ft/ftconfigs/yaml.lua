@@ -8,7 +8,21 @@ add(g.lsp.fts, {
 })
 
 add(g.lsp.servers.lsp_installer, {
-	yamlls = "default",
+	yamlls = function(on_attach, capabilities)
+		return {
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				yaml = {
+					schemaStore = {
+						enable = false,
+						url = "",
+					},
+					schemas = require("schemastore").yaml.schemas(),
+				},
+			},
+		}
+	end,
 })
 
 add(g.treesitter.ensure_installed, {
