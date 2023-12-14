@@ -8,11 +8,25 @@ add(g.lsp.fts, {
 })
 
 add(g.lsp.servers.lsp_installer, {
-	prosemd_lsp = "default",
+	-- ltex = function(on_attach, capabilities)
+	-- 	return {
+	-- 		capabilities = capabilities,
+	-- 		on_attach = on_attach,
+	-- 		settings = {
+	-- 			ltex = {
+	-- 				language = "auto",
+	-- 				diagnosticSeverity = "information",
+	-- 				sentenceCacheSize = 2000,
+	-- 			},
+	-- 		},
+	-- 	}
+	-- end,
+
+	ltex = "default",
 })
 
 add(g.treesitter.ensure_installed, {
-  ft,
+	ft,
 	"markdown_inline",
 })
 
@@ -26,6 +40,26 @@ add(g.formatter.filetype, {
 
 add(g.formatter.on_save, {
 	"*." .. ft,
+})
+
+add(g.linter.ensure_installed, {
+	"proselint",
+	"write-good",
+	"alex",
+	"markdownlint",
+})
+
+add(g.linter.filetype, {
+	[ft] = {
+		"proselint",
+		"write_good",
+		"alex",
+		"markdownlint",
+	},
+})
+
+add(g.linter.custom_linter, {
+	"",
 })
 
 local configs = {}
@@ -43,6 +77,8 @@ configs[ft] = function()
 
 	optl.foldenable = false
 	optl.foldcolumn = "0"
+	optl.tabstop = 4
+	optl.shiftwidth = 4
 
 	vim.g.GripRunning = 0
 	function start_grip()
