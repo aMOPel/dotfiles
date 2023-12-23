@@ -22,7 +22,7 @@ table.insert(plugins, {
 				documentation = cmp.config.disable,
 			},
 			mapping = cmp.mapping.preset.insert({
-				["<CR>"] = cmp.mapping.confirm({ select = true }),
+				["<CR>"] = cmp.mapping.confirm({ select = false }),
 			}),
 			sources = cmp.config.sources({
 				{ name = "vsnip", max_item_count = 5 },
