@@ -76,6 +76,7 @@ shopt -s cdspell
 shopt -s dirspell
 shopt -s extglob
 shopt -s dotglob
+shopt -s globstar
 
 set -o vi
 

@@ -37,6 +37,10 @@ add(g.formatter.filetype, {
 	},
 })
 
+add(g.formatter.on_save, {
+	"*.gd",
+})
+
 add(g.linter.ensure_installed, {
 	"gdtoolkit",
 })
