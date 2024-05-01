@@ -33,7 +33,7 @@ export PATH=$PATH:$HOME/node_modules/.bin
 export NPM_CONFIG_PREFIX=$HOME/.local/npm-global
 
 # python
-export PYTHONPATH=$HOME/.local/lib/python3.8/site-packages
+# export PYTHONPATH=$HOME/.local/lib/python3.8/site-packages
 
 # nim
 export PATH=$HOME/.nimble/bin:$PATH

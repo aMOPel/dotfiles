@@ -52,7 +52,7 @@ augroup END
 	end,
 	-- loading maintained snapshot named 'base'
 	config = {
-		snapshot = "base",
+		snapshot = "base1",
 		snapshot_path = vim.fn.expand(
 			"$XDG_DATA_HOME/chezmoi/home/dot_config/nvim/packer-snapshots"
 		),

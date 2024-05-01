@@ -466,7 +466,6 @@ local M = function(use)
 			-- { p 'https://github.com/saaguero/vim-textobj-pastedtext', after = 'vim-textobj-user', },
 			{ p("https://github.com/idbrii/textobj-word-column.vim") },
 			{ p("https://github.com/glts/vim-textobj-comment") },
-			{ p("https://github.com/kana/vim-textobj-line") },
 			-- { p "https://github.com/kana/vim-textobj-lastpat", },
 		},
 	})
